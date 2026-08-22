@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Aarogya Group{% endblock %}
+
+{% block content %}
+	<section class="container py-5 py-lg-6">
+		<div class="row align-items-center g-5">
+			<div class="col-lg-7">
+				<p class="text-uppercase fw-semibold text-ag-green mb-3">Care that feels personal</p>
+				<h1 class="display-3 fw-bold mb-4">Better health begins with better attention.</h1>
+				<p class="lead text-secondary mb-4">Aarogya Group brings trusted healthcare guidance and thoughtful support closer to every family.</p>
+				<div class="d-flex flex-wrap gap-3">
+					<a class="btn btn-ag-green btn-lg px-4" href="#services">Explore services</a>
+					<a class="btn btn-outline-secondary btn-lg px-4" href="#about">Learn about us</a>
+				</div>
+			</div>
+			<div class="col-lg-5">
+				<div class="p-4 p-md-5 rounded-4" style="background: var(--ag-mint);">
+					<span class="badge rounded-pill text-bg-light text-ag-green mb-4">Trusted support</span>
+					<h2 class="h3 fw-bold">Healthcare with clarity and compassion.</h2>
+					<p class="text-secondary mb-0">From everyday wellness to guided care, we help you make confident decisions.</p>
+				</div>
+			</div>
+	</div>
+</section>
+
+	<section id="services" class="bg-white border-top border-bottom py-5">
+		<div class="container py-lg-3">
+			<div class="row g-4">
+				<div class="col-md-4"><div class="h-100 p-4"><div class="fs-2 text-ag-green mb-3">01</div><h2 class="h4">Primary care</h2><p class="text-secondary mb-0">Reliable guidance for your everyday health needs.</p></div></div>
+				<div class="col-md-4"><div class="h-100 p-4"><div class="fs-2 text-ag-green mb-3">02</div><h2 class="h4">Wellness plans</h2><p class="text-secondary mb-0">Practical routines designed around your life.</p></div></div>
+				<div class="col-md-4"><div class="h-100 p-4"><div class="fs-2 text-ag-green mb-3">03</div><h2 class="h4">Family support</h2><p class="text-secondary mb-0">A caring partner for every stage of your family journey.</p></div></div>
+			</div>
+		</div>
+	</section>
+
+	<section id="about" class="container py-5 py-lg-6">
+		<div class="row justify-content-between align-items-center g-4">
+			<div class="col-lg-6"><h2 class="display-6 fw-bold">Your wellbeing deserves a steady partner.</h2></div>
+			<div class="col-lg-5"><p class="text-secondary mb-4">We combine professional care with a human approach, so every interaction feels clear, respectful, and useful.</p><a class="btn btn-ag-green" href="mailto:care@aarogyagroup.com">Connect with our team</a></div>
+		</div>
+	</section>
+{% endblock %}
