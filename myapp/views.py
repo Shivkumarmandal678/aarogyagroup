@@ -49,7 +49,9 @@ def worker_login(request):
             worker_username = sheet_value(worker, 'username')
             worker_password = sheet_value(worker, 'password')
             worker_status = sheet_value(worker, 'status')
-            status_allowed = not worker_status or worker_status.casefold() == 'active'
+            status_allowed = worker_status.casefold() not in {
+                'inactive', 'disabled', 'blocked', 'deleted',
+            }
             if (worker_username and worker_password
                     and worker_username.casefold() == username.casefold()
                     and worker_password == password
