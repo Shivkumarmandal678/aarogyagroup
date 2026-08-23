@@ -80,7 +80,7 @@ def worker_login(request):
 
 
 def worker_logout(request):
-    request.session.pop('worker_username', None)
+    request.session.flush()
     messages.info(request, 'You have been logged out.')
     return redirect('worker_login')
 
