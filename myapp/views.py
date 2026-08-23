@@ -26,11 +26,20 @@ def dashboard_context(user_type):
         sheet = {'headers': [], 'rows': [], 'table_rows': []}
         error = str(exc)
 
+    visible_headers = [
+        header for header in sheet['headers']
+        if header.strip().casefold().replace(' ', '') != 'password'
+    ]
+    visible_indexes = [sheet['headers'].index(header) for header in visible_headers]
+    visible_table_rows = [
+        [row[index] for index in visible_indexes]
+        for row in sheet['table_rows']
+    ]
     return {
         'user_type': user_type,
-        'sheet_headers': sheet['headers'],
+        'sheet_headers': visible_headers,
         'sheet_rows': sheet['rows'],
-        'sheet_table_rows': sheet['table_rows'],
+        'sheet_table_rows': visible_table_rows,
         'sheet_count': len(sheet['rows']),
         'sheet_error': error,
     }
@@ -70,9 +79,38 @@ def worker_logout(request):
     messages.info(request, 'You have been logged out.')
     return redirect('worker_login')
 
+
+def employee_login(request):
+    if request.session.get('employee_authenticated'):
+        return redirect('employee_dashboard')
+
+    error = ''
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+        if username == settings.EMPLOYEE_USERNAME and password == settings.EMPLOYEE_PASSWORD:
+            request.session['employee_authenticated'] = True
+            return redirect('employee_dashboard')
+        error = 'Invalid employee username or password.'
+    return render(request, 'employee_login.html', {'error': error})
+
+
+def employee_logout(request):
+    request.session.pop('employee_authenticated', None)
+    messages.info(request, 'You have been logged out.')
+    return redirect('employee_login')
+
 # Home view
 def home(request):
     return render(request, 'home.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def appointment(request):
+    return render(request, 'appointment.html')
 
 # Worker Dashboard view
 def worker_dashboard(request):
@@ -87,10 +125,6 @@ def worker_dashboard(request):
     ]
     context['sheet_rows'] = worker_rows
     context['sheet_count'] = len(worker_rows)
-    context['sheet_headers'] = [
-        header for header in context['sheet_headers']
-        if header.strip().casefold().replace(' ', '') != 'password'
-    ]
     context['sheet_table_rows'] = [
         [row.get(header, '') for header in context['sheet_headers']]
         for row in worker_rows
@@ -99,4 +133,12 @@ def worker_dashboard(request):
 
 # Employer Dashboard view
 def employer_dashboard(request):
+    if not request.session.get('employee_authenticated'):
+        return redirect('employee_login')
     return render(request, 'employer_dashboard.html', dashboard_context('employer'))
+
+
+def employee_dashboard(request):
+    if not request.session.get('employee_authenticated'):
+        return redirect('employee_login')
+    return render(request, 'employee_dashboard.html', dashboard_context('employee'))

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Employee Dashboard | Aarogya Group{% endblock %}
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4"><div><p class="text-ag-green fw-semibold mb-1">Employee portal</p><h1 class="h3 fw-bold mb-1">Dashboard</h1><p class="text-secondary mb-0">Manage worker records from the live sheet.</p></div><a class="btn btn-outline-secondary" href="{% url 'employee_logout' %}"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></div>
+        {% if sheet_error %}<div class="alert alert-warning">{{ sheet_error }}</div>{% elif sheet_table_rows %}
+        <div class="card border-0 shadow-sm"><div class="card-body"><div class="d-flex justify-content-between mb-3"><h2 class="h5 fw-bold mb-0">Worker records</h2><span class="badge text-bg-success">{{ sheet_count }} record{{ sheet_count|pluralize }}</span></div><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead class="table-light"><tr>{% for header in sheet_headers %}<th>{{ header }}</th>{% endfor %}</tr></thead><tbody>{% for row in sheet_table_rows %}<tr>{% for cell in row %}<td>{{ cell|default:"-" }}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div></div></div>
+        {% else %}<div class="alert alert-info">No worker records are available yet.</div>{% endif %}
+    </div>
+</section>
+{% endblock %}

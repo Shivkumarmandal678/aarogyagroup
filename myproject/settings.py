@@ -38,6 +38,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID', '1iRNlkAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg')
 GOOGLE_SHEET_GID = os.getenv('GOOGLE_SHEET_GID', '')
 GOOGLE_SHEET_CSV_URL = os.getenv('GOOGLE_SHEET_CSV_URL', '')
+EMPLOYEE_USERNAME = os.getenv('EMPLOYEE_USERNAME', 'employee')
+EMPLOYEE_PASSWORD = os.getenv('EMPLOYEE_PASSWORD', 'change-this-password')
 
 
 # Application definition
