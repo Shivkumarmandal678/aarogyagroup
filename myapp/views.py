@@ -14,6 +14,17 @@ def sheet_value(row, field):
     return ''
 
 
+def without_login_fields(headers, rows):
+    visible_headers = [
+        header for header in headers
+        if header.strip().casefold().replace(' ', '') not in {'username', 'password'}
+    ]
+    return visible_headers, [
+        [row.get(header, '') for header in visible_headers]
+        for row in rows
+    ]
+
+
 def dashboard_context(user_type, csv_url=None):
     try:
         sheet = fetch_sheet_data(
@@ -26,15 +37,9 @@ def dashboard_context(user_type, csv_url=None):
         sheet = {'headers': [], 'rows': [], 'table_rows': []}
         error = str(exc)
 
-    visible_headers = [
-        header for header in sheet['headers']
-        if header.strip().casefold().replace(' ', '') != 'password'
-    ]
-    visible_indexes = [sheet['headers'].index(header) for header in visible_headers]
-    visible_table_rows = [
-        [row[index] for index in visible_indexes]
-        for row in sheet['table_rows']
-    ]
+    visible_headers, visible_table_rows = without_login_fields(
+        sheet['headers'], sheet['rows'],
+    )
     return {
         'user_type': user_type,
         'sheet_headers': visible_headers,
@@ -129,6 +134,9 @@ def worker_dashboard(request):
         return redirect('worker_login')
 
     context = dashboard_context('worker', settings.WORKER_SHEET_CSV_URL)
+    context['sheet_rows'] = []
+    context['sheet_table_rows'] = []
+    context['sheet_count'] = 0
     worker_rows = [
         row for row in context['sheet_rows']
         if sheet_value(row, 'username').casefold() == username.casefold()
@@ -145,7 +153,7 @@ def worker_dashboard(request):
         )
         context['client_headers'] = [
             header for header in client_sheet['headers']
-            if header.strip().casefold().replace(' ', '') != 'password'
+            if header.strip().casefold().replace(' ', '') not in {'username', 'password'}
         ]
         context['client_rows'] = [
             [row[index] for index, header in enumerate(client_sheet['headers'])
@@ -169,4 +177,7 @@ def employer_dashboard(request):
 def employee_dashboard(request):
     if not request.session.get('employee_authenticated'):
         return redirect('employee_login')
-    return render(request, 'employee_dashboard.html', dashboard_context('employee', settings.WORKER_SHEET_CSV_URL))
+    context = dashboard_context('employee', settings.WORKER_SHEET_CSV_URL)
+    context['worker_records'] = context['sheet_table_rows']
+    context['worker_headers'] = context['sheet_headers']
+    return render(request, 'employee_dashboard.html', context)
