@@ -28,6 +28,11 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
+# Google Sheets configuration. The sheet must be shared with viewer access.
+GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID', '1iRNlkAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg')
+GOOGLE_SHEET_GID = os.getenv('GOOGLE_SHEET_GID', '')
+GOOGLE_SHEET_CSV_URL = os.getenv('GOOGLE_SHEET_CSV_URL', '')
+
 
 # Application definition
 
