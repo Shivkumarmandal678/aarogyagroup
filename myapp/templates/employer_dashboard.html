@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Employer Dashboard | Aarogya Group{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="bg-ag-light p-4 rounded-3 mb-5 border-start border-5" style="border-color: var(--ag-green);">
+            <h1 class="h3 fw-bold mb-2">Welcome Back, Employer!</h1>
+            <p class="text-secondary mb-0">Manage your workforce, ensure compliance, track attendance, and maintain worker records efficiently.</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-secondary text-sm mb-2">Total Workers</p>
+                                <h4 class="fw-bold mb-0">247</h4>
+                            </div>
+                            <div class="bg-ag-light p-3 rounded-3">
+                                <i class="bi bi-people text-ag-green fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-secondary text-sm mb-2">Present Today</p>
+                                <h4 class="fw-bold mb-0">234</h4>
+                            </div>
+                            <div class="bg-ag-light p-3 rounded-3">
+                                <i class="bi bi-check-circle text-ag-green fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-secondary text-sm mb-2">Pending Compliance</p>
+                                <h4 class="fw-bold mb-0">12</h4>
+                            </div>
+                            <div class="bg-ag-light p-3 rounded-3">
+                                <i class="bi bi-exclamation-circle text-ag-green fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="text-secondary text-sm mb-2">Pending Orientation</p>
+                                <h4 class="fw-bold mb-0">5</h4>
+                            </div>
+                            <div class="bg-ag-light p-3 rounded-3">
+                                <i class="bi bi-book text-ag-green fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="row g-4">
+            <!-- Attendance Overview -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-clock-history text-ag-green me-2"></i>Attendance Overview
+                            </h5>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row text-center mb-4">
+                            <div class="col-md-4">
+                                <p class="text-secondary text-sm mb-1">Present</p>
+                                <h4 class="fw-bold text-ag-green">234</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-secondary text-sm mb-1">Absent</p>
+                                <h4 class="fw-bold text-danger">8</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-secondary text-sm mb-1">On Leave</p>
+                                <h4 class="fw-bold text-warning">5</h4>
+                            </div>
+                        </div>
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-ag-green" role="progressbar" style="width: 94%;">94%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance Status -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-shield-check text-ag-green me-2"></i>Compliance Status
+                            </h5>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Manage</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Medical Certificates</p>
+                                    <small class="text-secondary">235/247 Updated</small>
+                                </div>
+                                <span class="badge bg-warning">95%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Labor Card Verification</p>
+                                    <small class="text-secondary">240/247 Verified</small>
+                                </div>
+                                <span class="badge bg-ag-green">97%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Safety Training</p>
+                                    <small class="text-secondary">230/247 Completed</small>
+                                </div>
+                                <span class="badge bg-warning">93%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Sections -->
+        <div class="row g-4 mt-4">
+            <!-- Pending Orientation -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-book text-ag-green me-2"></i>Pending Orientation
+                            </h5>
+                            <a href="#" class="btn btn-sm btn-ag-green">Schedule</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-start px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Raj Kumar</p>
+                                    <small class="text-secondary">Joined: 2024-08-15 | Role: Machine Operator</small>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Assign</a>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-start px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Priya Singh</p>
+                                    <small class="text-secondary">Joined: 2024-08-12 | Role: Quality Control</small>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Assign</a>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-start px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Amit Patel</p>
+                                    <small class="text-secondary">Joined: 2024-08-10 | Role: Warehouse Staff</small>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Assign</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Workers -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-person-plus text-ag-green me-2"></i>Recent Additions
+                            </h5>
+                            <a href="#" class="btn btn-sm btn-ag-green">Add Worker</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Rahul Verma</p>
+                                    <small class="text-secondary">Added: 2024-08-20 | Machine Operator</small>
+                                </div>
+                                <span class="badge bg-ag-light text-ag-green">Active</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Neha Gupta</p>
+                                    <small class="text-secondary">Added: 2024-08-18 | Data Entry</small>
+                                </div>
+                                <span class="badge bg-ag-light text-ag-green">Active</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                <div>
+                                    <p class="fw-semibold mb-1">Vikram Singh</p>
+                                    <small class="text-secondary">Added: 2024-08-15 | Quality Check</small>
+                                </div>
+                                <span class="badge bg-ag-light text-ag-green">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .text-sm {
+        font-size: 0.875rem;
+    }
+</style>
+
+{% endblock %}
