@@ -133,10 +133,14 @@ def worker_dashboard(request):
     if not username:
         return redirect('worker_login')
 
-    context = dashboard_context('worker', settings.WORKER_SHEET_CSV_URL)
-    context['sheet_rows'] = []
-    context['sheet_table_rows'] = []
-    context['sheet_count'] = 0
+    context = {
+        'user_type': 'worker',
+        'sheet_headers': [],
+        'sheet_rows': [],
+        'sheet_table_rows': [],
+        'sheet_count': 0,
+        'sheet_error': '',
+    }
     worker_rows = [
         row for row in context['sheet_rows']
         if sheet_value(row, 'username').casefold() == username.casefold()
