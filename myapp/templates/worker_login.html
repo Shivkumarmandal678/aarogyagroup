@@ -2,30 +2,52 @@
 
 {% block title %}Worker Login | Aarogya Group{% endblock %}
 
+{% block extra_css %}
+<style>
+    .worker-login { min-height: calc(100vh - 210px); display: grid; place-items: center; padding: 3rem 0; background: linear-gradient(135deg, #ecfdf5, #f8fafc 52%, #eff6ff); }
+    .login-shell { overflow: hidden; border: 1px solid rgba(16, 185, 129, .16); border-radius: 1.25rem; background: #fff; box-shadow: 0 1.5rem 4rem rgba(15, 23, 42, .12); }
+    .login-brand { background: #064e3b; color: #fff; padding: 2.5rem; }
+    .brand-mark { width: 3.5rem; height: 3.5rem; display: grid; place-items: center; border-radius: 1rem; background: #10b981; font-size: 1.7rem; }
+    .login-form { padding: 2.5rem; }
+    .login-form .form-control { min-height: 3rem; border-color: #dbe5e1; border-radius: .65rem; }
+    .login-form .form-control:focus { border-color: var(--ag-green); box-shadow: 0 0 0 .2rem rgba(16, 185, 129, .15); }
+    @media (max-width: 575.98px) { .login-brand, .login-form { padding: 2rem 1.5rem; } }
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="py-5">
-    <div class="container" style="max-width: 520px;">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4 p-md-5">
-                <div class="text-center mb-4">
-                    <i class="bi bi-person-badge text-ag-green display-5"></i>
-                    <h1 class="h3 fw-bold mt-3">Worker Login</h1>
-                    <p class="text-secondary mb-0">Use the username and password assigned to you.</p>
+<section class="worker-login">
+    <div class="container" style="max-width: 900px;">
+        <div class="login-shell row g-0">
+            <div class="login-brand col-lg-5 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="brand-mark mb-4"><i class="bi bi-shield-check"></i></div>
+                    <p class="text-uppercase small fw-semibold mb-2" style="letter-spacing: .08em;">Aarogya Group</p>
+                    <h1 class="display-6 fw-bold mb-3">Worker portal</h1>
+                    <p class="mb-0" style="color: #a7f3d0;">Access your personal work records securely.</p>
+                </div>
+                <div class="mt-5 small" style="color: #a7f3d0;"><i class="bi bi-lock me-2"></i>Your account is protected.</div>
+            </div>
+            <div class="login-form col-lg-7">
+                <div class="mb-4">
+                    <p class="text-ag-green fw-semibold mb-2">Welcome back</p>
+                    <h2 class="h3 fw-bold mb-2">Sign in to continue</h2>
+                    <p class="text-secondary mb-0">Use the credentials assigned to your worker account.</p>
                 </div>
                 {% if error %}
-                    <div class="alert alert-warning" role="alert">{{ error }}</div>
+                    <div class="alert alert-danger d-flex align-items-start gap-2" role="alert"><i class="bi bi-exclamation-circle-fill mt-1"></i><span>{{ error }}</span></div>
                 {% endif %}
-                <form method="post">
+                <form method="post" action="{% url 'worker_login' %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label class="form-label" for="username">Username</label>
-                        <input class="form-control" id="username" name="username" type="text" required autofocus>
+                        <label class="form-label fw-semibold" for="username">Username</label>
+                        <div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-person text-secondary"></i></span><input class="form-control" id="username" name="username" type="text" autocomplete="username" required autofocus></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label" for="password">Password</label>
-                        <input class="form-control" id="password" name="password" type="password" required>
+                        <label class="form-label fw-semibold" for="password">Password</label>
+                        <div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-key text-secondary"></i></span><input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required></div>
                     </div>
-                    <button class="btn btn-ag-green w-100" type="submit">
+                    <button class="btn btn-ag-green w-100 py-2 fw-semibold" type="submit">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Login
                     </button>
                 </form>
