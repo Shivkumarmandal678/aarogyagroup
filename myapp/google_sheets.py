@@ -49,6 +49,8 @@ def fetch_sheet_data(sheet_id, gid="", csv_url=""):
     for row in rows[1:]:
         values = row + [""] * (len(headers) - len(row))
         values = values[:len(headers)]
+        if not any(value.strip() for value in values):
+            continue
         table_rows.append(values)
         data.append(dict(zip(headers, values)))
 
