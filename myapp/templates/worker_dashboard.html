@@ -259,6 +259,27 @@
             </div>
         </div>
         {% endif %}
+
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Client Details</h2>
+                    <p class="text-secondary mb-0">Client records available to your worker account.</p>
+                </div>
+            </div>
+            {% if client_error %}
+                <div class="alert alert-warning">{{ client_error }}</div>
+            {% elif client_rows %}
+                <div class="table-responsive bg-white border rounded-3 shadow-sm">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light"><tr>{% for header in client_headers %}<th>{{ header }}</th>{% endfor %}</tr></thead>
+                        <tbody>{% for row in client_rows %}<tr>{% for cell in row %}<td>{{ cell|default:"-" }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">No client records are available yet.</div>
+            {% endif %}
+        </div>
     </div>
 </section>
 

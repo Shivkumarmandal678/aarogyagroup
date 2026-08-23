@@ -34,12 +34,13 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Google Sheets configuration. The sheet must be shared with viewer access.
+# Google Sheets configuration. Each tab must be shared with viewer access.
 GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID', '1iRNlkAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg')
 GOOGLE_SHEET_GID = os.getenv('GOOGLE_SHEET_GID', '')
 GOOGLE_SHEET_CSV_URL = os.getenv('GOOGLE_SHEET_CSV_URL', '')
-EMPLOYEE_USERNAME = os.getenv('EMPLOYEE_USERNAME', 'employee')
-EMPLOYEE_PASSWORD = os.getenv('EMPLOYEE_PASSWORD', 'change-this-password')
+WORKER_SHEET_CSV_URL = os.getenv('WORKER_SHEET_CSV_URL', '')
+EMPLOYEE_SHEET_CSV_URL = os.getenv('EMPLOYEE_SHEET_CSV_URL', '')
+CLIENT_SHEET_CSV_URL = os.getenv('CLIENT_SHEET_CSV_URL', '')
 
 
 # Application definition

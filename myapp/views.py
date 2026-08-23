@@ -14,12 +14,12 @@ def sheet_value(row, field):
     return ''
 
 
-def dashboard_context(user_type):
+def dashboard_context(user_type, csv_url=None):
     try:
         sheet = fetch_sheet_data(
             settings.GOOGLE_SHEET_ID,
             settings.GOOGLE_SHEET_GID,
-            settings.GOOGLE_SHEET_CSV_URL,
+            csv_url or settings.WORKER_SHEET_CSV_URL or settings.GOOGLE_SHEET_CSV_URL,
         )
         error = ''
     except GoogleSheetError as exc:
@@ -53,7 +53,7 @@ def worker_login(request):
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
-        context = dashboard_context('worker')
+        context = dashboard_context('worker', settings.WORKER_SHEET_CSV_URL)
         for worker in context['sheet_rows']:
             worker_username = sheet_value(worker, 'username')
             worker_password = sheet_value(worker, 'password')
@@ -88,10 +88,20 @@ def employee_login(request):
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
-        if username == settings.EMPLOYEE_USERNAME and password == settings.EMPLOYEE_PASSWORD:
-            request.session['employee_authenticated'] = True
-            return redirect('employee_dashboard')
+        context = dashboard_context('employee', settings.EMPLOYEE_SHEET_CSV_URL)
+        for employee in context['sheet_rows']:
+            employee_username = sheet_value(employee, 'username')
+            employee_password = sheet_value(employee, 'password')
+            employee_status = sheet_value(employee, 'status').casefold()
+            status_allowed = employee_status not in {'inactive', 'disabled', 'blocked', 'deleted'}
+            if (employee_username and employee_password
+                    and employee_username.casefold() == username.casefold()
+                    and employee_password == password and status_allowed):
+                request.session['employee_authenticated'] = True
+                return redirect('employee_dashboard')
         error = 'Invalid employee username or password.'
+        if context['sheet_error']:
+            error = context['sheet_error']
     return render(request, 'employee_login.html', {'error': error})
 
 
@@ -118,7 +128,7 @@ def worker_dashboard(request):
     if not username:
         return redirect('worker_login')
 
-    context = dashboard_context('worker')
+    context = dashboard_context('worker', settings.WORKER_SHEET_CSV_URL)
     worker_rows = [
         row for row in context['sheet_rows']
         if sheet_value(row, 'username').casefold() == username.casefold()
@@ -129,16 +139,34 @@ def worker_dashboard(request):
         [row.get(header, '') for header in context['sheet_headers']]
         for row in worker_rows
     ]
+    try:
+        client_sheet = fetch_sheet_data(
+            settings.GOOGLE_SHEET_ID, '', settings.CLIENT_SHEET_CSV_URL,
+        )
+        context['client_headers'] = [
+            header for header in client_sheet['headers']
+            if header.strip().casefold().replace(' ', '') != 'password'
+        ]
+        context['client_rows'] = [
+            [row[index] for index, header in enumerate(client_sheet['headers'])
+             if header in context['client_headers']]
+            for row in client_sheet['table_rows']
+        ]
+        context['client_error'] = ''
+    except GoogleSheetError as exc:
+        context['client_headers'] = []
+        context['client_rows'] = []
+        context['client_error'] = str(exc)
     return render(request, 'worker_dashboard.html', context)
 
 # Employer Dashboard view
 def employer_dashboard(request):
     if not request.session.get('employee_authenticated'):
         return redirect('employee_login')
-    return render(request, 'employer_dashboard.html', dashboard_context('employer'))
+    return render(request, 'employer_dashboard.html', dashboard_context('employer', settings.WORKER_SHEET_CSV_URL))
 
 
 def employee_dashboard(request):
     if not request.session.get('employee_authenticated'):
         return redirect('employee_login')
-    return render(request, 'employee_dashboard.html', dashboard_context('employee'))
+    return render(request, 'employee_dashboard.html', dashboard_context('employee', settings.WORKER_SHEET_CSV_URL))
