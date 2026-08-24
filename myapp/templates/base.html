@@ -17,8 +17,10 @@
 </head>
 <body class="d-flex flex-column min-vh-100" oncontextmenu="return false;">
 
+    {% if not request.GET.embed %}
     <!-- Navbar Include -->
     {% include 'navbar.html' %}
+    {% endif %}
 
     <!-- Main Content -->
     <main class="container my-4 flex-grow-1">
@@ -26,42 +28,44 @@
         {% endblock %}
     </main>
 
-    <!-- Footer Include -->
-    {% include 'footer.html' %}
+    {% if not request.GET.embed %}
+        <!-- Footer Include -->
+        {% include 'footer.html' %}
+    {% endif %}
 
-    {% if request.resolver_match.url_name != 'chatbot' %}
-    <button class="ag-chatbot-launcher" id="chatbotLauncher" type="button" aria-controls="chatbotPanel" aria-expanded="false" title="Chat with Aarogya">
-        <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
-        <span>Chat</span>
-    </button>
-    <aside class="ag-chatbot-panel" id="chatbotPanel" aria-hidden="true" aria-label="Aarogya chatbot">
-        <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i>Aarogya Assistant</strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
-        <iframe class="ag-chatbot-frame" src="{% url 'chatbot' %}" title="Aarogya chatbot"></iframe>
-        <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}">Open full chatbot page <i class="bi bi-arrow-up-right ms-1"></i></a>
-    </aside>
+    {% if not request.GET.embed and request.resolver_match.url_name != 'chatbot' %}
+        <button class="ag-chatbot-launcher" id="chatbotLauncher" type="button" aria-controls="chatbotPanel" aria-expanded="false" title="Chat with Aarogya">
+            <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
+            <span>Chat</span>
+        </button>
+        <aside class="ag-chatbot-panel" id="chatbotPanel" aria-hidden="true" aria-label="Aarogya chatbot">
+            <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i>Aarogya Assistant</strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
+            <iframe class="ag-chatbot-frame" src="{% url 'chatbot' %}?embed=1" title="Aarogya chatbot"></iframe>
+            <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}">Open full chatbot page <i class="bi bi-arrow-up-right ms-1"></i></a>
+        </aside>
 
-    <style>
-        .ag-chatbot-launcher { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 1050; display: inline-flex; align-items: center; gap: .45rem; padding: .75rem 1rem; border: 0; border-radius: 2rem; background: #f4b942; color: #123c37; box-shadow: 0 .5rem 1.5rem rgba(18, 60, 55, .25); font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
-        .ag-chatbot-launcher:hover { color: #123c37; transform: translateY(-3px); box-shadow: 0 .75rem 1.75rem rgba(18, 60, 55, .3); }
-        .ag-chatbot-launcher i { font-size: 1.2rem; }
-        .ag-chatbot-panel { position: fixed; right: 1.25rem; bottom: 5.5rem; z-index: 1049; display: flex; width: min(390px, calc(100vw - 2rem)); height: min(650px, calc(100vh - 7rem)); flex-direction: column; overflow: hidden; border: 1px solid #d9e9e1; border-radius: 12px; background: #fff; box-shadow: 0 1rem 3rem rgba(18, 60, 55, .24); opacity: 0; pointer-events: none; transform: translateY(1rem) scale(.97); transition: opacity .2s ease, transform .2s ease; }
-        .ag-chatbot-panel.is-open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
-        .ag-chatbot-panel-head { display: flex; align-items: center; justify-content: space-between; padding: .9rem 1rem; background: #123c37; color: #fff; }
-        .ag-chatbot-close { padding: .25rem .4rem; border: 0; background: transparent; color: #fff; }
-        .ag-chatbot-frame { width: 100%; flex: 1; border: 0; }
-        .ag-chatbot-full-link { padding: .7rem 1rem; background: #f4faf7; color: #123c37; font-size: .85rem; text-align: center; text-decoration: none; }
-        @media (max-width: 575.98px) { .ag-chatbot-launcher { right: 1rem; bottom: 1rem; padding: .8rem; } .ag-chatbot-launcher span { display: none; } .ag-chatbot-panel { right: 1rem; bottom: 4.75rem; height: calc(100vh - 6rem); } }
-    </style>
-    <script>
-        (() => {
-            const launcher = document.getElementById('chatbotLauncher');
-            const panel = document.getElementById('chatbotPanel');
-            const close = document.getElementById('chatbotClose');
-            const toggleChat = (open) => { panel.classList.toggle('is-open', open); panel.setAttribute('aria-hidden', String(!open)); launcher.setAttribute('aria-expanded', String(open)); };
-            launcher.addEventListener('click', () => toggleChat(!panel.classList.contains('is-open')));
-            close.addEventListener('click', () => toggleChat(false));
-        })();
-    </script>
+        <style>
+            .ag-chatbot-launcher { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 1050; display: inline-flex; align-items: center; gap: .45rem; padding: .75rem 1rem; border: 0; border-radius: 2rem; background: #f4b942; color: #123c37; box-shadow: 0 .5rem 1.5rem rgba(18, 60, 55, .25); font-weight: 700; transition: transform .2s ease, box-shadow .2s ease; }
+            .ag-chatbot-launcher:hover { color: #123c37; transform: translateY(-3px); box-shadow: 0 .75rem 1.75rem rgba(18, 60, 55, .3); }
+            .ag-chatbot-launcher i { font-size: 1.2rem; }
+            .ag-chatbot-panel { position: fixed; right: 1.25rem; bottom: 5.5rem; z-index: 1049; display: flex; width: min(390px, calc(100vw - 2rem)); height: min(650px, calc(100vh - 7rem)); flex-direction: column; overflow: hidden; border: 1px solid #d9e9e1; border-radius: 12px; background: #fff; box-shadow: 0 1rem 3rem rgba(18, 60, 55, .24); opacity: 0; pointer-events: none; transform: translateY(1rem) scale(.97); transition: opacity .2s ease, transform .2s ease; }
+            .ag-chatbot-panel.is-open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+            .ag-chatbot-panel-head { display: flex; align-items: center; justify-content: space-between; padding: .9rem 1rem; background: #123c37; color: #fff; }
+            .ag-chatbot-close { padding: .25rem .4rem; border: 0; background: transparent; color: #fff; }
+            .ag-chatbot-frame { width: 100%; flex: 1; border: 0; }
+            .ag-chatbot-full-link { padding: .7rem 1rem; background: #f4faf7; color: #123c37; font-size: .85rem; text-align: center; text-decoration: none; }
+            @media (max-width: 575.98px) { .ag-chatbot-launcher { right: 1rem; bottom: 1rem; padding: .8rem; } .ag-chatbot-launcher span { display: none; } .ag-chatbot-panel { right: 1rem; bottom: 4.75rem; height: calc(100vh - 6rem); } }
+        </style>
+        <script>
+            (() => {
+                const launcher = document.getElementById('chatbotLauncher');
+                const panel = document.getElementById('chatbotPanel');
+                const close = document.getElementById('chatbotClose');
+                const toggleChat = (open) => { panel.classList.toggle('is-open', open); panel.setAttribute('aria-hidden', String(!open)); launcher.setAttribute('aria-expanded', String(open)); };
+                launcher.addEventListener('click', () => toggleChat(!panel.classList.contains('is-open')));
+                close.addEventListener('click', () => toggleChat(false));
+            })();
+        </script>
     {% endif %}
 
     <!-- Bootstrap 5 JS -->
