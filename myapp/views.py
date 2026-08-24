@@ -11,3 +11,7 @@ def about(request):
 
 def service(request):
     return render(request, 'services.html')
+
+
+def chatbot(request):
+    return render(request, 'chatbot.html')
