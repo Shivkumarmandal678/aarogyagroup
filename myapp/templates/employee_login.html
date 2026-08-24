@@ -5,7 +5,11 @@
     <div class="container" style="max-width: 480px;">
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4 p-md-5">
-                <div class="text-center mb-4"><i class="bi bi-briefcase text-ag-green display-5"></i><h1 class="h3 fw-bold mt-3">Employee Login</h1><p class="text-secondary">Sign in to manage workers and appointments.</p></div>
+                <div class="text-center mb-4">
+                    <i class="bi bi-briefcase text-ag-green display-5"></i>
+                    <h1 class="h3 fw-bold mt-3">Employee Login</h1>
+                    <p class="text-secondary">Sign in to manage workers and appointments.</p>
+                </div>
                 {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
                 <form method="post" action="{% url 'employee_login' %}">
                     {% csrf_token %}

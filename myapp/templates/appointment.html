@@ -1,5 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Appointment | Aarogya Group{% endblock %}
 {% block content %}
-<section class="py-5 bg-light"><div class="container" style="max-width: 650px;"><div class="card border-0 shadow-sm"><div class="card-body p-4 p-md-5"><p class="text-ag-green fw-semibold mb-2">Aarogya Group</p><h1 class="h3 fw-bold mb-2">Appointment</h1><p class="text-secondary mb-4">Please contact the Aarogya Group team to schedule your appointment.</p><div class="d-grid gap-3"><a class="btn btn-ag-green" href="mailto:shivkumarmandal678@gmail.com"><i class="bi bi-envelope me-2"></i>Email for appointment</a><a class="btn btn-outline-secondary" href="{% url 'home' %}"><i class="bi bi-house me-2"></i>Back to Home</a></div></div></div></div></section>
+<section class="py-5 bg-light">
+    <div class="container" style="max-width: 650px;">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <p class="text-ag-green fw-semibold mb-2">Aarogya Group</p>
+                <h1 class="h3 fw-bold mb-2">Appointment</h1>
+                <p class="text-secondary mb-4">
+                    Please contact the Aarogya Group team to schedule your appointment.
+                </p>
+                <div class="d-grid gap-3">
+                    <a class="btn btn-ag-green" href="mailto:aarogyamc@gmail.com">
+                        <i class="bi bi-envelope me-2"></i>
+                        Email for appointment
+                    </a>
+                    <a class="btn btn-outline-secondary" href="{% url 'home' %}">
+                        <i class="bi bi-house me-2"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
