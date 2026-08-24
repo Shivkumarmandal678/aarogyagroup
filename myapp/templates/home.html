@@ -1,22 +1,28 @@
 {% extends "base.html" %}
 {% block title %}Home | Aarogya Group{% endblock %}
 {% block content %}
-<section class="bg-ag-light py-5 py-lg-6">
+<style>
+    .ag-hero { background: linear-gradient(120deg, #e9f8f2 0%, #f8fcfa 58%, #fff3df 100%); }
+    .ag-hero-panel { background: #123c37; color: #fff; border-radius: 1rem; }
+    .ag-feature { border-top: 3px solid #18a673; }
+</style>
+<section class="ag-hero py-5 py-lg-6">
     <div class="container py-4">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
-                <p class="text-ag-green fw-semibold mb-2">Aarogya Group</p>
-                <h1 class="display-4 fw-bold mb-4">Workforce support, made simple.</h1>
-                <p class="lead text-secondary mb-4">Secure and transparent services for workers and employers, including records, training, attendance, and compliance support.</p>
+                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-plus-circle me-2"></i>Aarogya Orientation &amp; Training Center</p>
+                <h1 class="display-4 fw-bold mb-4">Ready for your next journey abroad.</h1>
+                <p class="lead text-secondary mb-4">We prepare workers with clear medical biometric orientation, practical guidance, and the confidence they need before leaving Nepal for overseas employment.</p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-ag-green btn-lg px-4" href="{% url 'service' %}">View Services</a>
-                    <a class="btn btn-outline-success btn-lg px-4" href="{% url 'about' %}">About Us</a>
+                    <a class="btn btn-ag-green btn-lg px-4" href="{% url 'service' %}"><i class="bi bi-arrow-right-circle me-2"></i>Explore Services</a>
+                    <a class="btn btn-outline-success btn-lg px-4" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>Call 9801196900</a>
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="bg-white p-5 rounded-4 shadow-sm text-center">
-                    <i class="bi bi-shield-check display-1 text-ag-green"></i>
-                    <p class="h5 mt-3 mb-0">Secure, reliable workforce management</p>
+                <div class="ag-hero-panel p-4 p-lg-5 shadow-sm">
+                    <i class="bi bi-person-vcard display-3 text-warning"></i>
+                    <p class="h3 mt-4 mb-3">Understand. Prepare. Go with confidence.</p>
+                    <p class="mb-0 text-white-50">Professional orientation for a safe and informed overseas journey.</p>
                 </div>
             </div>
         </div>
@@ -25,13 +31,14 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-6 fw-bold">What We Provide</h2>
-            <p class="lead text-secondary">Everything you need to manage essential workforce services.</p>
+            <p class="text-ag-green fw-semibold mb-2">Our focus</p>
+            <h2 class="display-6 fw-bold">Practical preparation that matters</h2>
+            <p class="lead text-secondary">Focused support from orientation to the final steps before departure.</p>
         </div>
         <div class="row g-4">
-            <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><i class="bi bi-heart-pulse text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Health Records</h5><p class="text-secondary mb-0">Keep medical records and certificates organized in one secure place.</p></div></div></div>
-            <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><i class="bi bi-book text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Training</h5><p class="text-secondary mb-0">Access orientation, safety training, and role-based guidance.</p></div></div></div>
-            <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><i class="bi bi-shield-check text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Compliance</h5><p class="text-secondary mb-0">Support essential workplace compliance and documentation needs.</p></div></div></div>
+            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-heart-pulse text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Medical Orientation</h5><p class="text-secondary mb-0">Understand medical fitness, health precautions, and the biometric process before travel.</p></div></div>
+            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-mortarboard text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Pre-departure Training</h5><p class="text-secondary mb-0">Learn the essential responsibilities, safety practices, and expectations of overseas work.</p></div></div>
+            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-passport text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Overseas Readiness</h5><p class="text-secondary mb-0">Get clear guidance on documents, cultural awareness, and the journey ahead.</p></div></div>
         </div>
     </div>
 </section>

@@ -10,4 +10,4 @@ def about(request):
 
 
 def service(request):
-    return render(request, 'service.html')
+    return render(request, 'services.html')

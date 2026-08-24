@@ -1,23 +1,24 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title %}Services | Aarogya Orientation & Training Center{% endblock %}
 
 {% block content %}
 <style>
   /* Services Page Styling */
   .services-header {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background: #123c37;
     color: white;
     padding: 60px 0 40px;
-    border-radius: 0 0 30px 30px;
+    border-radius: 0;
     margin-bottom: 50px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   }
 
   .service-card {
     border: none;
-    border-radius: 20px;
+    border-radius: 8px;
     background: #ffffff;
     padding: 30px 25px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     position: relative;
     overflow: hidden;
@@ -30,47 +31,47 @@
     left: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    background: #18a673;
     transition: height 0.3s ease;
   }
 
   .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 114, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(18, 60, 55, 0.15);
   }
 
   .service-icon {
     width: 70px;
     height: 70px;
     border-radius: 20px;
-    background: linear-gradient(135deg, rgba(0, 198, 255, 0.15), rgba(0, 114, 255, 0.15));
+    background: #e9f8f2;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.8rem;
-    color: #0072ff;
+    color: #18a673;
     margin-bottom: 20px;
     transition: transform 0.4s ease;
   }
 
   .service-card:hover .service-icon {
     transform: scale(1.1) rotate(10deg);
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    background: #18a673;
     color: #ffffff;
   }
 
   .btn-book-service {
-    border-radius: 25px;
+    border-radius: 6px;
     padding: 8px 20px;
     font-weight: 600;
-    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    background: #18a673;
     color: white;
     border: none;
     transition: all 0.3s ease;
   }
 
   .btn-book-service:hover {
-    box-shadow: 0 6px 18px rgba(0, 198, 255, 0.4);
+    box-shadow: 0 6px 18px rgba(24, 166, 115, 0.3);
     transform: translateY(-2px);
     color: white;
   }
@@ -79,8 +80,9 @@
 <!-- Header Section -->
 <div class="services-header text-center">
   <div class="container">
-    <h1 class="fw-bold display-5">Our Healthcare Services</h1>
-    <p class="lead text-light mb-0">Providing world-class medical & diagnostic solutions for you and your family.</p>
+    <p class="text-warning fw-semibold mb-2"><i class="bi bi-stars me-2"></i>Aarogya Orientation &amp; Training Center</p>
+    <h1 class="fw-bold display-5">Training for a confident overseas journey</h1>
+    <p class="lead text-light mb-0">Medical biometric orientation and practical pre-departure training for workers going abroad.</p>
   </div>
 </div>
 
@@ -92,12 +94,12 @@
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="fa-solid fa-stethoscope"></i></div>
-          <h4 class="fw-bold text-dark mb-3">General Consultation</h4>
-          <p class="text-muted">Comprehensive medical check-ups and experienced physician advice for routine and urgent health concerns.</p>
+          <div class="service-icon"><i class="bi bi-person-vcard"></i></div>
+          <h4 class="fw-bold text-dark mb-3">Medical Biometric Orientation</h4>
+          <p class="text-muted">Step-by-step guidance about medical checks, biometric procedures, health requirements, and what to expect.</p>
         </div>
         <div class="mt-3">
-          <a href="{% url 'booking' %}" class="btn btn-book-service w-100">Book Appointment</a>
+          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
         </div>
       </div>
     </div>
@@ -106,12 +108,12 @@
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Cardiology & Heart Care</h4>
-          <p class="text-muted">Advanced cardiac care, ECG, echocardiography, and preventive heart health screening by specialists.</p>
+          <div class="service-icon"><i class="bi bi-mortarboard"></i></div>
+          <h4 class="fw-bold text-dark mb-3">Pre-departure Training</h4>
+          <p class="text-muted">Practical training on workplace conduct, personal safety, responsibilities, and adapting to life abroad.</p>
         </div>
         <div class="mt-3">
-          <a href="{% url 'booking' %}" class="btn btn-book-service w-100">Book Appointment</a>
+          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
         </div>
       </div>
     </div>
@@ -120,12 +122,12 @@
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="fa-solid fa-vial-virus"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Pathology & Lab Tests</h4>
-          <p class="text-muted">Fully automated diagnostic laboratory offering fast, accurate blood tests and health checkup packages.</p>
+          <div class="service-icon"><i class="bi bi-file-earmark-check"></i></div>
+          <h4 class="fw-bold text-dark mb-3">Document Guidance</h4>
+          <p class="text-muted">Clear support to help you understand the documents and key steps needed before departure.</p>
         </div>
         <div class="mt-3">
-          <a href="{% url 'booking' %}" class="btn btn-book-service w-100">Book Appointment</a>
+          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
         </div>
       </div>
     </div>
@@ -134,12 +136,12 @@
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="fa-solid fa-baby"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Pediatrics & Child Care</h4>
-          <p class="text-muted">Dedicated child healthcare, vaccinations, nutrition counselling, and routine growth monitoring.</p>
+          <div class="service-icon"><i class="bi bi-people"></i></div>
+          <h4 class="fw-bold text-dark mb-3">Worker Support</h4>
+          <p class="text-muted">A welcoming center where workers can ask questions and prepare with accurate, practical information.</p>
         </div>
         <div class="mt-3">
-          <a href="{% url 'booking' %}" class="btn btn-book-service w-100">Book Appointment</a>
+          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
         </div>
       </div>
     </div>
@@ -148,12 +150,12 @@
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="fa-solid fa-truck-medical"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Emergency & Ambulance</h4>
-          <p class="text-muted">24/7 rapid emergency response and fully-equipped ambulance services for prompt critical care.</p>
+          <div class="service-icon"><i class="bi bi-shield-check"></i></div>
+          <h4 class="fw-bold text-dark mb-3">Workplace Safety</h4>
+          <p class="text-muted">Build awareness of personal safety, workplace conduct, and responsibilities before starting work abroad.</p>
         </div>
         <div class="mt-3">
-          <a href="{% url 'booking' %}" class="btn btn-book-service w-100">Contact Emergency</a>
+          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
         </div>
       </div>
     </div>
@@ -162,12 +164,12 @@
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="fa-solid fa-pills"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Pharmacy & Home Delivery</h4>
-          <p class="text-muted">Genuine prescription medicines and healthcare products with doorstep delivery services.</p>
+          <div class="service-icon"><i class="bi bi-globe2"></i></div>
+          <h4 class="fw-bold text-dark mb-3">Overseas Readiness</h4>
+          <p class="text-muted">Prepare for cultural awareness, travel expectations, and the practical realities of living abroad.</p>
         </div>
         <div class="mt-3">
-          <a href="{% url 'booking' %}" class="btn btn-book-service w-100">Order Online</a>
+          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
         </div>
       </div>
     </div>

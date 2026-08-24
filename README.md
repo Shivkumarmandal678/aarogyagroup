@@ -18,4 +18,4 @@ GOOGLE_SHEET_CSV_URL=https://your-domain.example/sheet.csv
 
 The first row is used as the table header and every following row is displayed on both dashboards.
 
-The `Employee_Login_System` tab supplies employee `Username`, `Password`, and `Status`. The `Client_Details` tab is currently read-only through CSV export. Writing back to Google Sheets requires a Google Sheets API service account or a protected Apps Script endpoint; do not place those credentials in the public CSV URL.
+The `Client_Details` tab is currently read-only through CSV export. Writing back to Google Sheets requires a Google Sheets API service account or a protected Apps Script endpoint; do not place those credentials in the public CSV URL.

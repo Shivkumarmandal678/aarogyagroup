@@ -75,13 +75,13 @@
             <span><span class="text-ag-green">Aarogya</span> Group</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="bi bi-list fs-4" aria-hidden="true"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}">Service</a></li>
+                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house-door me-2" aria-hidden="true"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}"><i class="bi bi-building me-2" aria-hidden="true"></i>About</a></li>
+                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}"><i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services</a></li>
             </ul>
         </div>
     </div>
