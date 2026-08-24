@@ -10,10 +10,12 @@
     .ag-message.user { margin-left: auto; background: #18a673; color: #fff; border-bottom-right-radius: .25rem; }
     .ag-quick-button { border: 1px solid #b9d9cb; color: #123c37; background: #fff; border-radius: 2rem; font-size: .9rem; }
     .ag-quick-button:hover { background: #e9f8f2; }
+    .ag-chat-status { font-size: .8rem; color: #b7d8cb; }
+    .ag-typing { color: #5f7e72; font-style: italic; }
 </style>
 <section class="ag-chat-page py-4 py-lg-5">
     <div class="ag-chat-header p-4">
-        <div class="d-flex align-items-center gap-3"><i class="bi bi-robot fs-1 text-warning"></i><div><p class="text-warning fw-semibold mb-1">Aarogya Assistant</p><h1 class="h3 mb-1">How can we help?</h1><p class="text-white-50 mb-0">Ask about orientation, training, branches, or contact details.</p></div></div>
+        <div class="d-flex align-items-center justify-content-between gap-3"><div class="d-flex align-items-center gap-3"><i class="bi bi-robot fs-1 text-warning"></i><div><p class="text-warning fw-semibold mb-1">Aarogya Assistant</p><h1 class="h3 mb-1">How can we help?</h1><p class="text-white-50 mb-0">Ask about orientation, training, branches, or contact details.</p></div></div><span class="ag-chat-status d-none d-sm-inline"><i class="bi bi-circle-fill text-success me-1"></i>Online</span></div>
     </div>
     <div class="ag-chat-window p-3 p-md-4" id="chatWindow" aria-live="polite">
         <div class="ag-message bot">Namaste! Aarogya Orientation &amp; Training Center में आपका स्वागत है। आप किस जानकारी की तलाश में हैं?</div>
@@ -41,7 +43,10 @@
         const answers = {
             service: 'हम medical biometric orientation, pre-departure training, document guidance, workplace safety और overseas readiness support देते हैं।',
             branch: 'हमारी branches Lahan, Mirchaiya, Janakpur और Kathmandu में हैं। Mirchaiya में Birat Aarogya Medical & Orientation Centre और Janakpur में Jibandeep Branch है।',
-            contact: 'सभी branches के लिए phone 9801196900 और email aarogyamc@gmail.com है।'
+            contact: 'सभी branches के लिए phone 9801196900 और email aarogyamc@gmail.com है।',
+            medical: 'Medical biometric orientation में medical check-up, biometric procedure, health requirements और जरूरी तैयारी की जानकारी दी जाती है।',
+            training: 'Pre-departure training में workplace safety, conduct, responsibilities और विदेश में रहने की practical जानकारी दी जाती है।',
+            fallback: 'कृपया services, medical, training, branches, contact या phone के बारे में पूछें। सहायता के लिए 9801196900 पर call करें।'
         };
         const addMessage = (text, type) => {
             const message = document.createElement('div');
@@ -52,11 +57,22 @@
         };
         const reply = (question) => {
             const value = question.toLowerCase();
-            if (value.includes('branch') || value.includes('location') || value.includes('कहाँ')) return answers.branch;
+            if (value.includes('branch') || value.includes('location') || value.includes('lahan') || value.includes('mirchaiya') || value.includes('janakpur') || value.includes('kathmandu') || value.includes('कहाँ')) return answers.branch;
             if (value.includes('contact') || value.includes('phone') || value.includes('email') || value.includes('number')) return answers.contact;
-            return answers.service;
+            if (value.includes('medical') || value.includes('biometric') || value.includes('health')) return answers.medical;
+            if (value.includes('training') || value.includes('orientation') || value.includes('सिख')) return answers.training;
+            if (value.includes('service') || value.includes('सेवा')) return answers.service;
+            return answers.fallback;
         };
-        const ask = (question) => { addMessage(question, 'user'); window.setTimeout(() => addMessage(reply(question), 'bot'), 250); };
+        const ask = (question) => {
+            addMessage(question, 'user');
+            const typing = document.createElement('div');
+            typing.className = 'ag-message bot ag-typing';
+            typing.textContent = 'Aarogya is typing...';
+            windowElement.appendChild(typing);
+            windowElement.scrollTop = windowElement.scrollHeight;
+            window.setTimeout(() => { typing.remove(); addMessage(reply(question), 'bot'); }, 450);
+        };
         form.addEventListener('submit', (event) => { event.preventDefault(); const question = input.value.trim(); if (question) { ask(question); input.value = ''; input.focus(); } });
         quickQuestions.addEventListener('click', (event) => { if (event.target.matches('[data-question]')) ask(event.target.dataset.question); });
     })();
