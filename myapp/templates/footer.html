@@ -1,19 +1,72 @@
-<footer class="bg-dark text-white pt-5 pb-3 mt-5">
+<style>
+    .ag-footer {
+        background: #101a14;
+        color: #f8fafc;
+    }
+
+    .ag-footer-brand {
+        color: #f8fafc;
+        font-size: 1.2rem;
+        text-decoration: none;
+    }
+
+    .ag-footer-brand:hover { color: #f8fafc; }
+
+    .ag-footer-copy,
+    .ag-footer-link { color: #a7b4aa; }
+
+    .ag-footer-link {
+        display: inline-block;
+        text-decoration: none;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .ag-footer-link:hover {
+        color: #6ee7b7;
+        transform: translateX(2px);
+    }
+
+    .ag-footer-heading {
+        color: #d1fae5;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .ag-footer-divider { border-color: rgba(255, 255, 255, 0.12) !important; }
+
+    @media (max-width: 575.98px) {
+        .ag-footer { text-align: center; }
+        .ag-footer-links { justify-content: center; }
+    }
+</style>
+
+<footer class="ag-footer mt-5 pt-5 pb-4">
     <div class="container">
-        <div class="row g-4 mb-4">
-            <div class="col-md-6">
-                <h5 class="fw-bold mb-3"><a class="text-decoration-none" href="https://aarogyagroup.com.np"><span class="text-ag-green">Aarogya</span> Group</a></h5>
-                <p class="text-secondary mb-0">Secure and transparent support for workers and employers.</p>
+        <div class="row gy-4 gx-lg-5">
+            <div class="col-12 col-lg-6">
+                <a class="ag-footer-brand d-inline-flex align-items-center gap-2" href="{% url 'home' %}">
+                    <i class="bi bi-shield-check text-ag-green fs-4" aria-hidden="true"></i>
+                    <span><span class="text-ag-green">Aarogya</span> Group</span>
+                </a>
+                <p class="ag-footer-copy mt-3 mb-0" style="max-width: 28rem;">Secure and transparent workforce support for workers and employers.</p>
             </div>
-            <div class="col-md-6">
-                <h6 class="fw-bold mb-3">Quick Links</h6>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="{% url 'home' %}" class="text-secondary text-decoration-none">Home</a>
-                    <a href="{% url 'about' %}" class="text-secondary text-decoration-none">About</a>
-                    <a href="{% url 'service' %}" class="text-secondary text-decoration-none">Service</a>
-                </div>
+            <div class="col-6 col-sm-4 col-lg-2">
+                <h2 class="ag-footer-heading mb-3">Explore</h2>
+                <nav class="d-flex flex-column gap-2" aria-label="Footer navigation">
+                    <a class="ag-footer-link" href="{% url 'home' %}">Home</a>
+                    <a class="ag-footer-link" href="{% url 'about' %}">About</a>
+                    <a class="ag-footer-link" href="{% url 'service' %}">Service</a>
+                </nav>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-4">
+                <h2 class="ag-footer-heading mb-3">Visit Us</h2>
+                <a class="ag-footer-link" href="https://aarogyagroup.com.np">aarogyagroup.com.np</a>
             </div>
         </div>
-        <div class="border-top pt-3"><p class="text-secondary mb-0">&copy; 2026 Aarogya Group. All rights reserved.</p></div>
+        <div class="ag-footer-divider border-top mt-5 pt-3">
+            <p class="ag-footer-copy small mb-0">&copy; 2026 Aarogya Group. All rights reserved.</p>
+        </div>
     </div>
 </footer>
