@@ -1,57 +1,43 @@
-import csv
-import io
-import urllib.error
-import urllib.parse
-import urllib.request
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-class GoogleSheetError(Exception):
-    """Raised when the configured Google Sheet cannot be read."""
+def get_sheet():
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    # service_account.json file ka path
+    creds = ServiceAccountCredentials.from_json_keyfile_name(BASE_DIR / 'service_account.json', scope)
+    client = gspread.authorize(creds)
+    
+    # Sheet name: Admin_Login_System
+    sheet = client.open("Admin_Login_System").sheet1
+    return sheet
 
+def register_user_to_sheet(data):
+    sheet = get_sheet()
+    # Sheet Columns: [Username, Email, Phone, Address, Password]
+    sheet.append_row([
+        data['username'],
+        data['email'],
+        data['phone'],
+        data['address'],
+        data['password']
+    ])
 
-def fetch_sheet_data(sheet_id, gid="", csv_url=""):
-    if csv_url:
-        export_url = csv_url
-    elif sheet_id:
-        query = {"format": "csv"}
-        if gid:
-            query["gid"] = gid
-        export_url = (
-            f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?"
-            f"{urllib.parse.urlencode(query)}"
-        )
-    else:
-        raise GoogleSheetError("GOOGLE_SHEET_ID is not configured.")
+def get_user_by_username(username):
+    sheet = get_sheet()
+    records = sheet.get_all_records()
+    for row in records:
+        if str(row.get('Username')).strip() == username.strip():
+            return row
+    return None
 
-    request = urllib.request.Request(
-        export_url,
-        headers={"User-Agent": "AarogyaGroup/1.0"},
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=15) as response:
-            body = response.read().decode("utf-8-sig")
-    except (urllib.error.URLError, TimeoutError, UnicodeDecodeError) as error:
-        raise GoogleSheetError(f"Could not connect to Google Sheets: {error}") from error
-
-    if not body.strip():
-        raise GoogleSheetError(
-            "The sheet returned no data. Set sharing to 'Anyone with the link: Viewer' "
-            "or configure a CSV URL with access."
-        )
-
-    rows = list(csv.reader(io.StringIO(body)))
-    if not rows:
-        raise GoogleSheetError("The Google Sheet is empty.")
-
-    headers = [header.strip() or f"Column {index}" for index, header in enumerate(rows[0], 1)]
-    data = []
-    table_rows = []
-    for row in rows[1:]:
-        values = row + [""] * (len(headers) - len(row))
-        values = values[:len(headers)]
-        if not any(value.strip() for value in values):
-            continue
-        table_rows.append(values)
-        data.append(dict(zip(headers, values)))
-
-    return {"headers": headers, "rows": data, "table_rows": table_rows}
+def update_user_password(email, new_password):
+    sheet = get_sheet()
+    records = sheet.get_all_records()
+    for idx, row in enumerate(records, start=2): # Header offset +1
+        if str(row.get('Email')).strip() == email.strip():
+            sheet.update_cell(idx, 5, new_password) # Column 5 = Password
+            return True
+    return False
