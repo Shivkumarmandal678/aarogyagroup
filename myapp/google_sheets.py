@@ -1,43 +1,47 @@
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-from pathlib import Path
+import os
+import csv
+import requests
+import io
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-def get_sheet():
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    # service_account.json file ka path
-    creds = ServiceAccountCredentials.from_json_keyfile_name(BASE_DIR / 'service_account.json', scope)
-    client = gspread.authorize(creds)
-    
-    # Sheet name: Admin_Login_System
-    sheet = client.open("Admin_Login_System").sheet1
-    return sheet
-
-def register_user_to_sheet(data):
-    sheet = get_sheet()
-    # Sheet Columns: [Username, Email, Phone, Address, Password]
-    sheet.append_row([
-        data['username'],
-        data['email'],
-        data['phone'],
-        data['address'],
-        data['password']
-    ])
+# 1. Read Data (Using CSV URL)
+def get_sheet_data_from_csv():
+    csv_url = os.environ.get('GOOGLE_SHEET_CSV_URL')
+    response = requests.get(csv_url)
+    if response.status_code == 200:
+        content = response.content.decode('utf-8')
+        csv_file = io.StringIO(content)
+        return list(csv.DictReader(csv_file))
+    return []
 
 def get_user_by_username(username):
-    sheet = get_sheet()
-    records = sheet.get_all_records()
+    records = get_sheet_data_from_csv()
     for row in records:
-        if str(row.get('Username')).strip() == username.strip():
+        if str(row.get('Username', '')).strip().lower() == username.strip().lower():
             return row
     return None
 
+# 2. Write/Register User (Using Google Web App URL)
+def register_user_to_sheet(data):
+    web_app_url = os.environ.get('GOOGLE_WEB_APP_URL')
+    payload = {
+        "action": "register",
+        "username": data['username'],
+        "email": data['email'],
+        "phone": data['phone'],
+        "address": data['address'],
+        "password": data['password']
+    }
+    response = requests.post(web_app_url, json=payload)
+    return response.json()
+
+# 3. Update Password (Using Google Web App URL)
 def update_user_password(email, new_password):
-    sheet = get_sheet()
-    records = sheet.get_all_records()
-    for idx, row in enumerate(records, start=2): # Header offset +1
-        if str(row.get('Email')).strip() == email.strip():
-            sheet.update_cell(idx, 5, new_password) # Column 5 = Password
-            return True
-    return False
+    web_app_url = os.environ.get('GOOGLE_WEB_APP_URL')
+    payload = {
+        "action": "update_password",
+        "email": email,
+        "new_password": new_password
+    }
+    response = requests.post(web_app_url, json=payload)
+    res_data = response.json()
+    return res_data.get('status') == 'success'
