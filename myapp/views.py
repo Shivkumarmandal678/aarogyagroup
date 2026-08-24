@@ -4,10 +4,13 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from .google_sheets import register_user_to_sheet, get_user_by_username, update_user_password
 
-
+# Home / Dashboard View (नयाँ थपिएको)
 def home(request):
-    return render(request, 'index.html')
-
+    username = request.session.get('user')
+    # यदि login भएको छैन भने सिधै login पेजमा पठाउने वा home देखाउने
+    if not username:
+        return redirect('login')
+    return render(request, 'home.html', {'username': username})
 
 # Registration View
 def register_view(request):
@@ -105,3 +108,9 @@ def reset_password_view(request):
         messages.error(request, 'Invalid OTP ya error aayi!')
 
     return render(request, 'reset_password.html')
+
+# Logout View (नयाँ थपिएको)
+def logout_view(request):
+    request.session.flush()
+    messages.success(request, 'Logged out successfully!')
+    return redirect('login')
