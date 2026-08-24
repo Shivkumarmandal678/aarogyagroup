@@ -4,6 +4,11 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from .google_sheets import register_user_to_sheet, get_user_by_username, update_user_password
 
+
+def home(request):
+    return render(request, 'index.html')
+
+
 # Registration View
 def register_view(request):
     if request.method == 'POST':
