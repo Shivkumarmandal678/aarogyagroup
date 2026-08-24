@@ -1,17 +1,149 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<!-- FontAwesome Icons for Navigation -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  /* Modern Glassmorphic & 3D Flex Navbar */
+  .custom-navbar {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  /* Brand Logo & Text Animation */
+  .navbar-brand-custom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .brand-logo {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .navbar-brand-custom:hover .brand-logo {
+    transform: rotate(360deg) scale(1.1);
+  }
+
+  /* 3D Dynamic Nav Items */
+  .nav-3d-item {
+    margin: 0 6px;
+    perspective: 1000px;
+  }
+
+  .nav-3d-link {
+    color: #f8f9fa !important;
+    font-weight: 500;
+    padding: 8px 16px !important;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-style: preserve-3d;
+  }
+
+  .nav-3d-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px) translateZ(10px) rotateX(5deg);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+    color: #00d2ff !important;
+  }
+
+  .nav-3d-link i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-3d-link:hover i {
+    transform: scale(1.25);
+  }
+
+  /* Special Login Button Styling */
+  .btn-login-3d {
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    color: #fff !important;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 22px !important;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-login-3d:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 198, 255, 0.6);
+    background: linear-gradient(45deg, #0072ff, #00c6ff);
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="{% url 'home' %}">Aarogya Group</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    
+    <!-- Brand Logo & Name -->
+    <a class="navbar-brand-custom" href="{% url 'home' %}">
+      <!-- Media URL se Logo Image Load karega -->
+      <img src="{{ MEDIA_URL }}logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063822.png'" alt="Aarogya Logo" class="brand-logo">
+      <span class="fw-bold text-white fs-4 tracking-wide">Aarogya Group</span>
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Home</a>
+
+    <!-- Navigation Menu Items -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto align-items-center">
+        
+        <!-- Home Link -->
+        <li class="nav-item nav-3d-item">
+          <a class="nav-link nav-3d-link" href="{% url 'home' %}">
+            <i class="fa-solid fa-house text-warning"></i>
+            <span>Home</span>
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">About Us</a>
+
+        <!-- Services Link -->
+        <li class="nav-item nav-3d-item">
+          <a class="nav-link nav-3d-link" href="{% url 'services' %}">
+            <i class="fa-solid fa-briefcase text-info"></i>
+            <span>Services</span>
+          </a>
         </li>
+
+        <!-- About Us Link -->
+        <li class="nav-item nav-3d-item">
+          <a class="nav-link nav-3d-link" href="{% url 'about' %}">
+            <i class="fa-solid fa-circle-info text-success"></i>
+            <span>About</span>
+          </a>
+        </li>
+
+        <!-- Booking Link -->
+        <li class="nav-item nav-3d-item">
+          <a class="nav-link nav-3d-link" href="{% url 'booking' %}">
+            <i class="fa-solid fa-calendar-check text-danger"></i>
+            <span>Booking</span>
+          </a>
+        </li>
+
+        <!-- Login Button -->
+        <li class="nav-item nav-3d-item ms-lg-2">
+          <a class="nav-link nav-3d-link btn-login-3d" href="{% url 'login' %}">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span>Login</span>
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>

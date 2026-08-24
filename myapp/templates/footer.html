@@ -1,5 +1,197 @@
-<footer class="bg-dark text-white text-center py-3 mt-auto">
-  <div class="container">
-    <p class="mb-0">&copy; {% now "Y" %} Aarogya Group. All Rights Reserved.</p>
+<!-- FontAwesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  /* 3D Footer Base Container */
+  .footer-3d {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    color: #e0e1dd;
+    position: relative;
+    border-top: 4px solid #00c6ff;
+    overflow: hidden;
+  }
+
+  /* 3D Dynamic Card Styling */
+  .footer-3d-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    height: 100%;
+  }
+
+  .footer-3d-card:hover {
+    transform: translateY(-8px) rotateX(4deg) rotateY(-2deg);
+    box-shadow: 0 15px 30px rgba(0, 198, 255, 0.2);
+    border-color: rgba(0, 198, 255, 0.4);
+  }
+
+  /* Footer Headings */
+  .footer-title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 35px;
+    height: 3px;
+    background: #00c6ff;
+    border-radius: 2px;
+  }
+
+  /* Footer Links with 3D Hover Effect */
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+
+  .footer-links a {
+    color: #a3b18a;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .footer-links a:hover {
+    color: #00c6ff;
+    transform: translateX(8px);
+  }
+
+  /* Social Icons with 3D Pop Effect */
+  .social-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-right: 8px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+  }
+
+  .social-icon-btn:hover {
+    transform: translateY(-5px) scale(1.15) rotate(5deg);
+    color: #fff;
+    box-shadow: 0 8px 15px rgba(0, 198, 255, 0.4);
+  }
+
+  .social-facebook:hover { background: #1877f2; }
+  .social-instagram:hover { background: #e4405f; }
+  .social-whatsapp:hover { background: #25d366; }
+  .social-youtube:hover { background: #ff0000; }
+
+  /* Bottom Copyright Bar */
+  .footer-bottom {
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+</style>
+
+<footer class="footer-3d pt-5 mt-auto">
+  <div class="container pb-4">
+    <div class="row g-4">
+
+      <!-- Column 1: Brand Info & Logo -->
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-3d-card">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="{{ MEDIA_URL }}logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063822.png'" alt="Aarogya Logo" style="width: 48px; height: 48px; object-fit: cover;" class="rounded-circle border border-info">
+            <h4 class="text-white fw-bold m-0">Aarogya Group</h4>
+          </div>
+          <p class="text-light small leading-relaxed">
+            Aapki sehat aur welfare ke liye hamesha tatpar. Hum pradan karte hain behtareen services aur trusted healthcare solutions.
+          </p>
+          <div class="mt-3">
+            <a href="#" class="social-icon-btn social-facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-icon-btn social-instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon-btn social-whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" class="social-icon-btn social-youtube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="col-lg-2 col-md-6">
+        <div class="footer-3d-card">
+          <h5 class="footer-title">Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-angle-right text-info"></i> Home</a></li>
+            <li><a href="{% url 'about' %}"><i class="fa-solid fa-angle-right text-info"></i> About Us</a></li>
+            <li><a href="{% url 'services' %}"><i class="fa-solid fa-angle-right text-info"></i> Services</a></li>
+            <li><a href="{% url 'booking' %}"><i class="fa-solid fa-angle-right text-info"></i> Booking</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Column 3: User Options -->
+      <div class="col-lg-2 col-md-6">
+        <div class="footer-3d-card">
+          <h5 class="footer-title">Account</h5>
+          <ul class="footer-links">
+            <li><a href="{% url 'login' %}"><i class="fa-solid fa-lock text-warning"></i> User Login</a></li>
+            <li><a href="/admin/" target="_blank"><i class="fa-solid fa-user-shield text-danger"></i> Admin Panel</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Column 4: Contact Info -->
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-3d-card">
+          <h5 class="footer-title">Contact Us</h5>
+          <ul class="footer-links">
+            <li>
+              <a href="javascript:void(0)" class="pe-none">
+                <i class="fa-solid fa-location-dot text-danger fs-5"></i>
+                <span class="text-light">Kathmandu / Janakpur, Nepal</span>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+9779801196900">
+                <i class="fa-solid fa-phone text-success fs-5"></i>
+                <span class="text-light">+977-9801196900</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:info@aarogyagroup.com.np">
+                <i class="fa-solid fa-envelope text-primary fs-5"></i>
+                <span class="text-light">info@aarogyagroup.com.np</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom py-3">
+    <div class="container text-center">
+      <p class="mb-0 small text-light opacity-75">
+        &copy; {% now "Y" %} <span class="text-info font-weight-bold">Aarogya Group</span>. All Rights Reserved. Designed with <i class="fa-solid fa-heart text-danger"></i>
+      </p>
+    </div>
   </div>
 </footer>
