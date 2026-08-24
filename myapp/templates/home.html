@@ -1,331 +1,38 @@
 {% extends "base.html" %}
-
-{% block title %}Home | Aarogya Group - Worker & Employer Platform{% endblock %}
-
+{% block title %}Home | Aarogya Group{% endblock %}
 {% block content %}
-
-<!-- Hero Section -->
 <section class="bg-ag-light py-5 py-lg-6">
-    <div class="container">
+    <div class="container py-4">
         <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Welcome to <span class="text-ag-green">Aarogya Group</span></h1>
-                <p class="lead text-secondary mb-4">Connecting workers and employers with secure, comprehensive labor management solutions. Healthcare, orientation, biometrics, and compliance all in one platform.</p>
+            <div class="col-lg-7">
+                <p class="text-ag-green fw-semibold mb-2">Aarogya Group</p>
+                <h1 class="display-4 fw-bold mb-4">Workforce support, made simple.</h1>
+                <p class="lead text-secondary mb-4">Secure and transparent services for workers and employers, including records, training, attendance, and compliance support.</p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-ag-green btn-lg px-4" href="#for-workers">
-                        <i class="bi bi-person-badge"></i> For Workers
-                    </a>
-                    <a class="btn btn-outline-ag-green btn-lg px-4" href="#for-employers" style="border-color: var(--ag-green); color: var(--ag-green);">
-                        <i class="bi bi-briefcase"></i> For Employers
-                    </a>
+                    <a class="btn btn-ag-green btn-lg px-4" href="{% url 'service' %}">View Services</a>
+                    <a class="btn btn-outline-success btn-lg px-4" href="{% url 'about' %}">About Us</a>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="position-relative">
-                    <div class="bg-ag-light p-5 rounded-4" style="border: 3px solid var(--ag-green);">
-                        <div class="text-center">
-                            <i class="bi bi-shield-check display-1 text-ag-green"></i>
-                            <p class="h5 mt-3 text-secondary">Secure & Trusted Platform for Labor Management</p>
-                        </div>
-                    </div>
+            <div class="col-lg-5">
+                <div class="bg-white p-5 rounded-4 shadow-sm text-center">
+                    <i class="bi bi-shield-check display-1 text-ag-green"></i>
+                    <p class="h5 mt-3 mb-0">Secure, reliable workforce management</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- For Workers Section -->
-<section id="for-workers" class="py-5 py-lg-6">
+<section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold mb-3">Services for <span class="text-ag-green">Workers</span></h2>
-            <p class="lead text-secondary">Complete support for your employment needs</p>
+            <h2 class="display-6 fw-bold">What We Provide</h2>
+            <p class="lead text-secondary">Everything you need to manage essential workforce services.</p>
         </div>
-        
         <div class="row g-4">
-            <!-- Medical Records -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-heart-pulse text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Medical Records</h5>
-                        <p class="card-text text-secondary">Keep all your health records, medical certificates, and health check-ups organized in one secure place.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Orientation & Training -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-book text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Orientation & Training</h5>
-                        <p class="card-text text-secondary">Access comprehensive orientation programs, safety training, and skill development courses tailored to your role.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Biometric Tracking -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-fingerprint text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Biometric Tracking</h5>
-                        <p class="card-text text-secondary">Track attendance, working hours, and productivity with secure biometric systems integrated into your workplace.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Labor Card & Documents -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-card-list text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Labor Card & Documents</h5>
-                        <p class="card-text text-secondary">Manage your labor card (Shram Card), employment certificates, identity proofs, and all important documents digitally.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Support & Tickets -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-ticket-detailed text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Support & Tickets</h5>
-                        <p class="card-text text-secondary">Raise concerns, file complaints, or request assistance through our easy ticket system with real-time tracking.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mobile Access -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-phone text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Mobile Access</h5>
-                        <p class="card-text text-secondary">Access all your information anytime, anywhere with our mobile app. Works on Android and iOS.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-5">
-            <a class="btn btn-ag-green btn-lg px-5" href="{% url 'service' %}">
-                <i class="bi bi-arrow-right"></i> Explore Services
-            </a>
+            <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><i class="bi bi-heart-pulse text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Health Records</h5><p class="text-secondary mb-0">Keep medical records and certificates organized in one secure place.</p></div></div></div>
+            <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><i class="bi bi-book text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Training</h5><p class="text-secondary mb-0">Access orientation, safety training, and role-based guidance.</p></div></div></div>
+            <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><i class="bi bi-shield-check text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Compliance</h5><p class="text-secondary mb-0">Support essential workplace compliance and documentation needs.</p></div></div></div>
         </div>
     </div>
 </section>
-
-<!-- For Employers Section -->
-<section id="for-employers" class="bg-white py-5 py-lg-6">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold mb-3">Services for <span class="text-ag-green">Employers</span></h2>
-            <p class="lead text-secondary">Manage your workforce efficiently and legally</p>
-        </div>
-        
-        <div class="row g-4">
-            <!-- Workforce Management -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-people text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Workforce Management</h5>
-                        <p class="card-text text-secondary">Recruit, onboard, and manage workers efficiently. Track performance and maintain organized records.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Biometric Integration -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-clock-history text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Attendance & Hours</h5>
-                        <p class="card-text text-secondary">Automated biometric attendance tracking, real-time monitoring, and accurate payroll integration.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Orientation Programs -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-briefcase-fill text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Orientation Programs</h5>
-                        <p class="card-text text-secondary">Standardized induction programs, safety training, and compliance certifications for your workforce.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Legal Compliance -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-shield-check text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Compliance & Regulations</h5>
-                        <p class="card-text text-secondary">Stay updated with labor laws, safety regulations, and automatic compliance documentation.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Medical & Health -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-hospital text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Health & Wellness</h5>
-                        <p class="card-text text-secondary">Manage worker health records, medical certifications, and wellness programs for your team.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Reports & Analytics -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <div class="card-body p-4">
-                        <div class="bg-ag-light p-3 rounded-3 d-inline-block mb-3">
-                            <i class="bi bi-graph-up text-ag-green fs-4"></i>
-                        </div>
-                        <h5 class="card-title fw-bold mb-2">Reports & Analytics</h5>
-                        <p class="card-text text-secondary">Comprehensive dashboards, productivity reports, compliance metrics, and data-driven insights.</p>
-                        <a href="{% url 'service' %}" class="text-ag-green text-decoration-none fw-semibold">Learn more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-5">
-            <a class="btn btn-ag-green btn-lg px-5" href="{% url 'about' %}">
-                <i class="bi bi-arrow-right"></i> About Aarogya Group
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Features Section -->
-<section id="features" class="bg-ag-light py-5 py-lg-6">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold mb-3">Why Choose <span class="text-ag-green">Aarogya Group?</span></h2>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <i class="bi bi-lock-fill display-4 text-ag-green mb-3"></i>
-                    <h5 class="fw-bold mb-2">Secure & Safe</h5>
-                    <p class="text-secondary text-sm">Bank-level encryption for all data</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <i class="bi bi-lightning-fill display-4 text-ag-green mb-3"></i>
-                    <h5 class="fw-bold mb-2">Fast & Easy</h5>
-                    <p class="text-secondary text-sm">User-friendly interface for all</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <i class="bi bi-check-circle-fill display-4 text-ag-green mb-3"></i>
-                    <h5 class="fw-bold mb-2">Legal Compliant</h5>
-                    <p class="text-secondary text-sm">Meets all labor law requirements</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <i class="bi bi-headset display-4 text-ag-green mb-3"></i>
-                    <h5 class="fw-bold mb-2">24/7 Support</h5>
-                    <p class="text-secondary text-sm">Dedicated customer support</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- About Section -->
-<section id="about" class="py-5 py-lg-6">
-    <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <h2 class="display-5 fw-bold mb-4">About <span class="text-ag-green">Aarogya Group</span></h2>
-                <p class="lead text-secondary mb-3">Aarogya Group is dedicated to creating a safe, secure, and transparent platform for workers and employers across India.</p>
-                <p class="text-secondary mb-3">We believe every worker deserves dignity, proper documentation, healthcare access, and fair treatment. Our mission is to bridge the gap between employers and workers with technology that ensures compliance, transparency, and mutual growth.</p>
-                <ul class="list-unstyled gap-2 d-flex flex-column">
-                    <li><i class="bi bi-check-circle-fill text-ag-green me-2"></i>Trusted by thousands of workers and employers</li>
-                    <li><i class="bi bi-check-circle-fill text-ag-green me-2"></i>Fully compliant with Indian labor laws</li>
-                    <li><i class="bi bi-check-circle-fill text-ag-green me-2"></i>Secure, scalable, and reliable platform</li>
-                </ul>
-            </div>
-            <div class="col-lg-6">
-                <div class="bg-ag-light p-5 rounded-4" style="border-left: 5px solid var(--ag-green);">
-                    <h5 class="fw-bold mb-3">Our Commitment</h5>
-                    <p class="mb-3">We are committed to:</p>
-                    <ul class="list-unstyled gap-3 d-flex flex-column">
-                        <li><strong>Transparency:</strong> Clear, honest communication with all stakeholders</li>
-                        <li><strong>Security:</strong> Protecting worker and employer data with utmost care</li>
-                        <li><strong>Empowerment:</strong> Enabling workers with knowledge and tools</li>
-                        <li><strong>Compliance:</strong> Ensuring all legal and regulatory requirements are met</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="bg-ag-green text-white py-5 py-lg-6">
-    <div class="container text-center">
-        <h2 class="display-5 fw-bold mb-4">Ready to Get Started?</h2>
-        <p class="lead mb-4">Join thousands of workers and employers on Aarogya Group</p>
-        <div class="row">
-            <div class="col-md-6">
-                <a class="btn btn-light btn-lg px-4 mb-3 me-2" href="{% url 'service' %}">
-                    <i class="bi bi-person-badge"></i> I'm a Worker
-                </a>
-            </div>
-            <div class="col-md-6">
-                <a class="btn btn-outline-light btn-lg px-4 mb-3" href="{% url 'about' %}">
-                    <i class="bi bi-briefcase"></i> I'm an Employer
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
 {% endblock %}
