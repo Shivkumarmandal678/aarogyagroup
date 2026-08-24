@@ -22,6 +22,7 @@
         <div class="d-flex flex-wrap gap-2 mb-3" id="quickQuestions">
             <button class="ag-quick-button px-3 py-2" type="button" data-question="What services do you provide?">Our services</button>
             <button class="ag-quick-button px-3 py-2" type="button" data-question="Where are your branches?">Our branches</button>
+            <button class="ag-quick-button px-3 py-2" type="button" data-question="When does the new batch start?">Batch schedule</button>
             <button class="ag-quick-button px-3 py-2" type="button" data-question="How can I contact you?">Contact details</button>
         </div>
     </div>
@@ -43,9 +44,14 @@
         const answers = {
             service: 'हम medical biometric orientation, pre-departure training, document guidance, workplace safety और overseas readiness support देते हैं।',
             branch: 'हमारी branches Lahan, Mirchaiya, Janakpur और Kathmandu में हैं। Mirchaiya में Birat Aarogya Medical & Orientation Centre और Janakpur में Jibandeep Orientation & Medical Centre है।',
-            contact: 'सभी branches के लिए phone 9801196900 और email aarogyamc@gmail.com है।',
+            contact: 'Branch-wise phone: Lahan 9801196900, Mirchaiya 9801596900, Janakpur 9801196900 और Kathmandu 9801196900। सभी branches का email aarogyamc@gmail.com है।',
             medical: 'Medical biometric orientation में medical check-up, biometric procedure, health requirements और जरूरी तैयारी की जानकारी दी जाती है।',
             training: 'Pre-departure training में workplace safety, conduct, responsibilities और विदेश में रहने की practical जानकारी दी जाती है।',
+            schedule: 'हर सप्ताह नया batch 3 दिन चलता है: Sunday, Tuesday और Thursday। समय सुबह 9:00 बजे से शाम 6:00 बजे तक है। Saturday को weekday schedule रहता है।',
+            lahan: 'Lahan branch का phone number 9801196900 है। Email: aarogyamc@gmail.com',
+            mirchaiya: 'Mirchaiya branch, Birat Aarogya Medical & Orientation Centre का phone number 9801596900 है। Email: aarogyamc@gmail.com',
+            janakpur: 'Janakpur branch, Jibandeep Orientation & Medical Centre का phone number 9801196900 है। Email: aarogyamc@gmail.com',
+            kathmandu: 'Kathmandu branch का phone number 9801196900 है। Email: aarogyamc@gmail.com',
             fallback: 'कृपया services, medical, training, branches, contact या phone के बारे में पूछें। सहायता के लिए 9801196900 पर call करें।'
         };
         const addMessage = (text, type) => {
@@ -57,7 +63,12 @@
         };
         const reply = (question) => {
             const value = question.toLowerCase();
-            if (value.includes('branch') || value.includes('location') || value.includes('lahan') || value.includes('mirchaiya') || value.includes('janakpur') || value.includes('kathmandu') || value.includes('कहाँ')) return answers.branch;
+            if (value.includes('mirchaiya')) return answers.mirchaiya;
+            if (value.includes('lahan')) return answers.lahan;
+            if (value.includes('janakpur')) return answers.janakpur;
+            if (value.includes('kathmandu')) return answers.kathmandu;
+            if (value.includes('batch') || value.includes('schedule') || value.includes('समय') || value.includes('कब') || value.includes('sunday') || value.includes('tuesday') || value.includes('thursday')) return answers.schedule;
+            if (value.includes('branch') || value.includes('location') || value.includes('कहाँ')) return answers.branch;
             if (value.includes('contact') || value.includes('phone') || value.includes('email') || value.includes('number')) return answers.contact;
             if (value.includes('medical') || value.includes('biometric') || value.includes('health')) return answers.medical;
             if (value.includes('training') || value.includes('orientation') || value.includes('सिख')) return answers.training;
