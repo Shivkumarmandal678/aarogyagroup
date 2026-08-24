@@ -75,6 +75,16 @@
     transform: translateY(-2px);
     color: white;
   }
+
+  .branch-card {
+    border-top: 4px solid #f4b942;
+    background: #fffaf0;
+    border-radius: 8px;
+  }
+
+  .branch-card .branch-icon { color: #18a673; font-size: 1.8rem; }
+
+  .branch-contact a { color: #123c37; text-decoration: none; }
 </style>
 
 <!-- Header Section -->
@@ -176,4 +186,18 @@
 
   </div>
 </div>
+
+<section class="container pb-5" id="branches">
+  <div class="text-center mb-4">
+    <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-geo-alt me-2"></i>Find Aarogya near you</p>
+    <h2 class="fw-bold">Our branches</h2>
+    <p class="text-secondary mb-0">The same trusted orientation and medical support across Nepal.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Lahan Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Mirchaiya Branch</h3><p class="text-secondary">Birat Aarogya Medical &amp; Orientation Centre</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Janakpur Branch</h3><p class="text-secondary">Jibandeep Branch: Orientation &amp; Medical</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Kathmandu Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+  </div>
+</section>
 {% endblock %}

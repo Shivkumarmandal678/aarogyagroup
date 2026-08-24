@@ -5,6 +5,19 @@
     .ag-hero { background: linear-gradient(120deg, #e9f8f2 0%, #f8fcfa 58%, #fff3df 100%); }
     .ag-hero-panel { background: #123c37; color: #fff; border-radius: 1rem; }
     .ag-feature { border-top: 3px solid #18a673; }
+    .ag-visual-stage { perspective: 1200px; min-height: 360px; position: relative; }
+    .ag-carousel { height: 360px; position: relative; transform-style: preserve-3d; }
+    .ag-slide { position: absolute; inset: 0; opacity: 0; transform: rotateY(55deg) translateZ(-180px) scale(.78); transition: transform .9s ease, opacity .9s ease; pointer-events: none; }
+    .ag-slide.is-active { opacity: 1; transform: rotateY(0) translateZ(0) scale(1); z-index: 2; pointer-events: auto; }
+    .ag-slide.is-next { opacity: .42; transform: rotateY(-35deg) translateX(34%) translateZ(-100px) scale(.82); z-index: 1; }
+    .ag-slide-image { width: 100%; height: 100%; object-fit: cover; border-radius: 1rem; box-shadow: 0 24px 55px rgba(18, 60, 55, .25); }
+    .ag-slide::after { content: ""; position: absolute; inset: 0; border-radius: 1rem; background: linear-gradient(0deg, rgba(8, 35, 32, .85), transparent 65%); }
+    .ag-slide-caption { position: absolute; right: 1.5rem; bottom: 1.25rem; left: 1.5rem; z-index: 1; color: #fff; }
+    .ag-carousel-dots { position: absolute; right: 0; bottom: -1.75rem; left: 0; z-index: 3; text-align: center; }
+    .ag-carousel-dot { width: .55rem; height: .55rem; margin: 0 .2rem; padding: 0; border: 0; border-radius: 50%; background: #a9c4b8; }
+    .ag-carousel-dot.is-active { background: #f4b942; transform: scale(1.25); }
+    .ag-contact-band { background: #fff3df; border-top: 1px solid #f4d9a1; border-bottom: 1px solid #f4d9a1; }
+    @media (max-width: 575.98px) { .ag-visual-stage, .ag-carousel { min-height: 280px; height: 280px; } .ag-slide-caption { right: 1rem; bottom: .8rem; left: 1rem; } }
 </style>
 <section class="ag-hero py-5 py-lg-6">
     <div class="container py-4">
@@ -28,6 +41,27 @@
         </div>
     </div>
 </section>
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-5">
+                <p class="text-ag-green fw-semibold mb-2">A clear first step</p>
+                <h2 class="display-6 fw-bold mb-3">See what your preparation looks like.</h2>
+                <p class="text-secondary mb-0">From medical biometric guidance to practical training, our team helps you move forward with the right information.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="ag-visual-stage" aria-label="Aarogya orientation center highlights">
+                    <div class="ag-carousel" id="agCarousel">
+                        <article class="ag-slide is-active"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85" alt="Medical professional preparing a patient"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">MEDICAL ORIENTATION</p><h3 class="h4 mb-0">Know the process before your appointment.</h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=85" alt="People attending a training session"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">PRACTICAL TRAINING</p><h3 class="h4 mb-0">Build confidence for work and life abroad.</h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85" alt="Travel documents and planning notes"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">OVERSEAS READINESS</p><h3 class="h4 mb-0">Take every important step with clarity.</h3></div></article>
+                    </div>
+                    <div class="ag-carousel-dots" aria-label="Carousel controls"><button class="ag-carousel-dot is-active" type="button" aria-label="Show medical orientation"></button><button class="ag-carousel-dot" type="button" aria-label="Show practical training"></button><button class="ag-carousel-dot" type="button" aria-label="Show overseas readiness"></button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
@@ -42,4 +76,29 @@
         </div>
     </div>
 </section>
+<section class="ag-contact-band py-4">
+    <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+        <div><p class="fw-bold mb-1">Ready to get oriented?</p><p class="text-secondary mb-0">Talk to Aarogya at any branch.</p></div>
+        <div class="d-flex flex-wrap gap-3"><a class="btn btn-ag-green" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a class="btn btn-outline-dark" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div>
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+    (() => {
+        const slides = [...document.querySelectorAll('.ag-slide')];
+        const dots = [...document.querySelectorAll('.ag-carousel-dot')];
+        let current = 0;
+        const showSlide = (index) => {
+            current = index;
+            slides.forEach((slide, position) => {
+                slide.classList.toggle('is-active', position === current);
+                slide.classList.toggle('is-next', position === (current + 1) % slides.length);
+            });
+            dots.forEach((dot, position) => dot.classList.toggle('is-active', position === current));
+        };
+        dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
+        setInterval(() => showSlide((current + 1) % slides.length), 4500);
+    })();
+</script>
 {% endblock %}

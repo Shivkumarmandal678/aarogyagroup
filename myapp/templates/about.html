@@ -1,12 +1,48 @@
 {% extends "base.html" %}
-{% block title %}About | Aarogya Group{% endblock %}
+{% block title %}About | Aarogya Orientation & Training Center{% endblock %}
 {% block content %}
+<style>
+    .ag-about-hero { background: linear-gradient(120deg, #e9f8f2, #fff3df); }
+    .ag-about-panel { border-left: 4px solid #18a673; background: #f7fbf9; }
+    .ag-about-contact { background: #123c37; color: #fff; }
+</style>
+<section class="ag-about-hero py-5">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-building me-2"></i>About Aarogya</p>
+                <h1 class="display-5 fw-bold mb-3">Helping workers leave prepared and informed.</h1>
+                <p class="lead text-secondary mb-4">Aarogya Orientation &amp; Training Center supports Nepali workers with medical biometric orientation, practical training, and clear pre-departure guidance for overseas employment.</p>
+                <a class="btn btn-ag-green" href="{% url 'service' %}"><i class="bi bi-heart-pulse me-2"></i>Explore Our Services</a>
+            </div>
+            <div class="col-lg-4 text-center"><i class="bi bi-person-vcard display-1 text-ag-green"></i><p class="h5 mt-3 mb-0">Prepare with clarity. Travel with confidence.</p></div>
+        </div>
+    </div>
+</section>
 <section class="py-5">
-    <div class="container" style="max-width: 820px;">
-        <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-building me-2"></i>About Aarogya</p>
-        <h1 class="display-6 fw-bold mb-3">Helping workers leave prepared and informed.</h1>
-        <p class="lead text-secondary mb-4">Aarogya Orientation &amp; Training Center provides medical biometric orientation and practical pre-departure training for Nepali workers preparing to go abroad.</p>
-        <a class="btn btn-ag-green" href="{% url 'service' %}"><i class="bi bi-heart-pulse me-2"></i>View Services</a>
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6"><div class="ag-about-panel h-100 p-4"><i class="bi bi-bullseye text-ag-green fs-2"></i><h2 class="h4 fw-bold mt-3">Our purpose</h2><p class="text-secondary mb-0">We make the medical and orientation process easier to understand, so workers can complete important steps with confidence before going abroad.</p></div></div>
+            <div class="col-md-6"><div class="ag-about-panel h-100 p-4"><i class="bi bi-shield-check text-ag-green fs-2"></i><h2 class="h4 fw-bold mt-3">Our support</h2><p class="text-secondary mb-0">Our team provides practical information about medical requirements, biometric procedures, documents, workplace safety, and life overseas.</p></div></div>
+        </div>
+    </div>
+</section>
+<section class="ag-about-contact py-5">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <p class="text-warning fw-semibold mb-2"><i class="bi bi-geo-alt me-2"></i>Branches across Nepal</p>
+                <h2 class="h2 fw-bold mb-3">Visit Aarogya near you</h2>
+                <p class="text-white-50 mb-0">Find us in Lahan, Mirchaiya, Janakpur, and Kathmandu. Every branch offers orientation and medical support for your overseas journey.</p>
+            </div>
+            <div class="col-lg-5">
+                <div class="d-flex flex-column gap-3">
+                    <a class="text-white text-decoration-none" href="tel:9801196900"><i class="bi bi-telephone text-warning me-2"></i>9801196900</a>
+                    <a class="text-white text-decoration-none" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope text-warning me-2"></i>aarogyamc@gmail.com</a>
+                    <div class="d-flex flex-wrap gap-2 mt-1"><a class="btn btn-warning" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>Call Now</a><a class="btn btn-outline-light" href="{% url 'service' %}#branches"><i class="bi bi-geo-alt me-2"></i>View Branches</a></div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}
