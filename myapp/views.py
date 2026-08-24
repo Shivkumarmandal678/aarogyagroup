@@ -114,3 +114,16 @@ def logout_view(request):
     request.session.flush()
     messages.success(request, 'Logged out successfully!')
     return redirect('login')
+
+
+
+# About View
+def about_view(request):
+    return render(request, 'about.html')
+
+# Booking View (अहिलेको लागि home वा booking.html)
+def booking_view(request):
+    return render(request, 'booking.html') # वा 'booking.html' यदि छ भने
+
+def services_view(request):
+    return render(request, 'services.html')
