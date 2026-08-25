@@ -81,6 +81,7 @@
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                 <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house-door me-2" aria-hidden="true"></i>Home</a></li>
                 <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}"><i class="bi bi-building me-2" aria-hidden="true"></i>About</a></li>
+                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'chairman' %}active{% endif %}" href="{% url 'chairman' %}"><i class="bi bi-person-badge me-2" aria-hidden="true"></i>Chairman</a></li>
                 <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}"><i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services</a></li>
             </ul>
         </div>

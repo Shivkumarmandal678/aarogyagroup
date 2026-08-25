@@ -9,6 +9,10 @@ def about(request):
     return render(request, 'about.html')
 
 
+def chairman(request):
+    return render(request, 'chairman.html')
+
+
 def service(request):
     return render(request, 'services.html')
 

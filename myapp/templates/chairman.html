@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Chairman's Message | Aarogya Group{% endblock %}
+{% block content %}
+<style>
+    .ag-chairman-hero { background: linear-gradient(120deg, #e9f8f2 0%, #f8fcfa 58%, #fff3df 100%); }
+    .ag-chairman-photo { width: 100%; height: 390px; object-fit: cover; border-radius: 1rem; box-shadow: 0 1rem 2.5rem rgba(18, 60, 55, .18); }
+    .ag-quote { border-left: 4px solid #f4b942; background: #fff; }
+    .ag-chairman-card { height: 100%; border-top: 3px solid #18a673; background: #fff; }
+    .ag-journey-step { position: relative; padding-left: 3.25rem; }
+    .ag-journey-step::before { position: absolute; top: .2rem; left: 0; display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: 50%; background: #123c37; color: #f4b942; font-weight: 700; content: attr(data-step); }
+</style>
+<section class="ag-chairman-hero py-5">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-person-badge me-2"></i>Leadership at Aarogya</p>
+                <h1 class="display-5 fw-bold mb-3">A message from our Chairman</h1>
+                <p class="lead text-secondary mb-0">Our responsibility is to help every worker begin an overseas journey with knowledge, dignity, and confidence.</p>
+            </div>
+            <div class="col-lg-5">
+                <img class="ag-chairman-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85" alt="Professional leader representing Aarogya Group">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-7">
+                <p class="text-ag-green fw-semibold mb-2">Chairman's message</p>
+                <h2 class="h1 fw-bold mb-4">Preparation creates opportunity.</h2>
+                <div class="ag-quote p-4 p-lg-5 shadow-sm">
+                    <p class="fs-5 mb-3">“Every person who comes to Aarogya brings a hope for a better future. We believe that hope deserves honest guidance, careful preparation, and respectful support.”</p>
+                    <p class="text-secondary mb-0">We are committed to making medical biometric orientation, pre-departure training, document guidance, and travel preparation easier to understand. Our team works so that workers and their families can make informed decisions before the journey begins.</p>
+                </div>
+                <p class="text-secondary mt-4 mb-0">Thank you for trusting Aarogya Group. We will continue to serve with responsibility, transparency, and care.</p>
+                <p class="fw-bold mt-4 mb-0">Chairman</p>
+                <p class="text-ag-green mb-0">Aarogya Group</p>
+            </div>
+            <div class="col-lg-5">
+                <div class="ag-chairman-card p-4 p-lg-5 shadow-sm">
+                    <i class="bi bi-compass text-ag-green fs-1"></i>
+                    <h2 class="h3 fw-bold mt-3">Our advice to every worker</h2>
+                    <ul class="text-secondary ps-3 mb-0">
+                        <li class="mb-3">Ask questions and understand each step before signing or travelling.</li>
+                        <li class="mb-3">Keep your passport, medical reports, receipts, and contact details secure.</li>
+                        <li class="mb-3">Follow medical and biometric instructions carefully and arrive on time.</li>
+                        <li>Respect local laws, workplace safety rules, and the culture of your destination.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="text-ag-green fw-semibold mb-2">Our mission</p>
+            <h2 class="display-6 fw-bold">Make every overseas journey better prepared.</h2>
+            <p class="lead text-secondary mb-0">Aarogya connects information, preparation, and responsible guidance in one place.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="ag-chairman-card p-4"><i class="bi bi-shield-check text-ag-green fs-2"></i><h3 class="h5 fw-bold mt-3">Protect people</h3><p class="text-secondary mb-0">Promote safe decisions through accurate information and transparent support.</p></div></div>
+            <div class="col-md-4"><div class="ag-chairman-card p-4"><i class="bi bi-book text-ag-green fs-2"></i><h3 class="h5 fw-bold mt-3">Build confidence</h3><p class="text-secondary mb-0">Give workers the practical knowledge they need for work and life abroad.</p></div></div>
+            <div class="col-md-4"><div class="ag-chairman-card p-4"><i class="bi bi-people text-ag-green fs-2"></i><h3 class="h5 fw-bold mt-3">Serve with care</h3><p class="text-secondary mb-0">Support workers and families with dignity from first orientation to departure.</p></div></div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <p class="text-ag-green fw-semibold mb-2">The Aarogya journey</p>
+                <h2 class="display-6 fw-bold">One clear step at a time.</h2>
+                <p class="text-secondary mb-0">Our work continues beyond a single appointment. We help people understand what comes next and prepare for it properly.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="d-flex flex-column gap-4">
+                    <div class="ag-journey-step" data-step="1"><h3 class="h5 fw-bold mb-1">Understand</h3><p class="text-secondary mb-0">Learn about medical, biometric, document, and orientation requirements.</p></div>
+                    <div class="ag-journey-step" data-step="2"><h3 class="h5 fw-bold mb-1">Prepare</h3><p class="text-secondary mb-0">Complete training, organize documents, and ask the questions that matter.</p></div>
+                    <div class="ag-journey-step" data-step="3"><h3 class="h5 fw-bold mb-1">Move forward</h3><p class="text-secondary mb-0">Travel with greater confidence, responsibility, and readiness for the future.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
