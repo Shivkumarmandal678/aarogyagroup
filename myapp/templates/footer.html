@@ -36,6 +36,9 @@
 
     .ag-footer-divider { border-color: rgba(255, 255, 255, 0.12) !important; }
 
+    .ag-footer-map { overflow: hidden; border: 1px solid rgba(255, 255, 255, .14); border-radius: .75rem; }
+    .ag-footer-map iframe { display: block; width: 100%; height: 280px; border: 0; }
+
     @media (max-width: 575.98px) {
         .ag-footer { text-align: center; }
         .ag-footer-links { justify-content: center; }
@@ -44,6 +47,9 @@
 
 <footer class="ag-footer mt-5 pt-5 pb-4">
     <div class="container">
+        <div class="ag-footer-map mb-5">
+            <iframe src="https://www.google.com/maps?q=Aarogya%20Group%20Nepal&output=embed" title="Aarogya Group location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
         <div class="row gy-4 gx-lg-5">
             <div class="col-12 col-lg-6">
                 <a class="ag-footer-brand d-inline-flex align-items-center gap-2" href="{% url 'home' %}">
