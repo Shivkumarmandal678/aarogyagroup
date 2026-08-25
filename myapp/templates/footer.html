@@ -38,17 +38,26 @@
 
     .ag-footer-map { overflow: hidden; border: 1px solid rgba(255, 255, 255, .14); border-radius: .75rem; }
     .ag-footer-map iframe { display: block; width: 100%; height: 280px; border: 0; }
+    .ag-footer-location { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem 1rem; background: #123c37; }
+    .ag-footer-location-text { color: #d1fae5; }
+    .ag-footer-location-link { white-space: nowrap; color: #123c37; background: #f4b942; }
+    .ag-footer-location-link:hover { color: #123c37; background: #ffd166; }
 
     @media (max-width: 575.98px) {
         .ag-footer { text-align: center; }
         .ag-footer-links { justify-content: center; }
+        .ag-footer-location { align-items: stretch; flex-direction: column; }
     }
 </style>
 
 <footer class="ag-footer mt-5 pt-5 pb-4">
     <div class="container">
         <div class="ag-footer-map mb-5">
-            <iframe src="https://www.google.com/maps?q=Aarogya%20Group%20Nepal&output=embed" title="Aarogya Group location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps?q=Lahan%20Ward%20No.%208%20Office%2C%20Lahan%2C%20Nepal&output=embed" title="Aarogya Group location near Lahan Ward No. 8 office" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="ag-footer-location">
+                <span class="ag-footer-location-text"><i class="bi bi-geo-alt-fill text-warning me-2" aria-hidden="true"></i>Lahan, Ward No. 8 Office ke front mein</span>
+                <a class="btn ag-footer-location-link" href="https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6" target="_blank" rel="noopener noreferrer"><i class="bi bi-map me-2" aria-hidden="true"></i>Open Exact Location</a>
+            </div>
         </div>
         <div class="row gy-4 gx-lg-5">
             <div class="col-12 col-lg-6">
