@@ -44,3 +44,21 @@ The first row is used as the table header and every following row is displayed o
 
 The `Client_Details` tab can receive writes through the service-account helper
 above. Do not place service-account credentials in a public CSV URL.
+
+## Role dashboard workflow
+
+The dashboard action endpoint expects the Google Apps Script web app to support
+these JSON `action` values: `add_booking`, `update_booking`, `delete_booking`,
+`add_report`, `update_report`, and `delete_report`. The read actions are
+`get_admins`, `get_bookings`, and `get_reports`.
+
+Create a `Reports` tab with this header row:
+
+```text
+ID,Booking_ID,Patient_Name,Patient_Email,Test_Name,Result,Report_File,Doctor,Doctor_Status,Manager_Status,Staff_Status,User_Status,Updated_By,Updated_At
+```
+
+Report workflow is sequential: a doctor creates the report, a manager approves
+it, staff gives the final approval, and only then does it become visible in the
+user dashboard. Admin can manage all records; other roles receive only their
+role-specific actions and records.

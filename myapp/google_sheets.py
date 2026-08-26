@@ -30,7 +30,11 @@ def fetch_sheet_rows(sheet_name):
     # १. Apps Script Web App बाट
     if WEB_APP_URL:
         try:
-            action = "get_admins" if sheet_name == "Admin" else "get_bookings"
+            action = {
+                'Admin': 'get_admins',
+                'Booking': 'get_bookings',
+                'Reports': 'get_reports',
+            }.get(sheet_name, f'get_{sheet_name.lower()}')
             r = requests.get(f"{WEB_APP_URL}?action={action}", timeout=8, allow_redirects=True)
             if r.status_code == 200:
                 data = r.json()
@@ -86,6 +90,27 @@ def get_all_client_bookings():
     """Booking Tab बाट सबै डाटा ल्याउने"""
     return fetch_sheet_rows("Booking")
 
+
+def get_all_reports():
+    return fetch_sheet_rows("Reports")
+
+
+def post_sheet_action(action, data=None):
+    if not WEB_APP_URL:
+        return False
+    payload = {'action': action, **(data or {})}
+    try:
+        response = requests.post(WEB_APP_URL, json=payload, timeout=8, allow_redirects=True)
+        if response.status_code not in [200, 201, 302]:
+            return False
+        try:
+            result = response.json()
+            return result.get('success', True) if isinstance(result, dict) else True
+        except ValueError:
+            return True
+    except Exception:
+        return False
+
 # =========================================================================
 # 3. CHANGE PASSWORD IN GOOGLE SHEET
 # =========================================================================
@@ -107,10 +132,7 @@ def update_admin_password_sheet(username, new_password):
 # 4. SAVE CLIENT BOOKING (POST)
 # =========================================================================
 def save_client_booking(data):
-    if not WEB_APP_URL:
-        return False
     payload = {
-        'action': 'add_booking',
         'timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
         'name': data.get('name', ''),
         'phone': data.get('phone', ''),
@@ -120,8 +142,4 @@ def save_client_booking(data):
         'message': data.get('message', ''),
         'status': 'Pending'
     }
-    try:
-        res = requests.post(WEB_APP_URL, json=payload, timeout=8, allow_redirects=True)
-        return res.status_code in [200, 302]
-    except Exception:
-        return False
+    return post_sheet_action('add_booking', payload)

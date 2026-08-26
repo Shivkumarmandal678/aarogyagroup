@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+  <h2>Aarogya Group Work Report</h2>
+  <p>Role: {{ user.role }} | User: {{ user.username }}</p>
+  <h4>Bookings</h4>
+  <table class="table table-bordered"><thead><tr><th>Name</th><th>Service</th><th>Date</th><th>Status</th></tr></thead><tbody>
+  {% for row in bookings %}<tr><td>{{ row.Name }}</td><td>{{ row.Service }}</td><td>{{ row.Date }}</td><td>{{ row.Status|default:"Pending" }}</td></tr>{% empty %}<tr><td colspan="4">No bookings</td></tr>{% endfor %}
+  </tbody></table>
+  <h4>Reports</h4>
+  <table class="table table-bordered"><thead><tr><th>Patient</th><th>Test</th><th>Result</th><th>Manager</th><th>Staff</th><th>User</th></tr></thead><tbody>
+  {% for row in reports %}<tr><td>{{ row.patient_name }}</td><td>{{ row.test_name }}</td><td>{{ row.result }}</td><td>{{ row.manager_status }}</td><td>{{ row.staff_status }}</td><td>{{ row.user_status }}</td></tr>{% empty %}<tr><td colspan="6">No reports</td></tr>{% endfor %}
+  </tbody></table>
+  <script>window.print();</script>
+</body>
+</html>

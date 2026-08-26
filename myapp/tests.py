@@ -35,6 +35,19 @@ class DashboardAccessTests(TestCase):
 
 		self.assertRedirects(response, '/staff-dashboard/')
 
+	def test_user_dashboard_renders(self):
+		session = self.client.session
+		session['admin_user'] = {
+			'username': 'client',
+			'role': 'User',
+		}
+		session.save()
+
+		response = self.client.get('/user-dashboard/')
+
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'user_dashboard.html')
+
 	@patch('myapp.views.get_all_client_bookings', return_value=[])
 	def test_admin_can_open_any_role_dashboard(self, get_bookings):
 		session = self.client.session

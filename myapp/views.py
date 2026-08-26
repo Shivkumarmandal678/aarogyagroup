@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+from datetime import datetime
 from django.contrib import messages
 from .google_sheets import (
     save_client_booking,
     authenticate_user,
     update_admin_password_sheet,
     get_all_client_bookings,
+    get_all_reports,
+    post_sheet_action,
     SHEET_ID,
 )
 
@@ -77,11 +82,43 @@ def _require_dashboard_role(request, role):
     return user, None
 
 
-def _dashboard_context(user, **extra):
+def _dashboard_context(dashboard_user, **extra):
     return {
         'sheet_url': f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit',
         **extra,
     }
+
+
+def _row_value(row, *keys):
+    for key in keys:
+        if row.get(key):
+            return str(row[key]).strip()
+    return ''
+
+
+def _normalize_report(row):
+    normalized = dict(row)
+    fields = ('id', 'patient_name', 'patient_email', 'test_name', 'result', 'doctor', 'doctor_status', 'manager_status', 'staff_status', 'user_status')
+    for field in fields:
+        normalized[field] = _row_value(row, field, field.title().replace('_', ' '), field.title(), field.upper())
+    return normalized
+
+
+def _dashboard_records(user):
+    bookings = get_all_client_bookings()
+    reports = [_normalize_report(row) for row in get_all_reports()]
+    role = get_role_redirect(user.get('role'))
+    if role == 'user_dashboard':
+        identity = {user.get('username', '').lower(), user.get('email', '').lower()}
+        bookings = [row for row in bookings if _row_value(row, 'Email', 'User_Email').lower() in identity]
+        reports = [row for row in reports if _row_value(row, 'Patient_Email', 'Email').lower() in identity and _row_value(row, 'Staff_Status', 'Status').lower() in {'approved', 'staff approved', 'complete', 'completed'}]
+    elif role == 'doctor_dashboard':
+        reports = [row for row in reports if not _row_value(row, 'Doctor', 'Doctor_Username') or _row_value(row, 'Doctor', 'Doctor_Username').lower() == user.get('username', '').lower()]
+    elif role == 'manager_dashboard':
+        reports = [row for row in reports if _row_value(row, 'Doctor_Status', 'Status').lower() in {'pending', 'submitted', 'doctor approved', 'approved'}]
+    elif role == 'staff_dashboard':
+        reports = [row for row in reports if _row_value(row, 'Manager_Status').lower() in {'approved', 'manager approved'}]
+    return list(reversed(bookings or [])), list(reversed(reports or []))
 
 
 def admin_login_view(request):
@@ -126,10 +163,8 @@ def admin_dashboard_view(request):
     admin, response = _require_dashboard_role(request, 'admin_dashboard')
     if response:
         return response
-    bookings = get_all_client_bookings()
-    if isinstance(bookings, list) and len(bookings) > 0:
-        bookings = list(reversed(bookings))
-    return render(request, 'admin_dashboard.html', _dashboard_context(admin, admin=admin, bookings=bookings))
+    bookings, reports = _dashboard_records(admin)
+    return render(request, 'admin_dashboard.html', _dashboard_context(admin, admin=admin, bookings=bookings, reports=reports, can_manage=True))
 
 
 # =========================================================================
@@ -139,10 +174,8 @@ def staff_dashboard_view(request):
     staff, response = _require_dashboard_role(request, 'staff_dashboard')
     if response:
         return response
-    bookings = get_all_client_bookings()
-    if isinstance(bookings, list) and len(bookings) > 0:
-        bookings = list(reversed(bookings))
-    return render(request, 'staff_dashboard.html', _dashboard_context(staff, staff=staff, bookings=bookings))
+    bookings, reports = _dashboard_records(staff)
+    return render(request, 'staff_dashboard.html', _dashboard_context(staff, staff=staff, bookings=bookings, reports=reports, can_approve=True))
 
 
 # =========================================================================
@@ -152,10 +185,8 @@ def doctor_dashboard_view(request):
     doctor, response = _require_dashboard_role(request, 'doctor_dashboard')
     if response:
         return response
-    bookings = get_all_client_bookings()
-    if isinstance(bookings, list) and len(bookings) > 0:
-        bookings = list(reversed(bookings))
-    return render(request, 'doctor_dashboard.html', _dashboard_context(doctor, doctor=doctor, bookings=bookings))
+    bookings, reports = _dashboard_records(doctor)
+    return render(request, 'doctor_dashboard.html', _dashboard_context(doctor, doctor=doctor, bookings=bookings, reports=reports, can_create=True))
 
 
 # =========================================================================
@@ -165,10 +196,8 @@ def manager_dashboard_view(request):
     manager, response = _require_dashboard_role(request, 'manager_dashboard')
     if response:
         return response
-    bookings = get_all_client_bookings()
-    if isinstance(bookings, list) and len(bookings) > 0:
-        bookings = list(reversed(bookings))
-    return render(request, 'manager_dashboard.html', _dashboard_context(manager, manager=manager, bookings=bookings))
+    bookings, reports = _dashboard_records(manager)
+    return render(request, 'manager_dashboard.html', _dashboard_context(manager, manager=manager, bookings=bookings, reports=reports, can_approve=True))
 
 
 # =========================================================================
@@ -178,7 +207,60 @@ def user_dashboard_view(request):
     user, response = _require_dashboard_role(request, 'user_dashboard')
     if response:
         return response
-    return render(request, 'user_dashboard.html', _dashboard_context(user, user=user))
+    bookings, reports = _dashboard_records(user)
+    return render(request, 'user_dashboard.html', _dashboard_context(user, user=user, bookings=bookings, reports=reports))
+
+
+@require_POST
+def dashboard_action_view(request):
+    user = _logged_in_user(request)
+    if not user:
+        return redirect('admin_login')
+    role = get_role_redirect(user.get('role'))
+    action = request.POST.get('action', '').strip()
+    allowed = {
+        'admin_dashboard': {'booking_create', 'booking_update', 'booking_delete', 'report_create', 'report_update', 'report_delete'},
+        'doctor_dashboard': {'report_create', 'report_update'},
+        'manager_dashboard': {'report_manager_approve', 'report_manager_reject'},
+        'staff_dashboard': {'report_staff_approve', 'report_staff_reject'},
+        'user_dashboard': {'booking_create'},
+    }
+    if not _is_admin(user) and action not in allowed.get(role, set()):
+        messages.error(request, 'This action is not allowed for your role.')
+        return redirect(get_role_redirect(user.get('role')))
+
+    data = {key: value.strip() for key, value in request.POST.items() if key not in {'csrfmiddlewaretoken', 'action'}}
+    data['updated_by'] = user.get('username', '')
+    data['updated_at'] = datetime.now().strftime('%Y-%m-%d %I:%M %p')
+    if action == 'report_create':
+        data.update({'doctor': user.get('username', ''), 'doctor_status': 'Pending Manager Approval', 'manager_status': 'Pending', 'staff_status': 'Pending', 'user_status': 'Hidden'})
+    elif action == 'report_manager_approve':
+        data.update({'manager_status': 'Approved', 'staff_status': 'Pending Staff Approval'})
+    elif action == 'report_manager_reject':
+        data.update({'manager_status': 'Rejected', 'staff_status': 'Hidden', 'user_status': 'Hidden'})
+    elif action == 'report_staff_approve':
+        data.update({'staff_status': 'Approved', 'user_status': 'Visible'})
+    elif action == 'report_staff_reject':
+        data.update({'staff_status': 'Rejected', 'user_status': 'Hidden'})
+
+    sheet_action = {
+        'booking_create': 'add_booking', 'booking_update': 'update_booking', 'booking_delete': 'delete_booking',
+        'report_create': 'add_report', 'report_update': 'update_report', 'report_delete': 'delete_report',
+        'report_manager_approve': 'update_report', 'report_manager_reject': 'update_report',
+        'report_staff_approve': 'update_report', 'report_staff_reject': 'update_report',
+    }.get(action)
+    if sheet_action and post_sheet_action(sheet_action, data):
+        messages.success(request, 'Update saved successfully.')
+    else:
+        messages.error(request, 'Update could not be saved in Google Sheet.')
+    return redirect(get_role_redirect(user.get('role')))
+
+
+def print_dashboard_view(request):
+    user = _logged_in_user(request)
+    if not user:
+        return redirect('admin_login')
+    return render(request, 'dashboard_print.html', {'user': user, 'bookings': _dashboard_records(user)[0], 'reports': _dashboard_records(user)[1]})
 
 
 # Password Change & Logout

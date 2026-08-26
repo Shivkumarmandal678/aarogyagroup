@@ -1,0 +1,75 @@
+<section class="container pb-4">
+  {% include 'messages.html' %}
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h5 class="mb-0"><i class="bi bi-activity me-2 text-success"></i>Work Progress</h5>
+    <a class="btn btn-outline-dark btn-sm" href="{% url 'dashboard_print' %}" target="_blank" title="Print dashboard"><i class="bi bi-printer me-1"></i>Print</a>
+  </div>
+
+  {% if can_create or can_manage %}
+  <div class="card border-0 shadow-sm p-3 mb-3">
+    <h6 class="fw-bold">Blood Test Report</h6>
+    <form method="post" action="{% url 'dashboard_action' %}" class="row g-2">
+      {% csrf_token %}<input type="hidden" name="action" value="report_create">
+      <div class="col-md-2"><input class="form-control form-control-sm" name="booking_id" placeholder="Booking ID" required></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" name="patient_name" placeholder="Patient name" required></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" name="patient_email" type="email" placeholder="Patient email" required></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" name="test_name" value="Blood Test" placeholder="Test name" required></div>
+      <div class="col-md-3"><input class="form-control form-control-sm" name="result" placeholder="Report result / notes" required></div>
+      <div class="col-md-1"><button class="btn btn-success btn-sm w-100" title="Save report"><i class="bi bi-plus-lg"></i></button></div>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if can_manage %}
+  <div class="card border-0 shadow-sm p-3 mb-3">
+    <h6 class="fw-bold">New Booking</h6>
+    <form method="post" action="{% url 'dashboard_action' %}" class="row g-2">
+      {% csrf_token %}<input type="hidden" name="action" value="booking_create">
+      <div class="col-md-3"><input class="form-control form-control-sm" name="name" placeholder="Client name" required></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" name="phone" placeholder="Phone" required></div>
+      <div class="col-md-3"><input class="form-control form-control-sm" name="email" type="email" placeholder="Email" required></div>
+      <div class="col-md-2"><input class="form-control form-control-sm" name="service" placeholder="Service" required></div>
+      <div class="col-md-2"><button class="btn btn-primary btn-sm w-100"><i class="bi bi-plus-lg me-1"></i>Create</button></div>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if reports %}
+  <div class="card border-0 shadow-sm p-3">
+    <div class="table-responsive">
+      <table class="table table-sm align-middle mb-0">
+        <thead><tr><th>Patient</th><th>Test</th><th>Result</th><th>Doctor</th><th>Manager</th><th>Staff</th><th>User</th><th>Action</th></tr></thead>
+        <tbody>
+        {% for report in reports %}
+          <tr>
+            <td>{{ report.patient_name|default:"-" }}<br><small class="text-muted">{{ report.patient_email }}</small></td>
+            <td>{{ report.test_name|default:"Blood Test" }}</td>
+            <td>{{ report.result|default:"-" }}</td>
+            <td>{{ report.doctor_status|default:"Pending" }}</td>
+            <td>{{ report.manager_status|default:"Pending" }}</td>
+            <td>{{ report.staff_status|default:"Pending" }}</td>
+            <td>{{ report.user_status|default:"Hidden" }}</td>
+            <td class="text-nowrap">
+              {% if can_manage %}
+                <form method="post" action="{% url 'dashboard_action' %}" class="d-inline">{% csrf_token %}<input type="hidden" name="action" value="report_update"><input type="hidden" name="report_id" value="{{ report.id }}"><input type="hidden" name="result" value="{{ report.result }}"><button class="btn btn-outline-primary btn-sm" title="Update report"><i class="bi bi-pencil"></i></button></form>
+                <form method="post" action="{% url 'dashboard_action' %}" class="d-inline">{% csrf_token %}<input type="hidden" name="action" value="report_delete"><input type="hidden" name="report_id" value="{{ report.id }}"><button class="btn btn-outline-danger btn-sm" title="Delete report"><i class="bi bi-trash"></i></button></form>
+                <form method="post" action="{% url 'dashboard_action' %}" class="d-inline">{% csrf_token %}<input type="hidden" name="action" value="report_manager_approve"><input type="hidden" name="report_id" value="{{ report.id }}"><button class="btn btn-outline-success btn-sm" title="Approve report"><i class="bi bi-check-lg"></i></button></form>
+                <form method="post" action="{% url 'dashboard_action' %}" class="d-inline">{% csrf_token %}<input type="hidden" name="action" value="report_manager_reject"><input type="hidden" name="report_id" value="{{ report.id }}"><button class="btn btn-outline-danger btn-sm" title="Reject report"><i class="bi bi-x-lg"></i></button></form>
+              {% elif can_approve %}
+                {% if report.manager_status == 'Approved' or report.staff_status == 'Pending Staff Approval' %}
+                <form method="post" action="{% url 'dashboard_action' %}" class="d-inline">{% csrf_token %}<input type="hidden" name="action" value="report_staff_approve"><input type="hidden" name="report_id" value="{{ report.id }}"><button class="btn btn-outline-success btn-sm" title="Approve report"><i class="bi bi-check-lg"></i></button></form>
+                {% endif %}
+              {% elif can_create %}
+                <form method="post" action="{% url 'dashboard_action' %}" class="d-inline">{% csrf_token %}<input type="hidden" name="action" value="report_update"><input type="hidden" name="report_id" value="{{ report.id }}"><input type="hidden" name="result" value="{{ report.result }}"><button class="btn btn-outline-primary btn-sm" title="Update report"><i class="bi bi-pencil"></i></button></form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+    <div class="alert alert-light border">No report workflow records found.</div>
+  {% endif %}
+</section>
