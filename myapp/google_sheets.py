@@ -1,159 +1,141 @@
 import os
 import io
 import csv
-import json
+import re
 import requests
 from datetime import datetime
-import gspread
-from google.oauth2.service_account import Credentials
 
-SCOPES = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-]
-
+# Environment Variables बाट URLs लिने
 WEB_APP_URL = os.environ.get('GOOGLE_WEB_APP_URL')
 CSV_URL = os.environ.get('GOOGLE_SHEET_CSV_URL')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1iRN1kAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg')
 
-def get_spreadsheet():
-    """Gspread मार्फत Sheet खोल्ने यदि credentials छ भने"""
-    try:
-        sa_json = os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON')
-        if sa_json:
-            creds = Credentials.from_service_account_info(json.loads(sa_json), scopes=SCOPES)
-            client = gspread.authorize(creds)
-            return client.open_by_key(SHEET_ID)
-        elif os.path.exists('credentials.json'):
-            client = gspread.service_account(filename='credentials.json')
-            return client.open_by_key(SHEET_ID)
-    except Exception as e:
-        print("Gspread connect error:", e)
-    return None
+# =========================================================================
+# HELPER: GOOGLE DRIVE LINK LAI DIRECT IMAGE URL MA BADALNE
+# =========================================================================
+def format_drive_image(url):
+    """Google Drive को Sharing Link लाई सिधै देखिने Direct Image Link मा बदल्छ"""
+    if not url:
+        return 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+    
+    url = str(url).strip()
+    match = re.search(r'/d/([a-zA-Z0-9_-]+)', url) or re.search(r'id=([a-zA-Z0-9_-]+)', url)
+    if match:
+        file_id = match.group(1)
+        return f"https://lh3.googleusercontent.com/d/{file_id}"
+    return url
 
-# ==========================================
-# 1. BOOKING SAVE FUNCTION (POST)
-# ==========================================
-def save_client_booking(data):
-    """Booking data Google Sheet को 'Booking' Tab मा थप्ने"""
-    # 1. यदि Google Apps Script URL छ भने (सबैभन्दा छिटो र सरल)
-    if WEB_APP_URL:
-        payload = {
-            'action': 'add_booking',
-            'timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
-            'name': data.get('name', ''),
-            'phone': data.get('phone', ''),
-            'email': data.get('email', ''),
-            'service': data.get('service', data.get('department', '')),
-            'date': data.get('date', ''),
-            'message': data.get('message', ''),
-            'status': 'Pending'
-        }
-        try:
-            res = requests.post(WEB_APP_URL, json=payload, timeout=10)
-            if res.status_code in [200, 302]:
-                return True
-        except Exception as e:
-            print("Web app post error:", e)
 
-    # 2. Fallback: Gspread मार्फत
-    try:
-        sh = get_spreadsheet()
-        if sh:
-            ws = sh.worksheet("Booking")
-            row = [
-                datetime.now().strftime("%Y-%m-%d %I:%M %p"),
-                data.get('name', ''),
-                data.get('phone', ''),
-                data.get('email', ''),
-                data.get('service', data.get('department', '')),
-                data.get('date', ''),
-                data.get('message', ''),
-                'Pending'
-            ]
-            ws.append_row(row, value_input_option='USER_ENTERED')
-            return True
-    except Exception as e:
-        print("Gspread booking error:", e)
-
-    return False
-
-# ==========================================
-# 2. ADMIN AUTHENTICATION (GET & UPDATE)
-# ==========================================
+# =========================================================================
+# 1. ADMIN AUTHENTICATION (LOGIN CHECK)
+# =========================================================================
 def get_admin_by_username(username):
-    """Admin Tab बाट Username खोज्ने"""
-    # Web app बाट खोज्ने
+    """Google Sheet को 'Admin' Tab बाट Username र Password जाँच्ने"""
+    target_user = str(username).strip().lower()
+
+    # १. Apps Script Web App बाट लिने
     if WEB_APP_URL:
         try:
-            res = requests.get(f"{WEB_APP_URL}?action=get_admins", timeout=10)
+            res = requests.get(f"{WEB_APP_URL}?action=get_admins", timeout=12, allow_redirects=True)
             if res.status_code == 200:
-                for user in res.json():
-                    if str(user.get('Username', '')).strip().lower() == str(username).strip().lower():
+                data = res.json()
+                for user in data:
+                    if str(user.get('Username', '')).strip().lower() == target_user:
+                        user['Profile_Image'] = format_drive_image(user.get('Profile_Image'))
                         return user
-        except Exception:
-            pass
+        except Exception as e:
+            print("Apps Script Fetch Error:", e)
 
-    # Gspread बाट खोज्ने
+    # २. Direct Google Sheet CSV Export बाट लिने (Fallback)
+    fallback_csv_url = CSV_URL or f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Admin"
     try:
-        sh = get_spreadsheet()
-        if sh:
-            ws = sh.worksheet("Admin")
-            for user in ws.get_all_records():
-                if str(user.get('Username', '')).strip().lower() == str(username).strip().lower():
-                    return user
-    except Exception:
-        pass
-
-    # CSV बाट खोज्ने
-    if CSV_URL:
-        try:
-            res = requests.get(CSV_URL, timeout=10)
-            if res.status_code == 200:
-                reader = csv.DictReader(io.StringIO(res.text))
-                for row in reader:
-                    if str(row.get('Username', '')).strip().lower() == str(username).strip().lower():
-                        return row
-        except Exception:
-            pass
+        res = requests.get(fallback_csv_url, timeout=12)
+        if res.status_code == 200:
+            reader = csv.DictReader(io.StringIO(res.text))
+            for row in reader:
+                # Keys strip garne
+                clean_row = {k.strip(): str(v).strip() for k, v in row.items() if k}
+                if clean_row.get('Username', '').lower() == target_user:
+                    clean_row['Profile_Image'] = format_drive_image(clean_row.get('Profile_Image'))
+                    return clean_row
+    except Exception as e:
+        print("CSV Read Error:", e)
 
     return None
 
+
+# =========================================================================
+# 2. ADMIN PASSWORD UPDATE
+# =========================================================================
 def update_admin_password_sheet(username, new_password):
-    """Google Sheet मा Password Update गर्ने"""
+    """Google Sheet मा गएर नयाँ Password सेभ गर्ने"""
+    if not WEB_APP_URL:
+        return False
+    
+    payload = {
+        'action': 'change_password',
+        'username': str(username).strip(),
+        'new_password': str(new_password).strip()
+    }
+    
+    try:
+        res = requests.post(WEB_APP_URL, json=payload, timeout=12, allow_redirects=True)
+        return res.status_code in [200, 302]
+    except Exception as e:
+        print("Password Update Error:", e)
+        return False
+
+
+# =========================================================================
+# 3. CLIENT BOOKING DATA SAVE (POST)
+# =========================================================================
+def save_client_booking(data):
+    """Client को Booking Google Sheet को 'Booking' Tab मा थप्ने"""
+    if not WEB_APP_URL:
+        print("GOOGLE_WEB_APP_URL is missing!")
+        return False
+
+    payload = {
+        'action': 'add_booking',
+        'timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+        'name': data.get('name', ''),
+        'phone': data.get('phone', ''),
+        'email': data.get('email', ''),
+        'service': data.get('service', data.get('department', '')),
+        'date': data.get('date', ''),
+        'message': data.get('message', ''),
+        'status': 'Pending'
+    }
+
+    try:
+        res = requests.post(WEB_APP_URL, json=payload, timeout=12, allow_redirects=True)
+        return res.status_code in [200, 302]
+    except Exception as e:
+        print("Booking Save Error:", e)
+        return False
+
+
+# =========================================================================
+# 4. GET ALL CLIENT BOOKINGS (FOR DASHBOARD)
+# =========================================================================
+def get_all_client_bookings():
+    """Admin Dashboard मा देखाउन Booking Tab बाट सबै Data ल्याउने"""
     if WEB_APP_URL:
         try:
-            payload = {
-                'action': 'change_password',
-                'username': username,
-                'new_password': new_password
-            }
-            res = requests.post(WEB_APP_URL, json=payload, timeout=10)
-            if res.status_code in [200, 302]:
-                return True
+            res = requests.get(f"{WEB_APP_URL}?action=get_bookings", timeout=12, allow_redirects=True)
+            if res.status_code == 200:
+                return res.json()
         except Exception:
             pass
 
+    # Fallback CSV for Booking tab
+    booking_csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Booking"
     try:
-        sh = get_spreadsheet()
-        if sh:
-            ws = sh.worksheet("Admin")
-            cell = ws.find(str(username).strip())
-            if cell:
-                ws.update_cell(cell.row, 2, str(new_password))
-                return True
+        res = requests.get(booking_csv_url, timeout=12)
+        if res.status_code == 200:
+            reader = csv.DictReader(io.StringIO(res.text))
+            return [row for row in reader]
     except Exception:
         pass
 
-    return False
-
-def get_all_client_bookings():
-    """Dashboard मा देखाउन Booking Tab बाट डाटा ल्याउने"""
-    try:
-        sh = get_spreadsheet()
-        if sh:
-            ws = sh.worksheet("Booking")
-            return ws.get_all_records()
-    except Exception:
-        pass
     return []
