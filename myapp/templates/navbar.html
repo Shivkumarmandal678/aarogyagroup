@@ -29,6 +29,8 @@
         color: #475569 !important;
         font-weight: 600;
         border-radius: 0.5rem;
+        display: inline-flex;
+        align-items: center;
     }
 
     .ag-nav-link:hover,
@@ -57,6 +59,14 @@
 
     .ag-navbar .navbar-toggler:focus { box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.2); }
 
+    .nav-avatar-img {
+        width: 28px;
+        height: 28px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #18a673;
+    }
+
     @media (max-width: 991.98px) {
         .ag-navbar .navbar-collapse {
             margin-top: 0.75rem;
@@ -74,15 +84,59 @@
             <span class="ag-brand-mark"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
             <span><span class="text-ag-green">Aarogya</span> Group</span>
         </a>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list fs-4" aria-hidden="true"></i>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house-door me-2" aria-hidden="true"></i>Home</a></li>
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}"><i class="bi bi-building me-2" aria-hidden="true"></i>About</a></li>
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'chairman' %}active{% endif %}" href="{% url 'chairman' %}"><i class="bi bi-person-badge me-2" aria-hidden="true"></i>Chairman</a></li>
-                <li class="nav-item"><a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}"><i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services</a></li>
+                <li class="nav-item">
+                    <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+                        <i class="bi bi-house-door me-2" aria-hidden="true"></i>Home
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">
+                        <i class="bi bi-building me-2" aria-hidden="true"></i>About
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'chairman' %}active{% endif %}" href="{% url 'chairman' %}">
+                        <i class="bi bi-person-badge me-2" aria-hidden="true"></i>Chairman
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}">
+                        <i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}" href="{% url 'booking' %}">
+                        <i class="bi bi-calendar-check me-2" aria-hidden="true"></i>Booking
+                    </a>
+                </li>
+
+                <!-- Admin Dynamic Button (Logged In / Logged Out) -->
+                {% if request.session.admin_user %}
+                <li class="nav-item ms-lg-2">
+                    <a class="nav-link ag-nav-link text-success fw-bold bg-light border" href="{% url 'admin_dashboard' %}">
+                        <img src="{{ request.session.admin_user.profile_image }}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Admin" class="nav-avatar-img me-2">
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item ms-lg-2">
+                    <a class="nav-link ag-nav-link btn btn-outline-success btn-sm px-3" href="{% url 'admin_login' %}">
+                        <i class="bi bi-person-lock me-1"></i> Admin Login
+                    </a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
     </div>

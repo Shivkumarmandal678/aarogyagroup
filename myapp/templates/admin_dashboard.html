@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #18a673;
+    box-shadow: 0 6px 15px rgba(24, 166, 115, 0.25);
+  }
+  .stat-card {
+    border-radius: 15px;
+    border: none;
+    transition: transform 0.2s;
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+  }
+</style>
+
+<div class="container py-4">
+  {% include 'messages.html' %}
+
+  <!-- Top Bar & Profile Info -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-4">
+      <div class="card shadow-sm border-0 rounded-4 p-4 text-center h-100 bg-white">
+        <div class="mb-3">
+          <img src="{{ admin.profile_image }}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Profile" class="profile-avatar">
+        </div>
+        <h4 class="fw-bold text-dark mb-1">{{ admin.username }}</h4>
+        <span class="badge bg-success bg-opacity-10 text-success mb-2 px-3 py-1 fs-6">{{ admin.role }}</span>
+        <p class="text-muted small mb-3">{{ admin.email }}</p>
+
+        <!-- Actions -->
+        <div class="d-grid gap-2">
+          <button class="btn btn-outline-primary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+            <i class="bi bi-key me-1"></i> Change Password
+          </button>
+          <a href="{% url 'admin_logout' %}" class="btn btn-outline-danger btn-sm rounded-pill">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Overview Stats -->
+    <div class="col-lg-8">
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <div class="card stat-card shadow-sm p-3 bg-white">
+            <div class="d-flex align-items-center">
+              <div class="fs-1 text-success me-3"><i class="bi bi-table"></i></div>
+              <div>
+                <h6 class="text-muted mb-0">Database Mode</h6>
+                <h5 class="fw-bold text-dark mb-0">Google Sheets Live</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card stat-card shadow-sm p-3 bg-white">
+            <div class="d-flex align-items-center">
+              <div class="fs-1 text-primary me-3"><i class="bi bi-server"></i></div>
+              <div>
+                <h6 class="text-muted mb-0">Storage Usage</h6>
+                <h5 class="fw-bold text-dark mb-0">0% (Cloud Free)</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Link to Sheet -->
+      <div class="card shadow-sm border-0 rounded-4 p-4 mt-3 bg-light">
+        <h5 class="fw-bold text-dark mb-2"><i class="bi bi-file-earmark-spreadsheet text-success me-2"></i>Live Google Sheet</h5>
+        <p class="text-muted small">सबै Clients र Admins को डाटा हेर्न वा सम्पादन गर्न सिधै Sheet खोल्न सक्नुहुन्छ:</p>
+        <a href="https://docs.google.com/spreadsheets/d/1iRN1kAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg/edit" target="_blank" class="btn btn-success btn-sm align-self-start rounded-pill px-3">
+          <i class="bi bi-box-arrow-up-right me-1"></i> Open Google Sheet
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-shield-lock me-2 text-primary"></i>Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" action="{% url 'admin_change_password' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">New Password</label>
+            <input type="password" name="new_password" class="form-control rounded-3" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Confirm New Password</label>
+            <input type="password" name="confirm_password" class="form-control rounded-3" required>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

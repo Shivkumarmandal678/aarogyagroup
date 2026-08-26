@@ -1,8 +1,6 @@
-import json
 import os
+import json
 from datetime import datetime
-from functools import lru_cache
-from django.conf import settings
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -12,9 +10,8 @@ SCOPES = [
 ]
 
 def get_client():
-    """Service account json बाट Google Sheets Client authorize गर्ने"""
+    """Service Account JSON वा Local File बाट Google Client Authorize गर्ने"""
     sa_json = os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON')
-    
     if sa_json:
         try:
             service_account_info = json.loads(sa_json)
@@ -22,11 +19,9 @@ def get_client():
             return gspread.authorize(creds)
         except Exception as e:
             print("Service account error:", e)
-            
-    # Fallback: यदि local file credentials.json छ भने
+
     if os.path.exists('credentials.json'):
         return gspread.service_account(filename='credentials.json')
-    
     return None
 
 def get_spreadsheet():
@@ -37,11 +32,11 @@ def get_spreadsheet():
     return None
 
 # ==========================================
-# CLIENT / BOOKING FUNCTIONS
+# 1. CLIENT / BOOKING FUNCTIONS
 # ==========================================
 
 def save_client_booking(data):
-    """Client ko details Google Sheet (Client tab) ma save garne"""
+    """Client ko Booking Google Sheet (Client Tab) ma save garne"""
     try:
         sh = get_spreadsheet()
         if not sh:
@@ -53,7 +48,7 @@ def save_client_booking(data):
             data.get('name', ''),
             data.get('phone', ''),
             data.get('email', ''),
-            data.get('service', data.get('department', '')),
+            data.get('department', data.get('service', '')),
             data.get('date', ''),
             data.get('message', ''),
             'Pending'
@@ -61,11 +56,11 @@ def save_client_booking(data):
         worksheet.append_row(row, value_input_option='USER_ENTERED')
         return True
     except Exception as e:
-        print("Error saving client booking:", e)
+        print("Error saving booking:", e)
         return False
 
 def get_all_clients():
-    """Client tab बाट सबै रेकर्ड ल्याउने"""
+    """Client Tab बाट सबै Booking डाटा ल्याउने (Dashboard मा देखाउन)"""
     try:
         sh = get_spreadsheet()
         if sh:
@@ -76,11 +71,11 @@ def get_all_clients():
     return []
 
 # ==========================================
-# ADMIN / USER FUNCTIONS
+# 2. ADMIN & USER AUTHENTICATION
 # ==========================================
 
 def get_admin_by_username(username):
-    """Admin tab बाट username खोज्ने"""
+    """Admin Tab बाट Username खोज्ने"""
     try:
         sh = get_spreadsheet()
         if not sh:
@@ -88,8 +83,26 @@ def get_admin_by_username(username):
         worksheet = sh.worksheet("Admin")
         records = worksheet.get_all_records()
         for user in records:
-            if str(user.get('Username')).strip().lower() == str(username).strip().lower():
+            if str(user.get('Username', '')).strip().lower() == str(username).strip().lower():
                 return user
     except Exception as e:
-        print("Error getting admin user:", e)
+        print("Error fetching admin:", e)
     return None
+
+def update_admin_password_sheet(username, new_password):
+    """Admin Tab मा गएर Password Update गर्ने"""
+    try:
+        sh = get_spreadsheet()
+        if not sh:
+            return False
+        worksheet = sh.worksheet("Admin")
+        
+        # Username भएको Cell खोज्ने
+        cell = worksheet.find(str(username).strip())
+        if cell:
+            # Password Column B (Column 2) मा पर्छ
+            worksheet.update_cell(cell.row, 2, str(new_password))
+            return True
+    except Exception as e:
+        print("Error updating password in Sheet:", e)
+    return False
