@@ -70,14 +70,14 @@ def admin_login_view(request):
     return render(request, 'admin_login.html')
 
 def admin_dashboard_view(request):
-    """Admin Dashboard"""
     admin = request.session.get('admin_user')
     if not admin:
         messages.warning(request, 'कृपया पहिले लगइन गर्नुहोस्!')
         return redirect('admin_login')
 
     bookings = get_all_client_bookings()
-    if isinstance(bookings, list):
+    # नयाँ डाटा सबैभन्दा माथि देखाउन list reverse गर्ने
+    if isinstance(bookings, list) and len(bookings) > 0:
         bookings = list(reversed(bookings))
 
     return render(request, 'admin_dashboard.html', {
