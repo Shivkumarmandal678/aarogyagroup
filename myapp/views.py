@@ -73,14 +73,20 @@ def admin_login_view(request):
     return render(request, 'admin_login.html')
 
 def admin_dashboard_view(request):
-    """Admin Dashboard"""
     admin = request.session.get('admin_user')
     if not admin:
-        messages.warning(request, 'पहिले लगइन गर्नुहोस्!')
+        messages.warning(request, 'कृपया पहिले लगइन गर्नुहोस्!')
         return redirect('admin_login')
 
     bookings = get_all_client_bookings()
-    return render(request, 'admin_dashboard.html', {'admin': admin, 'bookings': bookings})
+    # नयाँ बुकिंग माथि देखाउन list लाई reverse गर्ने
+    if isinstance(bookings, list):
+        bookings = list(reversed(bookings))
+
+    return render(request, 'admin_dashboard.html', {
+        'admin': admin,
+        'bookings': bookings
+    })
 
 def admin_change_password_view(request):
     """Google Sheet मा Password Update गर्ने"""
