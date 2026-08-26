@@ -92,6 +92,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Google Sheets storage for application data. Keep Django's SQLite database for
+# built-in auth/session tables; Google Sheets is not a Django database backend.
+GOOGLE_SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '')
+GOOGLE_SHEET_WORKSHEET = os.environ.get('GOOGLE_SHEET_WORKSHEET', 'Client_Details')
+GOOGLE_SERVICE_ACCOUNT_JSON = os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON', '')
+
 # Email Configurations (.env बाट load हुने)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
