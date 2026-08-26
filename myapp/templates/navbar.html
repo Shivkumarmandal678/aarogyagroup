@@ -1,36 +1,52 @@
 <style>
+    /* Modern Glassmorphic & Clean Navbar Styling */
     .ag-navbar {
-        background: rgba(255, 255, 255, 0.96);
+        background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(18, 60, 55, 0.06);
+        transition: all 0.3s ease;
     }
 
     .ag-brand {
-        color: #17211b;
-        font-size: 1.15rem;
+        color: #123c37;
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-decoration: none;
         letter-spacing: 0.01em;
     }
 
-    .ag-brand:hover { color: #17211b; }
+    .ag-brand:hover {
+        color: #123c37;
+    }
 
     .ag-brand-mark {
         display: inline-grid;
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 2.35rem;
+        height: 2.35rem;
         place-items: center;
         margin-right: 0.5rem;
         border-radius: 0.75rem;
         background: #d1fae5;
         color: #059669;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 10px rgba(5, 150, 105, 0.15);
     }
 
+    .text-ag-green {
+        color: #18a673 !important;
+    }
+
+    /* Nav Links */
     .ag-nav-link {
         position: relative;
-        padding: 0.65rem 0.9rem !important;
+        padding: 0.65rem 1rem !important;
         color: #475569 !important;
         font-weight: 600;
-        border-radius: 0.5rem;
+        border-radius: 0.6rem;
         display: inline-flex;
         align-items: center;
+        transition: all 0.2s ease;
+        text-decoration: none;
     }
 
     .ag-nav-link:hover,
@@ -43,22 +59,28 @@
     @media (min-width: 992px) {
         .ag-nav-link.active::after {
             position: absolute;
-            right: 0.9rem;
+            right: 1rem;
             bottom: 0.2rem;
-            left: 0.9rem;
-            height: 2px;
+            left: 1rem;
+            height: 2.5px;
             background: #10b981;
+            border-radius: 2px;
             content: "";
         }
     }
 
+    /* Mobile Toggler */
     .ag-navbar .navbar-toggler {
         padding: 0.45rem 0.6rem;
         border-color: #d1d5db;
+        border-radius: 0.5rem;
     }
 
-    .ag-navbar .navbar-toggler:focus { box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.2); }
+    .ag-navbar .navbar-toggler:focus {
+        box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.2);
+    }
 
+    /* Avatar & Buttons */
     .nav-avatar-img {
         width: 28px;
         height: 28px;
@@ -67,66 +89,104 @@
         border: 2px solid #18a673;
     }
 
+    .btn-nav-portal {
+        border-radius: 2rem;
+        font-weight: 600;
+        padding: 0.5rem 1.25rem !important;
+        transition: all 0.3s ease;
+    }
+
+    .btn-nav-portal:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(24, 166, 115, 0.25);
+    }
+
+    .dashboard-badge-btn {
+        background: #f0fdf4 !important;
+        border: 1px solid #bbf7d0 !important;
+        border-radius: 2rem !important;
+        padding: 0.45rem 1.1rem !important;
+    }
+
+    .dashboard-badge-btn:hover {
+        background: #dcfce7 !important;
+        transform: translateY(-2px);
+    }
+
     @media (max-width: 991.98px) {
         .ag-navbar .navbar-collapse {
-            margin-top: 0.75rem;
-            padding: 0.5rem;
+            margin-top: 0.85rem;
+            padding: 0.75rem;
             border-top: 1px solid #e5e7eb;
+            background: #ffffff;
+            border-radius: 0.75rem;
         }
 
-        .ag-nav-link { margin: 0.15rem 0; }
+        .ag-nav-link {
+            margin: 0.2rem 0;
+            width: 100%;
+        }
     }
 </style>
 
 <nav class="navbar navbar-expand-lg ag-navbar border-bottom sticky-top" aria-label="Main navigation">
     <div class="container py-2">
+        
+        <!-- Brand Logo & Name -->
         <a class="navbar-brand ag-brand d-flex align-items-center" href="{% url 'home' %}">
             <span class="ag-brand-mark"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
             <span><span class="text-ag-green">Aarogya</span> Group</span>
         </a>
         
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="bi bi-list fs-4" aria-hidden="true"></i>
+        <!-- Mobile Toggler Button -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-3 text-dark" aria-hidden="true"></i>
         </button>
         
+        <!-- Menu Navigation Items -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                
+                <!-- 1. Home -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
                         <i class="bi bi-house-door me-2" aria-hidden="true"></i>Home
                     </a>
                 </li>
                 
+                <!-- 2. About (Includes Chairman & MD) -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">
                         <i class="bi bi-building me-2" aria-hidden="true"></i>About
                     </a>
                 </li>
                 
+                <!-- 3. Services -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}">
                         <i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services
                     </a>
                 </li>
 
+                <!-- 4. Booking -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}" href="{% url 'booking' %}">
                         <i class="bi bi-calendar-check me-2" aria-hidden="true"></i>Booking
                     </a>
                 </li>
 
-                <!-- Admin Dynamic Link -->
+                <!-- 5. Dynamic Role Dashboard OR Portal Login -->
                 {% if request.session.admin_user %}
-                <li class="nav-item ms-lg-2">
-                    <a class="nav-link ag-nav-link text-success fw-bold bg-light border" href="{% url 'admin_dashboard' %}">
-                        <img src="{{ request.session.admin_user.profile_image }}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Admin" class="nav-avatar-img me-2">
-                        <span>Dashboard</span>
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a class="nav-link ag-nav-link text-success fw-bold dashboard-badge-btn" href="{% url 'dashboard_redirect' %}">
+                        <img src="{{ request.session.admin_user.profile_image }}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="User Avatar" class="nav-avatar-img me-2">
+                        <span>{{ request.session.admin_user.role }} Dashboard</span>
                     </a>
                 </li>
                 {% else %}
-                <li class="nav-item ms-lg-2">
-                    <a class="nav-link ag-nav-link btn btn-outline-success btn-sm px-3" href="{% url 'admin_login' %}">
-                        <i class="bi bi-person-lock me-1"></i> Admin Login
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a class="nav-link ag-nav-link btn btn-outline-success btn-nav-portal text-success" href="{% url 'admin_login' %}">
+                        <i class="bi bi-person-lock me-2"></i>Portal Login
                     </a>
                 </li>
                 {% endif %}

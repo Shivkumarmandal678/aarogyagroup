@@ -8,9 +8,16 @@ urlpatterns = [
     path('chatbot/', views.chatbot, name='chatbot'),
     path('booking/', views.booking_view, name='booking'),
     
-    # Admin URLs
+    # Universal Login & Routing
     path('admin-login/', views.admin_login_view, name='admin_login'),
-    path('admin-dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
-    path('admin-change-password/', views.admin_change_password_view, name='admin_change_password'),
+    path('dashboard/', views.dashboard_redirect_view, name='dashboard_redirect'),
     path('admin-logout/', views.admin_logout_view, name='admin_logout'),
+    path('change-password/', views.admin_change_password_view, name='admin_change_password'),
+
+    # Role Dashboards
+    path('admin-dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
+    path('staff-dashboard/', views.staff_dashboard_view, name='staff_dashboard'),
+    path('doctor-dashboard/', views.doctor_dashboard_view, name='doctor_dashboard'),
+    path('manager-dashboard/', views.manager_dashboard_view, name='manager_dashboard'),
+    path('user-dashboard/', views.user_dashboard_view, name='user_dashboard'),
 ]

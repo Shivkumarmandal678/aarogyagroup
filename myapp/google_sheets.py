@@ -8,6 +8,9 @@ from datetime import datetime
 WEB_APP_URL = os.environ.get('GOOGLE_WEB_APP_URL')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1iRNlkAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg')
 
+# =========================================================================
+# HELPER: GOOGLE DRIVE LINK CONVERTER
+# =========================================================================
 def format_drive_image(url):
     """Google Drive Link लाई Direct Image URL मा बदल्ने"""
     if not url:
@@ -20,76 +23,71 @@ def format_drive_image(url):
     return url
 
 # =========================================================================
-# 1. GET ALL BOOKINGS (UNLIMITED LIVE FETCH)
+# CORE HELPER: SHEET DATA FETCH ENGINE (APPS SCRIPT + CSV DUAL FETCH)
 # =========================================================================
-def get_all_client_bookings():
-    """Booking Tab बाट सबै डाटा लोड गर्ने (Apps Script + CSV Dual Engine)"""
-    # १. Apps Script बाट
+def fetch_sheet_rows(sheet_name):
+    """कुनै पनि Tab बाट सबै Rows सफासँग ल्याउने"""
+    # १. Apps Script Web App बाट
     if WEB_APP_URL:
         try:
-            res = requests.get(f"{WEB_APP_URL}?action=get_bookings", timeout=10, allow_redirects=True)
-            if res.status_code == 200:
-                data = res.json()
+            action = "get_admins" if sheet_name == "Admin" else "get_bookings"
+            r = requests.get(f"{WEB_APP_URL}?action={action}", timeout=8, allow_redirects=True)
+            if r.status_code == 200:
+                data = r.json()
                 if isinstance(data, list) and len(data) > 0:
-                    return data
+                    return [{str(k).strip(): str(v).strip() for k, v in item.items() if k} for item in data]
         except Exception as e:
-            print("Apps script fetch error:", e)
+            print(f"Apps Script Error for {sheet_name}:", e)
 
     # २. Direct CSV Fallback (१००% ग्यारेन्टी)
-    csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Booking"
+    csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
     try:
-        res = requests.get(csv_url, timeout=10)
-        if res.status_code == 200:
-            reader = csv.DictReader(io.StringIO(res.text))
-            bookings = []
+        r = requests.get(csv_url, timeout=8)
+        if r.status_code == 200:
+            reader = csv.DictReader(io.StringIO(r.text))
+            rows = []
             for row in reader:
                 clean_row = {str(k).replace('"', '').strip(): str(v).replace('"', '').strip() for k, v in row.items() if k}
-                # खाली row हटाउने
-                if clean_row.get('Name') or clean_row.get('Phone'):
-                    bookings.append(clean_row)
-            return bookings
+                if any(clean_row.values()):
+                    rows.append(clean_row)
+            return rows
     except Exception as e:
-        print("CSV Booking fetch error:", e)
+        print(f"CSV Error for {sheet_name}:", e)
 
     return []
 
 # =========================================================================
-# 2. ADMIN AUTHENTICATION (ALL ADMINS / ROLES SUPPORT)
+# 1. UNIVERSAL AUTHENTICATION (ADMIN / STAFF / ANY USER)
 # =========================================================================
-def get_admin_by_username(username):
-    """Admin Tab बाट Username खोज्ने"""
-    target = str(username).strip().lower()
+def authenticate_user(login_input, password_input):
+    """
+    Username वा Email दुवैबाट र Admin वा Staff सबैलाई Login गराउने
+    """
+    login_id = str(login_input).strip().lower()
+    password = str(password_input).strip()
 
-    # Apps Script
-    if WEB_APP_URL:
-        try:
-            res = requests.get(f"{WEB_APP_URL}?action=get_admins", timeout=10, allow_redirects=True)
-            if res.status_code == 200:
-                for user in res.json():
-                    if str(user.get('Username', '')).strip().lower() == target:
-                        user['Profile_Image'] = format_drive_image(user.get('Profile_Image'))
-                        return user
-        except Exception:
-            pass
+    admin_rows = fetch_sheet_rows("Admin")
+    for user in admin_rows:
+        uname = str(user.get('Username', '')).strip().lower()
+        uemail = str(user.get('Email', '')).strip().lower()
+        upass = str(user.get('Password', '')).strip()
 
-    # Direct CSV
-    admin_csv = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Admin"
-    try:
-        res = requests.get(admin_csv, timeout=10)
-        if res.status_code == 200:
-            reader = csv.DictReader(io.StringIO(res.text))
-            for row in reader:
-                clean_row = {str(k).replace('"', '').strip(): str(v).replace('"', '').strip() for k, v in row.items() if k}
-                if clean_row.get('Username', '').lower() == target:
-                    clean_row['Profile_Image'] = format_drive_image(clean_row.get('Profile_Image'))
-                    return clean_row
-    except Exception:
-        pass
+        # Username वा Email मध्ये एक मिलेमा र Password मिलेमा Login सफल
+        if (login_id == uname or login_id == uemail) and (password == upass):
+            user['Profile_Image'] = format_drive_image(user.get('Profile_Image'))
+            return user
 
     return None
 
 # =========================================================================
-# 3. CHANGE PASSWORD
+# 2. GET ALL BOOKINGS (FOR DASHBOARD)
+# =========================================================================
+def get_all_client_bookings():
+    """Booking Tab बाट सबै डाटा ल्याउने"""
+    return fetch_sheet_rows("Booking")
+
+# =========================================================================
+# 3. CHANGE PASSWORD IN GOOGLE SHEET
 # =========================================================================
 def update_admin_password_sheet(username, new_password):
     if not WEB_APP_URL:
@@ -100,13 +98,13 @@ def update_admin_password_sheet(username, new_password):
         'new_password': str(new_password).strip()
     }
     try:
-        res = requests.post(WEB_APP_URL, json=payload, timeout=10, allow_redirects=True)
+        res = requests.post(WEB_APP_URL, json=payload, timeout=8, allow_redirects=True)
         return res.status_code in [200, 302]
     except Exception:
         return False
 
 # =========================================================================
-# 4. SAVE NEW BOOKING
+# 4. SAVE CLIENT BOOKING (POST)
 # =========================================================================
 def save_client_booking(data):
     if not WEB_APP_URL:
@@ -123,7 +121,7 @@ def save_client_booking(data):
         'status': 'Pending'
     }
     try:
-        res = requests.post(WEB_APP_URL, json=payload, timeout=10, allow_redirects=True)
+        res = requests.post(WEB_APP_URL, json=payload, timeout=8, allow_redirects=True)
         return res.status_code in [200, 302]
     except Exception:
         return False

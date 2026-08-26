@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
+{% block title %}Login Portal | Aarogya Group{% endblock %}
+
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-5">
-      <div class="card shadow-lg border-0 rounded-4 p-4" style="background: #ffffff;">
+      <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5 bg-white">
         <div class="text-center mb-4">
           <div class="display-5 text-success mb-2"><i class="bi bi-shield-lock-fill"></i></div>
-          <h3 class="fw-bold text-dark">Admin Portal</h3>
-          <p class="text-muted small">Sign in with Google Sheets authorized credentials</p>
+          <h3 class="fw-bold text-dark mb-1">Staff &amp; Admin Portal</h3>
+          <p class="text-muted small">Sign in using your Google Sheet authorized credentials</p>
         </div>
 
         {% include 'messages.html' %}
@@ -16,17 +18,17 @@
         <form method="POST">
           {% csrf_token %}
           <div class="mb-3">
-            <label class="form-label fw-semibold">Username</label>
+            <label class="form-label fw-semibold">Username or Email</label>
             <div class="input-group">
-              <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
-              <input type="text" name="username" class="form-control" placeholder="Enter Admin Username" required>
+              <span class="input-group-text bg-light"><i class="bi bi-person-fill"></i></span>
+              <input type="text" name="username" class="form-control" placeholder="Enter Username or Email" required>
             </div>
           </div>
 
           <div class="mb-4">
             <label class="form-label fw-semibold">Password</label>
             <div class="input-group">
-              <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>
+              <span class="input-group-text bg-light"><i class="bi bi-key-fill"></i></span>
               <input type="password" name="password" class="form-control" placeholder="Enter Password" required>
             </div>
           </div>
