@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .google_sheets import (
     save_client_booking,
-    get_all_clients,
     get_admin_by_username,
-    update_admin_password_sheet
+    update_admin_password_sheet,
+    get_all_client_bookings
 )
 
-# Public Pages
+# Public Views
 def home(request):
     return render(request, 'home.html')
 
@@ -23,23 +23,23 @@ def service(request):
 def chatbot(request):
     return render(request, 'chatbot.html')
 
-# Booking Page
+# Booking View
 def booking_view(request):
     if request.method == 'POST':
         data = {
-            'name': request.POST.get('name'),
-            'phone': request.POST.get('phone'),
-            'email': request.POST.get('email'),
-            'department': request.POST.get('department'),
-            'date': request.POST.get('date'),
-            'message': request.POST.get('message'),
+            'name': request.POST.get('name', '').strip(),
+            'phone': request.POST.get('phone', '').strip(),
+            'email': request.POST.get('email', '').strip(),
+            'service': request.POST.get('service', '').strip(),
+            'date': request.POST.get('date', '').strip(),
+            'message': request.POST.get('message', '').strip(),
         }
         
-        success = save_client_booking(data)
-        if success:
-            messages.success(request, 'धन्यवाद! तपाईँको Booking Google Sheet मा सुरक्षित भयो।')
+        if save_client_booking(data):
+            messages.success(request, 'धन्यवाद! तपाईँको Booking सफलतापूर्वक सुरक्षित भयो।')
         else:
             messages.info(request, 'Booking प्राप्त भयो। हामी छिट्टै सम्पर्क गर्नेछौं।')
+            
         return redirect('booking')
         
     return render(request, 'booking.html')
@@ -58,8 +58,6 @@ def admin_login_view(request):
         password = request.POST.get('password', '').strip()
 
         admin = get_admin_by_username(username)
-        
-        # Google Sheet को Password सँग मिलाउने
         if admin and str(admin.get('Password', '')).strip() == password:
             request.session['admin_user'] = {
                 'username': admin.get('Username'),
@@ -75,34 +73,33 @@ def admin_login_view(request):
     return render(request, 'admin_login.html')
 
 def admin_dashboard_view(request):
-    """Admin Dashboard - Profile र Client Bookings देखाउने"""
+    """Admin Dashboard"""
     admin = request.session.get('admin_user')
     if not admin:
-        messages.warning(request, 'कृपया पहिले लगइन गर्नुहोस्!')
+        messages.warning(request, 'पहिले लगइन गर्नुहोस्!')
         return redirect('admin_login')
 
-    bookings = get_all_clients()
+    bookings = get_all_client_bookings()
     return render(request, 'admin_dashboard.html', {'admin': admin, 'bookings': bookings})
 
 def admin_change_password_view(request):
-    """Google Sheet मा Password फेर्ने"""
+    """Google Sheet मा Password Update गर्ने"""
     admin = request.session.get('admin_user')
     if not admin:
         return redirect('admin_login')
 
     if request.method == 'POST':
-        new_password = request.POST.get('new_password')
-        confirm_password = request.POST.get('confirm_password')
+        new_password = request.POST.get('new_password', '').strip()
+        confirm_password = request.POST.get('confirm_password', '').strip()
 
         if new_password != confirm_password:
-            messages.error(request, 'दुवै पासवर्ड मिलेनन्!')
+            messages.error(request, 'नयाँ पासवर्ड मिलेन!')
             return redirect('admin_dashboard')
 
-        success = update_admin_password_sheet(admin['username'], new_password)
-        if success:
-            messages.success(request, 'Google Sheet मा पासवर्ड सफलतापूर्वक अपडेट भयो!')
+        if update_admin_password_sheet(admin['username'], new_password):
+            messages.success(request, 'Google Sheet मा पासवर्ड सफलतापूर्वक परिवर्तन भयो!')
         else:
-            messages.error(request, 'पासवर्ड अपडेट गर्न सकिएन।')
+            messages.error(request, 'पासवर्ड परिवर्तन हुन सकेन।')
 
     return redirect('admin_dashboard')
 

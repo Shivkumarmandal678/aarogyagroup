@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment | Aarogya Group{% endblock %}
+
+{% block content %}
+<style>
+  .booking-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: none;
+  }
+  .booking-header {
+    background: linear-gradient(135deg, #123c37 0%, #18a673 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px 20px 0 0;
+  }
+  .form-control, .form-select {
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: #18a673;
+    box-shadow: 0 0 0 0.25rem rgba(24, 166, 115, 0.25);
+  }
+  .btn-submit {
+    background: #18a673;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .btn-submit:hover {
+    background: #123c37;
+    color: white;
+    transform: translateY(-2px);
+  }
+</style>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      
+      <div class="card booking-card">
+        <div class="booking-header text-center">
+          <h2 class="fw-bold mb-1"><i class="bi bi-calendar-check me-2"></i>Book an Appointment</h2>
+          <p class="mb-0 text-white-50">Fill the form below to book orientation and medical services</p>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+          {% include 'messages.html' %}
+
+          <form method="POST" action="{% url 'booking' %}">
+            {% csrf_token %}
+
+            <div class="row g-3">
+              <!-- Full Name -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                <input type="text" name="name" class="form-control" placeholder="Enter Full Name" required>
+              </div>
+
+              <!-- Phone -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                <input type="tel" name="phone" class="form-control" placeholder="98XXXXXXXX" required>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="example@gmail.com">
+              </div>
+
+              <!-- Service / Department -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Service <span class="text-danger">*</span></label>
+                <select name="service" class="form-select" required>
+                  <option value="" selected disabled>Select Service</option>
+                  <option value="Medical Biometric Orientation">Medical Biometric Orientation</option>
+                  <option value="Pre-departure Training">Pre-departure Training</option>
+                  <option value="Document Guidance">Document Guidance</option>
+                  <option value="General Health Checkup">General Health Checkup</option>
+                  <option value="Other Support">Other Support</option>
+                </select>
+              </div>
+
+              <!-- Date -->
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Preferred Date <span class="text-danger">*</span></label>
+                <input type="date" name="date" class="form-control" required>
+              </div>
+
+              <!-- Message -->
+              <div class="col-12">
+                <label class="form-label fw-semibold">Remarks / Message</label>
+                <textarea name="message" class="form-control" rows="3" placeholder="Any specific requirements or questions..."></textarea>
+              </div>
+
+              <!-- Submit -->
+              <div class="col-12 mt-4">
+                <button type="submit" class="btn btn-submit w-100 fs-5">
+                  <i class="bi bi-send-fill me-2"></i> Submit Booking
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
