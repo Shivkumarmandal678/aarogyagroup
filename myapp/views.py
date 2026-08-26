@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-from datetime import datetime
+from datetime import date, datetime, timedelta
+from django.utils import timezone
 from django.contrib import messages
 from .google_sheets import (
     save_client_booking,
@@ -26,9 +27,36 @@ def service(request):
 def chatbot(request):
     return render(request, 'chatbot.html')
 
+CLASS_WEEKDAYS = {1, 3, 6}
+CLASS_CUTOFF_HOUR = 10
+
+
+def next_class_date(current=None):
+    current = current or timezone.localtime()
+    class_date = current.date()
+    if class_date.weekday() in CLASS_WEEKDAYS and current.hour < CLASS_CUTOFF_HOUR:
+        return class_date
+    while True:
+        class_date += timedelta(days=1)
+        if class_date.weekday() in CLASS_WEEKDAYS:
+            return class_date
+
+
+def is_valid_class_date(value, current=None):
+    try:
+        selected = date.fromisoformat(str(value))
+    except (TypeError, ValueError):
+        return False
+    return selected == next_class_date(current)
+
+
 # Booking View
 def booking_view(request):
     if request.method == 'POST':
+        selected_date = request.POST.get('date', '').strip()
+        if not is_valid_class_date(selected_date):
+            messages.error(request, 'Please select the next available class date: Sunday, Tuesday, or Thursday.')
+            return render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
         data = {
             'name': request.POST.get('name', '').strip(),
             'phone': request.POST.get('phone', '').strip(),
@@ -45,7 +73,7 @@ def booking_view(request):
         else:
             messages.info(request, 'Booking प्राप्त भयो। हामी छिट्टै सम्पर्क गर्नेछौं।')
         return redirect('booking')
-    return render(request, 'booking.html')
+    return render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
 
 
 # =========================================================================

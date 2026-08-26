@@ -1,6 +1,10 @@
 from unittest.mock import patch
 
 from django.test import TestCase
+from django.utils import timezone
+from datetime import datetime
+
+from myapp.views import is_valid_class_date, next_class_date
 
 
 class DashboardAccessTests(TestCase):
@@ -65,6 +69,19 @@ class DashboardAccessTests(TestCase):
 
 
 class BookingFormTests(TestCase):
+	def test_next_class_date_obeys_ten_am_cutoff(self):
+		before_cutoff = timezone.make_aware(datetime(2026, 9, 1, 9, 59))
+		after_cutoff = timezone.make_aware(datetime(2026, 9, 1, 10, 0))
+
+		self.assertEqual(next_class_date(before_cutoff).isoformat(), '2026-09-01')
+		self.assertEqual(next_class_date(after_cutoff).isoformat(), '2026-09-03')
+
+	def test_only_next_class_date_is_accepted(self):
+		current = timezone.make_aware(datetime(2026, 9, 1, 11, 0))
+
+		self.assertTrue(is_valid_class_date('2026-09-03', current))
+		self.assertFalse(is_valid_class_date('2026-09-02', current))
+
 	@patch('myapp.views.save_client_booking', return_value=True)
 	def test_booking_submits_requested_fields(self, save_booking):
 		response = self.client.post('/booking/', {
@@ -75,7 +92,7 @@ class BookingFormTests(TestCase):
 			'address': 'Kathmandu',
 			'lot_number': 'LOT-7',
 			'service': 'Biometric',
-			'date': '2026-09-01',
+			'date': next_class_date().isoformat(),
 			'message': 'Please confirm.',
 		})
 

@@ -110,7 +110,8 @@
               <!-- Date -->
               <div class="col-md-12">
                 <label class="form-label fw-semibold">Preferred Date <span class="text-danger">*</span></label>
-                <input type="date" name="date" class="form-control" required>
+                <input type="date" name="date" id="preferredDate" class="form-control" min="{{ next_class_date }}" value="{{ next_class_date }}" required>
+                <div class="form-text"><i class="bi bi-info-circle me-1"></i>Classes are available on Sunday, Tuesday, and Thursday. Before 10:00 AM, today's class is available; after 10:00 AM, the next class date is shown.</div>
               </div>
 
               <!-- Message -->
@@ -134,4 +135,42 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (() => {
+    const dateInput = document.getElementById('preferredDate');
+    const allowedDays = new Set([0, 2, 4]);
+    const cutoffHour = 10;
+    const dateFromString = (value) => {
+      const [year, month, day] = value.split('-').map(Number);
+      return new Date(year, month - 1, day);
+    };
+    const formatDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+    const nextClassDate = () => {
+      const now = new Date();
+      const candidate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      if (!(allowedDays.has(candidate.getDay()) && now.getHours() < cutoffHour)) {
+        candidate.setDate(candidate.getDate() + 1);
+        while (!allowedDays.has(candidate.getDay())) candidate.setDate(candidate.getDate() + 1);
+      }
+      return formatDate(candidate);
+    };
+    const nextDate = nextClassDate();
+    dateInput.min = nextDate;
+    dateInput.value = nextDate;
+    dateInput.addEventListener('change', () => {
+      const selected = dateFromString(dateInput.value);
+      if (!allowedDays.has(selected.getDay()) || dateInput.value < nextDate) {
+        dateInput.value = nextDate;
+      }
+    });
+  })();
+</script>
 {% endblock %}
