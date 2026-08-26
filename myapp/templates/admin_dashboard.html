@@ -11,7 +11,7 @@
   }
 
   .dashboard-container {
-    padding: 20px 0 50px;
+    padding: 10px 0 50px;
   }
 
   /* Profile Card */
@@ -20,7 +20,6 @@
     border-radius: 20px;
     border: none;
     box-shadow: 0 10px 30px rgba(18, 60, 55, 0.08);
-    transition: transform 0.3s ease;
   }
 
   .profile-avatar-lg {
@@ -119,7 +118,6 @@
     border-radius: 8px;
     padding: 6px 10px;
     text-decoration: none;
-    transition: 0.2s;
   }
   .btn-action-call:hover {
     background: #059669;
@@ -133,7 +131,6 @@
     border-radius: 8px;
     padding: 6px 10px;
     text-decoration: none;
-    transition: 0.2s;
   }
   .btn-action-wa:hover {
     background: #16a34a;
@@ -264,7 +261,7 @@
                 {% if row.Email %}<div class="small text-muted"><i class="bi bi-envelope me-1"></i>{{ row.Email }}</div>{% endif %}
               </td>
               <td>
-                <span class="badge-service">{{ row.Service|default:row.Department|default:"General" }}</span>
+                <span class="badge-service">{{ row.Service|default:"General" }}</span>
               </td>
               <td>
                 <span class="badge bg-light text-dark border"><i class="bi bi-calendar-event me-1"></i>{{ row.Date|default:"-" }}</span>
@@ -333,7 +330,7 @@
 
 {% block extra_js %}
 <script>
-  // Table Search Filter Logic
+  // Search Filter
   document.getElementById('tableSearch').addEventListener('keyup', function () {
     const filter = this.value.toLowerCase();
     const rows = document.querySelectorAll('#bookingTable tbody tr');
