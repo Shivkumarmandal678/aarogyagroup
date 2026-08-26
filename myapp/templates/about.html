@@ -1,120 +1,285 @@
 {% extends "base.html" %}
 
-{% block title %}About & Chairman's Message | Aarogya Group{% endblock %}
+{% block title %}About & Leadership | Aarogya Group{% endblock %}
 
 {% block content %}
 <style>
-    .ag-about-hero { background: linear-gradient(120deg, #e9f8f2, #fff3df); border-radius: 0 0 25px 25px; }
-    .ag-about-panel { border-left: 4px solid #18a673; background: #f7fbf9; border-radius: 12px; }
-    .ag-chairman-photo { width: 100%; height: 380px; object-fit: cover; border-radius: 1.25rem; box-shadow: 0 1rem 2.5rem rgba(18, 60, 55, .18); }
-    .ag-quote { border-left: 4px solid #f4b942; background: #ffffff; border-radius: 12px; }
-    .ag-chairman-card { border-top: 3px solid #18a673; background: #ffffff; border-radius: 12px; }
-    .ag-journey-step { position: relative; padding-left: 3.25rem; }
-    .ag-journey-step::before { position: absolute; top: .2rem; left: 0; display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: 50%; background: #123c37; color: #f4b942; font-weight: 700; content: attr(data-step); }
-    .ag-about-contact { background: #123c37; color: #fff; border-radius: 16px; }
+    :root {
+        --ag-primary: #123c37;
+        --ag-accent: #18a673;
+        --ag-warning: #f4b942;
+    }
+
+    .ag-about-hero {
+        background: linear-gradient(120deg, #e9f8f2 0%, #ffffff 50%, #fff3df 100%);
+        border-radius: 0 0 25px 25px;
+    }
+
+    .ag-about-panel {
+        border-left: 4px solid var(--ag-accent);
+        background: #f7fbf9;
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+    }
+    .ag-about-panel:hover {
+        transform: translateY(-4px);
+    }
+
+    /* =========================================
+       3D LEADERSHIP CARDS STYLING
+       ========================================= */
+    .leadership-3d-stage {
+        perspective: 1200px;
+    }
+
+    .leader-3d-card {
+        background: #ffffff;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 15px 35px rgba(18, 60, 55, 0.08);
+        transform-style: preserve-3d;
+        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        overflow: hidden;
+        border-top: 4px solid var(--ag-accent);
+    }
+
+    .leader-3d-card:hover {
+        transform: translateY(-8px) rotateX(2deg) rotateY(-2deg) scale(1.01);
+        box-shadow: 0 25px 50px rgba(18, 60, 55, 0.16);
+    }
+
+    .leader-photo-box {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        transform: translateZ(20px);
+    }
+
+    .leader-photo {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .leader-3d-card:hover .leader-photo {
+        transform: scale(1.05);
+    }
+
+    .leader-badge-3d {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        background: rgba(18, 60, 55, 0.9);
+        backdrop-filter: blur(8px);
+        color: #ffffff;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transform: translateZ(30px);
+    }
+
+    .quote-box-3d {
+        background: #f8fafc;
+        border-left: 4px solid var(--ag-warning);
+        border-radius: 12px;
+        padding: 20px 24px;
+        position: relative;
+        transform: translateZ(15px);
+    }
+
+    .quote-box-3d.md-quote {
+        border-left-color: var(--ag-accent);
+        background: #f0fdf4;
+    }
+
+    .journey-step-box {
+        position: relative;
+        padding-left: 3.25rem;
+    }
+    .journey-step-box::before {
+        position: absolute;
+        top: 0.2rem;
+        left: 0;
+        display: grid;
+        width: 2.25rem;
+        height: 2.25rem;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--ag-primary);
+        color: var(--ag-warning);
+        font-weight: 700;
+        content: attr(data-step);
+    }
+
+    .ag-about-contact {
+        background: var(--ag-primary);
+        color: #fff;
+        border-radius: 18px;
+    }
 </style>
 
 <!-- Hero Section -->
-<section class="ag-about-hero py-5 mb-4">
+<section class="ag-about-hero py-5 mb-5 shadow-sm">
     <div class="container py-4">
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
-                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-building me-2"></i>About Aarogya Group</p>
-                <h1 class="display-5 fw-bold mb-3">Helping workers leave prepared, informed and confident.</h1>
-                <p class="lead text-secondary mb-4">Aarogya Orientation &amp; Training Center supports Nepali workers with medical biometric orientation, practical training, and clear pre-departure guidance for overseas employment.</p>
+                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 fs-6 mb-2">
+                    <i class="bi bi-building me-1"></i> About Aarogya Group
+                </span>
+                <h1 class="display-5 fw-bold text-dark mb-3">Helping workers leave prepared, informed, and confident.</h1>
+                <p class="lead text-secondary mb-4">Aarogya Orientation &amp; Training Center supports Nepali workers with medical biometric orientation, practical skills training, and transparent pre-departure guidance for overseas employment.</p>
                 <div class="d-flex flex-wrap gap-2">
-                    <a class="btn btn-ag-green px-4" href="{% url 'service' %}"><i class="bi bi-heart-pulse me-2"></i>Explore Services</a>
-                    <a class="btn btn-outline-success px-4" href="#chairman-section"><i class="bi bi-person-badge me-2"></i>Chairman's Message</a>
+                    <a class="btn btn-ag-green px-4 shadow-sm" href="{% url 'service' %}">
+                        <i class="bi bi-heart-pulse me-2"></i>Explore Services
+                    </a>
+                    <a class="btn btn-outline-success px-4" href="#leadership-section">
+                        <i class="bi bi-people-fill me-2"></i>Meet Our Leadership
+                    </a>
                 </div>
             </div>
             <div class="col-lg-4 text-center">
-                <i class="bi bi-person-vcard display-1 text-ag-green"></i>
+                <i class="bi bi-shield-check display-1 text-ag-green"></i>
                 <p class="h5 mt-3 mb-0 fw-bold text-dark">Prepare with clarity. Travel with confidence.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Purpose & Support -->
-<section class="py-4">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="ag-about-panel h-100 p-4 shadow-sm">
-                    <i class="bi bi-bullseye text-ag-green fs-2"></i>
-                    <h2 class="h4 fw-bold mt-3 text-dark">Our Purpose</h2>
-                    <p class="text-secondary mb-0">We make the medical and orientation process easier to understand, so workers can complete important steps with confidence before going abroad.</p>
-                </div>
+<!-- Purpose & Support Grid -->
+<section class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="ag-about-panel h-100 p-4 shadow-sm">
+                <i class="bi bi-bullseye text-ag-green fs-2"></i>
+                <h3 class="h4 fw-bold mt-3 text-dark">Our Purpose</h3>
+                <p class="text-secondary mb-0">We make the medical and biometric orientation process clear and transparent, ensuring that every worker understands each critical step before embarking on their journey abroad.</p>
             </div>
-            <div class="col-md-6">
-                <div class="ag-about-panel h-100 p-4 shadow-sm">
-                    <i class="bi bi-shield-check text-ag-green fs-2"></i>
-                    <h2 class="h4 fw-bold mt-3 text-dark">Our Support</h2>
-                    <p class="text-secondary mb-0">Our team provides practical information about medical requirements, biometric procedures, documents, workplace safety, and life overseas.</p>
-                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ag-about-panel h-100 p-4 shadow-sm">
+                <i class="bi bi-shield-lock text-ag-green fs-2"></i>
+                <h3 class="h4 fw-bold mt-3 text-dark">Our Support</h3>
+                <p class="text-secondary mb-0">Our expert team delivers verified guidance on medical requirements, biometric clearance, document preparation, occupational health, and destination workplace safety.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ================= CHAIRMAN'S SECTION ================= -->
-<section class="py-5" id="chairman-section">
-    <div class="container">
+
+<!-- ========================================================================= -->
+<!-- 3D LEADERSHIP SHOWCASE (CHAIRMAN & MANAGING DIRECTOR) -->
+<!-- ========================================================================= -->
+<section class="py-5" id="leadership-section">
+    <div class="container leadership-3d-stage">
+        
         <div class="text-center mb-5">
-            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 fs-6 mb-2"><i class="bi bi-person-badge me-1"></i>Leadership at Aarogya</span>
-            <h2 class="display-6 fw-bold text-dark">A Message from our Chairman</h2>
-            <p class="text-muted">Our responsibility is to help every worker begin an overseas journey with knowledge, dignity, and confidence.</p>
+            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 fs-6 mb-2">
+                <i class="bi bi-person-badge-fill me-1"></i> Executive Leadership
+            </span>
+            <h2 class="display-6 fw-bold text-dark">Messages from Our Leadership</h2>
+            <p class="text-muted" style="max-width: 650px; margin: 0 auto;">Dedicated to providing honest direction, dignified service, and modern operational excellence for every aspirant.</p>
         </div>
 
-        <div class="row g-5 align-items-center mb-5">
-            <div class="col-lg-5 text-center">
-                <img class="ag-chairman-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85" alt="Chairman Aarogya Group">
-                <div class="mt-3">
-                    <h5 class="fw-bold mb-0 text-dark">Chairman</h5>
-                    <p class="text-ag-green fw-semibold mb-0">Aarogya Group</p>
+        <div class="row g-5">
+            
+            <!-- 1. CHAIRMAN CARD (3D) -->
+            <div class="col-lg-6">
+                <div class="card leader-3d-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="leader-photo-box mb-4">
+                            <img class="leader-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85" alt="Chairman Aarogya Group">
+                            <div class="leader-badge-3d">
+                                <i class="bi bi-award-fill text-warning me-1"></i> Chairman
+                            </div>
+                        </div>
+
+                        <h3 class="fw-bold text-dark mb-1">Chairman's Message</h3>
+                        <p class="text-ag-green fw-semibold mb-3">Vision, Ethics &amp; Dignity</p>
+
+                        <div class="quote-box-3d mb-4">
+                            <p class="fs-6 mb-2 text-dark font-italic">
+                                “Every person who walks into Aarogya brings a dream for a better future. That dream deserves honest guidance, careful preparation, and genuine respect.”
+                            </p>
+                            <small class="text-muted d-block">— Chairman, Aarogya Group</small>
+                        </div>
+
+                        <p class="text-secondary small mb-3">
+                            We are committed to making biometric orientation, pre-departure training, and document protocols simple to understand. Our mission is to protect families and workers from misinformation.
+                        </p>
+                    </div>
+
+                    <div class="border-top pt-3 mt-2">
+                        <small class="fw-bold text-dark"><i class="bi bi-check2-circle text-success me-1"></i>Core Advice: </small>
+                        <small class="text-muted">Always understand every contract and medical report before travel.</small>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-7">
-                <div class="ag-quote p-4 p-lg-5 shadow-sm mb-4">
-                    <p class="fs-5 mb-3 text-dark font-italic">“Every person who comes to Aarogya brings a hope for a better future. We believe that hope deserves honest guidance, careful preparation, and respectful support.”</p>
-                    <p class="text-secondary mb-0">We are committed to making medical biometric orientation, pre-departure training, document guidance, and travel preparation easier to understand. Our team works so that workers and their families can make informed decisions before the journey begins.</p>
-                </div>
-                <div class="ag-chairman-card p-4 shadow-sm">
-                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-compass text-ag-green me-2"></i>Chairman's Advice to Every Worker:</h5>
-                    <ul class="text-secondary ps-3 mb-0">
-                        <li class="mb-2">Ask questions and understand each step before signing or travelling.</li>
-                        <li class="mb-2">Keep your passport, medical reports, receipts, and contact details secure.</li>
-                        <li class="mb-2">Follow medical and biometric instructions carefully and arrive on time.</li>
-                        <li>Respect local laws, workplace safety rules, and the culture of your destination.</li>
-                    </ul>
+
+            <!-- 2. MANAGING DIRECTOR (MD) CARD (3D) -->
+            <div class="col-lg-6">
+                <div class="card leader-3d-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between" style="border-top-color: #0284c7;">
+                    <div>
+                        <div class="leader-photo-box mb-4">
+                            <img class="leader-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=85" alt="Managing Director Aarogya Group">
+                            <div class="leader-badge-3d" style="background: rgba(2, 132, 199, 0.9);">
+                                <i class="bi bi-gear-wide-connected text-warning me-1"></i> Managing Director
+                            </div>
+                        </div>
+
+                        <h3 class="fw-bold text-dark mb-1">Managing Director's Message</h3>
+                        <p class="text-primary fw-semibold mb-3">Operational Excellence &amp; Worker Welfare</p>
+
+                        <div class="quote-box-3d md-quote mb-4">
+                            <p class="fs-6 mb-2 text-dark font-italic">
+                                “Our priority is seamless operations, modern digital systems, and personalized care across every branch in Nepal so no applicant feels stranded.”
+                            </p>
+                            <small class="text-muted d-block">— Managing Director, Aarogya Group</small>
+                        </div>
+
+                        <p class="text-secondary small mb-3">
+                            Through continuous digital upgrades, strict medical compliance, and dedicated orientation staff, we ensure that every batch of workers transitions smoothly from our centers to international workplaces.
+                        </p>
+                    </div>
+
+                    <div class="border-top pt-3 mt-2">
+                        <small class="fw-bold text-dark"><i class="bi bi-shield-fill-check text-primary me-1"></i>Operational Focus: </small>
+                        <small class="text-muted">Fast digital reporting, friendly orientation &amp; 24/7 applicant support.</small>
+                    </div>
                 </div>
             </div>
+
         </div>
+
     </div>
 </section>
 
-<!-- The Journey Steps -->
-<section class="py-5 bg-light rounded-4 my-4">
+
+<!-- The 3-Step Aarogya Journey -->
+<section class="py-5 bg-light rounded-4 my-5">
     <div class="container">
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
-                <p class="text-ag-green fw-semibold mb-2">The Aarogya Journey</p>
+                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 fs-6 mb-2">The Process</span>
                 <h2 class="display-6 fw-bold text-dark">One clear step at a time.</h2>
-                <p class="text-secondary mb-0">Our work continues beyond a single appointment. We help people understand what comes next and prepare for it properly.</p>
+                <p class="text-secondary mb-0">Our work continues beyond a single appointment. We help you understand what comes next and prepare for it systematically.</p>
             </div>
             <div class="col-lg-7">
                 <div class="d-flex flex-column gap-4">
-                    <div class="ag-journey-step" data-step="1">
-                        <h3 class="h5 fw-bold mb-1 text-dark">Understand</h3>
-                        <p class="text-secondary mb-0">Learn about medical, biometric, document, and orientation requirements.</p>
+                    <div class="journey-step-box" data-step="1">
+                        <h4 class="h5 fw-bold mb-1 text-dark">1. Understand</h4>
+                        <p class="text-secondary mb-0">Learn about medical standards, biometric requirements, and pre-departure document checklists.</p>
                     </div>
-                    <div class="ag-journey-step" data-step="2">
-                        <h3 class="h5 fw-bold mb-1 text-dark">Prepare</h3>
-                        <p class="text-secondary mb-0">Complete training, organize documents, and ask the questions that matter.</p>
+                    <div class="journey-step-box" data-step="2">
+                        <h4 class="h5 fw-bold mb-1 text-dark">2. Prepare</h4>
+                        <p class="text-secondary mb-0">Complete practical safety orientations, health screenings, and clarify all your queries.</p>
                     </div>
-                    <div class="ag-journey-step" data-step="3">
-                        <h3 class="h5 fw-bold mb-1 text-dark">Move forward</h3>
-                        <p class="text-secondary mb-0">Travel with greater confidence, responsibility, and readiness for the future.</p>
+                    <div class="journey-step-box" data-step="3">
+                        <h4 class="h5 fw-bold mb-1 text-dark">3. Move Forward</h4>
+                        <p class="text-secondary mb-0">Travel abroad with complete readiness, official clearances, and total peace of mind.</p>
                     </div>
                 </div>
             </div>
@@ -122,22 +287,31 @@
     </div>
 </section>
 
-<!-- Branches & Contact -->
+
+<!-- Branches & Contact Banner -->
 <section class="ag-about-contact p-4 p-lg-5 mt-5 shadow">
     <div class="container">
         <div class="row align-items-center g-4">
             <div class="col-lg-7">
-                <p class="text-warning fw-semibold mb-2"><i class="bi bi-geo-alt me-2"></i>Branches across Nepal</p>
-                <h2 class="h2 fw-bold mb-3">Visit Aarogya Near You</h2>
-                <p class="text-white-50 mb-0">Find us in Lahan, Mirchaiya, Janakpur, and Kathmandu. Every branch offers orientation and medical support for your overseas journey.</p>
+                <p class="text-warning fw-semibold mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Nationwide Branch Network</p>
+                <h2 class="h2 fw-bold mb-3 text-white">Visit Aarogya Near You</h2>
+                <p class="text-white-50 mb-0">Operational centers across Lahan, Mirchaiya, Janakpur, and Kathmandu providing standardized orientation and medical support.</p>
             </div>
             <div class="col-lg-5 text-lg-end">
                 <div class="d-flex flex-column gap-2">
-                    <a class="text-white text-decoration-none fs-5" href="tel:9801196900"><i class="bi bi-telephone text-warning me-2"></i>9801196900</a>
-                    <a class="text-white text-decoration-none" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope text-warning me-2"></i>aarogyamc@gmail.com</a>
+                    <a class="text-white text-decoration-none fs-5" href="tel:9801196900">
+                        <i class="bi bi-telephone text-warning me-2"></i>9801196900
+                    </a>
+                    <a class="text-white text-decoration-none" href="mailto:aarogyamc@gmail.com">
+                        <i class="bi bi-envelope text-warning me-2"></i>aarogyamc@gmail.com
+                    </a>
                     <div class="mt-3">
-                        <a class="btn btn-warning px-4 fw-bold me-2" href="tel:9801196900"><i class="bi bi-telephone me-1"></i>Call Now</a>
-                        <a class="btn btn-outline-light px-4" href="{% url 'service' %}#branches">View Branches</a>
+                        <a class="btn btn-warning px-4 fw-bold me-2 text-dark shadow-sm" href="tel:9801196900">
+                            <i class="bi bi-telephone-fill me-1"></i>Call Now
+                        </a>
+                        <a class="btn btn-outline-light px-4" href="{% url 'service' %}#branches">
+                            View All Branches
+                        </a>
                     </div>
                 </div>
             </div>
