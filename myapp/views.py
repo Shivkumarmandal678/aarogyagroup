@@ -4,7 +4,8 @@ from .google_sheets import (
     save_client_booking,
     authenticate_user,
     update_admin_password_sheet,
-    get_all_client_bookings
+    get_all_client_bookings,
+    SHEET_ID,
 )
 
 # Public Views
@@ -45,8 +46,8 @@ def booking_view(request):
 
 def get_role_redirect(role_name):
     """Role अनुसार सहि Dashboard URL Path छान्ने Helper"""
-    role = str(role_name).strip().lower()
-    if 'admin' in role or 'owner' in role or 'super' in role:
+    role = ''.join(char for char in str(role_name).strip().lower() if char.isalnum())
+    if role in {'admin', 'administrator', 'owner', 'superadmin'}:
         return 'admin_dashboard'
     elif 'doctor' in role or 'medical' in role:
         return 'doctor_dashboard'
@@ -55,6 +56,32 @@ def get_role_redirect(role_name):
     elif 'staff' in role or 'reception' in role or 'employee' in role:
         return 'staff_dashboard'
     return 'user_dashboard'
+
+
+def _logged_in_user(request):
+    return request.session.get('admin_user')
+
+
+def _is_admin(user):
+    role = ''.join(char for char in str(user.get('role', '')).strip().lower() if char.isalnum())
+    return role in {'admin', 'administrator', 'owner', 'superadmin'}
+
+
+def _require_dashboard_role(request, role):
+    """Allow admins everywhere, but keep each other role on its own portal."""
+    user = _logged_in_user(request)
+    if not user:
+        return None, redirect('admin_login')
+    if not _is_admin(user) and get_role_redirect(user.get('role')) != role:
+        return user, redirect(get_role_redirect(user.get('role')))
+    return user, None
+
+
+def _dashboard_context(user, **extra):
+    return {
+        'sheet_url': f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit',
+        **extra,
+    }
 
 
 def admin_login_view(request):
@@ -96,62 +123,62 @@ def dashboard_redirect_view(request):
 # 1. ADMIN DASHBOARD
 # =========================================================================
 def admin_dashboard_view(request):
-    admin = request.session.get('admin_user')
-    if not admin:
-        return redirect('admin_login')
+    admin, response = _require_dashboard_role(request, 'admin_dashboard')
+    if response:
+        return response
     bookings = get_all_client_bookings()
     if isinstance(bookings, list) and len(bookings) > 0:
         bookings = list(reversed(bookings))
-    return render(request, 'admin_dashboard.html', {'admin': admin, 'bookings': bookings})
+    return render(request, 'admin_dashboard.html', _dashboard_context(admin, admin=admin, bookings=bookings))
 
 
 # =========================================================================
 # 2. STAFF DASHBOARD
 # =========================================================================
 def staff_dashboard_view(request):
-    staff = request.session.get('admin_user')
-    if not staff:
-        return redirect('admin_login')
+    staff, response = _require_dashboard_role(request, 'staff_dashboard')
+    if response:
+        return response
     bookings = get_all_client_bookings()
     if isinstance(bookings, list) and len(bookings) > 0:
         bookings = list(reversed(bookings))
-    return render(request, 'staff_dashboard.html', {'staff': staff, 'bookings': bookings})
+    return render(request, 'staff_dashboard.html', _dashboard_context(staff, staff=staff, bookings=bookings))
 
 
 # =========================================================================
 # 3. DOCTOR DASHBOARD
 # =========================================================================
 def doctor_dashboard_view(request):
-    doctor = request.session.get('admin_user')
-    if not doctor:
-        return redirect('admin_login')
+    doctor, response = _require_dashboard_role(request, 'doctor_dashboard')
+    if response:
+        return response
     bookings = get_all_client_bookings()
     if isinstance(bookings, list) and len(bookings) > 0:
         bookings = list(reversed(bookings))
-    return render(request, 'doctor_dashboard.html', {'doctor': doctor, 'bookings': bookings})
+    return render(request, 'doctor_dashboard.html', _dashboard_context(doctor, doctor=doctor, bookings=bookings))
 
 
 # =========================================================================
 # 4. MANAGER DASHBOARD
 # =========================================================================
 def manager_dashboard_view(request):
-    manager = request.session.get('admin_user')
-    if not manager:
-        return redirect('admin_login')
+    manager, response = _require_dashboard_role(request, 'manager_dashboard')
+    if response:
+        return response
     bookings = get_all_client_bookings()
     if isinstance(bookings, list) and len(bookings) > 0:
         bookings = list(reversed(bookings))
-    return render(request, 'manager_dashboard.html', {'manager': manager, 'bookings': bookings})
+    return render(request, 'manager_dashboard.html', _dashboard_context(manager, manager=manager, bookings=bookings))
 
 
 # =========================================================================
 # 5. GENERAL USER DASHBOARD
 # =========================================================================
 def user_dashboard_view(request):
-    user = request.session.get('admin_user')
-    if not user:
-        return redirect('admin_login')
-    return render(request, 'user_dashboard.html', {'user': user})
+    user, response = _require_dashboard_role(request, 'user_dashboard')
+    if response:
+        return response
+    return render(request, 'user_dashboard.html', _dashboard_context(user, user=user))
 
 
 # Password Change & Logout

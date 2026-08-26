@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard_base.html' %}
 
 {% block title %}Admin Dashboard | Aarogya Group{% endblock %}
 
@@ -203,7 +203,7 @@
                 <small class="text-muted">Directly manage, edit or export booking data in Google Sheets</small>
               </div>
             </div>
-            <a href="https://docs.google.com/spreadsheets/d/1iRNlkAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg/edit" target="_blank" class="btn btn-warning fw-bold text-dark rounded-pill px-3 py-2 btn-sm shadow-sm">
+              <a href="{{ sheet_url }}" target="_blank" class="btn btn-warning fw-bold text-dark rounded-pill px-3 py-2 btn-sm shadow-sm">
               <i class="bi bi-box-arrow-up-right me-1"></i> Open Sheet
             </a>
           </div>
