@@ -104,12 +104,6 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'chairman' %}active{% endif %}" href="{% url 'chairman' %}">
-                        <i class="bi bi-person-badge me-2" aria-hidden="true"></i>Chairman
-                    </a>
-                </li>
-                
-                <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}">
                         <i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services
                     </a>
@@ -121,7 +115,7 @@
                     </a>
                 </li>
 
-                <!-- Admin Dynamic Button (Logged In / Logged Out) -->
+                <!-- Admin Dynamic Link -->
                 {% if request.session.admin_user %}
                 <li class="nav-item ms-lg-2">
                     <a class="nav-link ag-nav-link text-success fw-bold bg-light border" href="{% url 'admin_dashboard' %}">

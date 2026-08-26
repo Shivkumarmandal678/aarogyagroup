@@ -14,9 +14,6 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
-def chairman(request):
-    return render(request, 'chairman.html')
-
 def service(request):
     return render(request, 'services.html')
 
@@ -73,13 +70,13 @@ def admin_login_view(request):
     return render(request, 'admin_login.html')
 
 def admin_dashboard_view(request):
+    """Admin Dashboard"""
     admin = request.session.get('admin_user')
     if not admin:
         messages.warning(request, 'कृपया पहिले लगइन गर्नुहोस्!')
         return redirect('admin_login')
 
     bookings = get_all_client_bookings()
-    # नयाँ बुकिंग माथि देखाउन list लाई reverse गर्ने
     if isinstance(bookings, list):
         bookings = list(reversed(bookings))
 
@@ -110,7 +107,7 @@ def admin_change_password_view(request):
     return redirect('admin_dashboard')
 
 def admin_logout_view(request):
-    """Admin Session हटाएर Logout गर्ने"""
+    """Admin Logout"""
     if 'admin_user' in request.session:
         del request.session['admin_user']
     messages.success(request, 'सफलतापूर्वक लगआउट हुनुभयो।')
