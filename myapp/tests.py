@@ -63,3 +63,26 @@ class DashboardAccessTests(TestCase):
 		self.assertTemplateUsed(response, 'dashboard_base.html')
 		get_bookings.assert_called_once()
 
+
+class BookingFormTests(TestCase):
+	@patch('myapp.views.save_client_booking', return_value=True)
+	def test_booking_submits_requested_fields(self, save_booking):
+		response = self.client.post('/booking/', {
+			'name': 'Test Client',
+			'phone': '9812345678',
+			'email': 'client@example.com',
+			'passport_number': 'P1234567',
+			'address': 'Kathmandu',
+			'lot_number': 'LOT-7',
+			'service': 'Biometric',
+			'date': '2026-09-01',
+			'message': 'Please confirm.',
+		})
+
+		self.assertRedirects(response, '/booking/')
+		submitted = save_booking.call_args.args[0]
+		self.assertEqual(submitted['passport_number'], 'P1234567')
+		self.assertEqual(submitted['address'], 'Kathmandu')
+		self.assertEqual(submitted['lot_number'], 'LOT-7')
+		self.assertEqual(submitted['service'], 'Biometric')
+

@@ -64,10 +64,10 @@
                 <input type="text" name="name" class="form-control" placeholder="Enter Full Name" required>
               </div>
 
-              <!-- Phone -->
+              <!-- Mobile Number -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
-                <input type="tel" name="phone" class="form-control" placeholder="98XXXXXXXX" required>
+                <label class="form-label fw-semibold">Mobile Number <span class="text-danger">*</span></label>
+                <input type="tel" name="phone" class="form-control" placeholder="98XXXXXXXX" inputmode="tel" pattern="[0-9+ ()-]{7,20}" required>
               </div>
 
               <!-- Email -->
@@ -76,16 +76,34 @@
                 <input type="email" name="email" class="form-control" placeholder="example@gmail.com">
               </div>
 
-              <!-- Service / Department -->
+              <!-- Passport Number -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Passport Number <span class="text-muted small">(Optional)</span></label>
+                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off">
+              </div>
+
+              <!-- Address -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Address <span class="text-muted small">(Optional)</span></label>
+                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address">
+              </div>
+
+              <!-- Lot Number -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Lot Number <span class="text-muted small">(Optional)</span></label>
+                <input type="text" name="lot_number" class="form-control" placeholder="Enter lot number">
+              </div>
+
+              <!-- Service -->
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Service <span class="text-danger">*</span></label>
                 <select name="service" class="form-select" required>
                   <option value="" selected disabled>Select Service</option>
-                  <option value="Medical Biometric Orientation">Medical Biometric Orientation</option>
-                  <option value="Pre-departure Training">Pre-departure Training</option>
-                  <option value="Document Guidance">Document Guidance</option>
-                  <option value="General Health Checkup">General Health Checkup</option>
-                  <option value="Other Support">Other Support</option>
+                  <option value="Medical">Medical</option>
+                  <option value="Orientation">Orientation</option>
+                  <option value="Biometric">Biometric</option>
+                  <option value="Ticket">Ticket</option>
+                  <option value="Shram">Shram</option>
                 </select>
               </div>
 

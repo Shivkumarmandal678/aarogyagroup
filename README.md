@@ -62,3 +62,9 @@ Report workflow is sequential: a doctor creates the report, a manager approves
 it, staff gives the final approval, and only then does it become visible in the
 user dashboard. Admin can manage all records; other roles receive only their
 role-specific actions and records.
+
+The `Booking` tab should use this header row for the public booking form:
+
+```text
+Timestamp,Name,Phone,Email,Passport_Number,Address,Lot_Number,Service,Date,Message,Status
+```
