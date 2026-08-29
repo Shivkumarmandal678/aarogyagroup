@@ -63,8 +63,8 @@ it, staff gives the final approval, and only then does it become visible in the
 user dashboard. Admin can manage all records; other roles receive only their
 role-specific actions and records.
 
-The `Booking` tab should use this header row for the public booking form:
+The `Booking` tab should use this header row for the public booking form. `Timestamp` and `Status` are generated server-side and are not form fields:
 
 ```text
-Timestamp,Name,Phone,Email,Passport_Number,Address,Lot_Number,Service,Date,Message,Status
+Timestamp,Name,Phone,Email,Address,Passport_Number,Lot_Number,Service,Date,Message,Status
 ```

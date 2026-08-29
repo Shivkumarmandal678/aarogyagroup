@@ -91,6 +91,45 @@ class PerformanceHeaderTests(TestCase):
 
 
 class BookingFormTests(TestCase):
+	def test_booking_page_renders_form_fields_without_server_fields(self):
+		response = self.client.get('/booking/')
+
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'booking.html')
+		for field in ('name="name"', 'name="phone"', 'name="email"', 'name="address"', 'name="passport_number"', 'name="lot_number"', 'name="service"', 'name="date"', 'name="message"'):
+			self.assertContains(response, field, html=False)
+		self.assertNotContains(response, 'name="timestamp"', html=False)
+		self.assertNotContains(response, 'name="status"', html=False)
+
+	def test_booking_page_has_cache_header(self):
+		response = self.client.get('/booking/')
+
+		self.assertIn('public', response.headers['Cache-Control'])
+		self.assertIn('Accept-Encoding', response.headers['Vary'])
+
+	def test_invalid_date_does_not_save_booking(self):
+		with patch('myapp.views.save_client_booking') as save_booking:
+			response = self.client.post('/booking/', {
+				'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
+				'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+				'date': '2099-01-01', 'message': 'Please confirm.',
+			})
+
+		self.assertEqual(response.status_code, 200)
+		save_booking.assert_not_called()
+		self.assertContains(response, 'Please select the next available class date', html=False)
+
+	@patch('myapp.views.save_client_booking', return_value=False)
+	def test_failed_sheet_save_still_redirects(self, save_booking):
+		response = self.client.post('/booking/', {
+			'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
+			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+			'date': next_class_date().isoformat(), 'message': 'Please confirm.',
+		})
+
+		self.assertRedirects(response, '/booking/')
+		save_booking.assert_called_once()
+
 	def test_next_class_date_obeys_ten_am_cutoff(self):
 		before_cutoff = timezone.make_aware(datetime(2026, 9, 1, 9, 59))
 		after_cutoff = timezone.make_aware(datetime(2026, 9, 1, 10, 0))

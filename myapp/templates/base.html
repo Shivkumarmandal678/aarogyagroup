@@ -18,7 +18,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Aarogya Group | Medical Biometric Orientation & Training Center in Lahan, Nepal">
     <meta property="og:description" content="Medical biometric orientation, pre-departure training, and worker support for people preparing for overseas employment from Lahan, Nepal.">
-    <meta property="og:url" content="https://aarogyagroup.com.np/">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <meta property="og:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85">
     <meta property="og:site_name" content="Aarogya Group">
     <meta property="og:locale" content="en_US">
@@ -26,13 +26,12 @@
     <meta name="twitter:title" content="Aarogya Group | Medical Biometric Orientation & Training Center">
     <meta name="twitter:description" content="Trust Aarogya Group for medical biometric orientation and overseas job preparation support in Lahan, Nepal.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85">
-    <link rel="canonical" href="https://aarogyagroup.com.np/">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://images.unsplash.com">
     <title>{% block title %}Aarogya Group | Medical Biometric Orientation & Training Center in Lahan, Nepal{% endblock %}</title>
 
     <!-- Bootstrap 5 CSS -->
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" onload="this.rel='stylesheet'">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
@@ -103,7 +102,7 @@
         </button>
         <aside class="ag-chatbot-panel" id="chatbotPanel" aria-hidden="true" aria-label="Aarogya chatbot">
             <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i>Aarogya Assistant</strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
-            <iframe class="ag-chatbot-frame" src="{% url 'chatbot' %}?embed=1" title="Aarogya chatbot"></iframe>
+            <iframe class="ag-chatbot-frame" src="{% url 'chatbot' %}?embed=1" title="Aarogya chatbot" loading="lazy"></iframe>
             <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}">Open full chatbot page <i class="bi bi-arrow-up-right ms-1"></i></a>
         </aside>
 
@@ -133,10 +132,6 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
-
-    <script>
-        document.documentElement.lang = 'en';
-    </script>
 
     {% block extra_js %}{% endblock %}
 </body>
