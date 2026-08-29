@@ -75,18 +75,18 @@
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Email Address</label>
-                <input type="email" name="email" class="form-control" placeholder="example@gmail.com">
+                <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                <input type="email" name="email" class="form-control" placeholder="example@gmail.com" value="{{ email|default:'' }}" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Passport Number <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" value="{{ passport_number|default:'' }}">
+                <label class="form-label fw-semibold">Passport Number <span class="text-danger">*</span></label>
+                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" value="{{ passport_number|default:'' }}" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Address <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" value="{{ address|default:'' }}">
+                <label class="form-label fw-semibold">Address <span class="text-danger">*</span></label>
+                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" value="{{ address|default:'' }}" required>
               </div>
 
               <div class="col-md-6">
@@ -120,8 +120,8 @@
               </div>
 
               <div class="col-12">
-                <label class="form-label fw-semibold">Remarks / Message</label>
-                <textarea name="message" class="form-control" rows="3" placeholder="Any specific requirements or questions..."></textarea>
+                <label class="form-label fw-semibold">Remarks / Message <span class="text-danger">*</span></label>
+                <textarea name="message" class="form-control" rows="3" placeholder="Any specific requirements or questions..." required>{{ message|default:'' }}</textarea>
               </div>
 
               <div class="col-12 mt-4">

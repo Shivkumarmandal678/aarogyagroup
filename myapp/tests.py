@@ -105,14 +105,14 @@ class BookingFormTests(TestCase):
 		self.assertFalse(is_valid_class_date('2026-09-02', current))
 
 	@patch('myapp.views.save_client_booking', return_value=True)
-	def test_booking_submits_requested_fields(self, save_booking):
+	def test_booking_submits_required_fields_and_optional_lot(self, save_booking):
 		response = self.client.post('/booking/', {
 			'name': 'Test Client',
 			'phone': '9812345678',
 			'email': 'client@example.com',
 			'passport_number': 'P1234567',
 			'address': 'Kathmandu',
-			'lot_number': 'LOT-7',
+			'lot_number': '',
 			'service': 'Biometric',
 			'date': next_class_date().isoformat(),
 			'message': 'Please confirm.',
@@ -122,7 +122,7 @@ class BookingFormTests(TestCase):
 		submitted = save_booking.call_args.args[0]
 		self.assertEqual(submitted['passport_number'], 'P1234567')
 		self.assertEqual(submitted['address'], 'Kathmandu')
-		self.assertEqual(submitted['lot_number'], 'LOT-7')
+		self.assertEqual(submitted['lot_number'], '')
 		self.assertEqual(submitted['service'], 'Biometric')
 
 	@patch('myapp.views.save_client_booking')
@@ -143,15 +143,15 @@ class BookingFormTests(TestCase):
 		save_booking.assert_not_called()
 		self.assertContains(response, 'Demo or fake', html=False)
 
-	@patch('myapp.views.save_client_booking', return_value=True)
-	def test_requires_passport_or_address(self, save_booking):
+	@patch('myapp.views.save_client_booking')
+	def test_requires_all_fields_except_lot(self, save_booking):
 		response = self.client.post('/booking/', {
 			'name': 'Test Client',
 			'phone': '9812345678',
-			'email': 'client@example.com',
-			'passport_number': '',
-			'address': '',
-			'lot_number': '7',
+			'email': '',
+			'passport_number': 'P1234567',
+			'address': 'Kathmandu',
+			'lot_number': '',
 			'service': 'Biometric',
 			'date': next_class_date().isoformat(),
 			'message': 'Please confirm.',
@@ -159,7 +159,7 @@ class BookingFormTests(TestCase):
 
 		self.assertEqual(response.status_code, 200)
 		save_booking.assert_not_called()
-		self.assertContains(response, 'Please fill at least one of Passport Number or Address', html=False)
+		self.assertContains(response, 'Please fill in all required fields', html=False)
 
 	def test_public_pages_are_english_only(self):
 		response = self.client.get('/chatbot/')

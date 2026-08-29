@@ -184,7 +184,7 @@ def save_client_booking(data):
     if looks_like_demo_submission(data):
         return False
 
-    required = ['name', 'phone', 'email', 'service', 'date']
+    required = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'date', 'message']
     if any(not str(data.get(field, '')).strip() for field in required):
         return False
 

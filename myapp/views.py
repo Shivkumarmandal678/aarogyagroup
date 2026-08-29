@@ -112,8 +112,9 @@ def booking_view(request):
             'date': request.POST.get('date', '').strip(),
             'message': request.POST.get('message', '').strip(),
         }
-        if not data['passport_number'] and not data['address']:
-            messages.error(request, 'Please fill at least one of Passport Number or Address before submitting the booking.')
+        required_fields = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'date', 'message']
+        if any(not data.get(field, '').strip() for field in required_fields):
+            messages.error(request, 'Please fill in all required fields. Lot number is optional, but all other fields must be completed.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
