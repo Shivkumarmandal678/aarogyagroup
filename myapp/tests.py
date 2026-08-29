@@ -143,6 +143,24 @@ class BookingFormTests(TestCase):
 		save_booking.assert_not_called()
 		self.assertContains(response, 'Demo or fake', html=False)
 
+	@patch('myapp.views.save_client_booking', return_value=True)
+	def test_requires_passport_or_address(self, save_booking):
+		response = self.client.post('/booking/', {
+			'name': 'Test Client',
+			'phone': '9812345678',
+			'email': 'client@example.com',
+			'passport_number': '',
+			'address': '',
+			'lot_number': '7',
+			'service': 'Biometric',
+			'date': next_class_date().isoformat(),
+			'message': 'Please confirm.',
+		})
+
+		self.assertEqual(response.status_code, 200)
+		save_booking.assert_not_called()
+		self.assertContains(response, 'Please fill at least one of Passport Number or Address', html=False)
+
 	def test_public_pages_are_english_only(self):
 		response = self.client.get('/chatbot/')
 		self.assertEqual(response.status_code, 200)

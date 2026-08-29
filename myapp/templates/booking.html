@@ -81,17 +81,24 @@
 
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Passport Number <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" inputmode="text" pattern="[A-Za-z0-9-]{3,20}">
+                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" value="{{ passport_number|default:'' }}">
               </div>
 
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Address <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" inputmode="text" pattern="[A-Za-z0-9 ,./#-]{3,200}">
+                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" value="{{ address|default:'' }}">
               </div>
 
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Lot Number <span class="text-muted small">(Optional)</span></label>
-                <input type="number" name="lot_number" class="form-control" placeholder="Enter lot number" min="1" step="1">
+                <select name="lot_number" class="form-select">
+                  <option value="" {% if not lot_number %}selected{% endif %}>Select lot number</option>
+                  <option value="1" {% if lot_number == '1' %}selected{% endif %}>1</option>
+                  <option value="2" {% if lot_number == '2' %}selected{% endif %}>2</option>
+                  <option value="3" {% if lot_number == '3' %}selected{% endif %}>3</option>
+                  <option value="4" {% if lot_number == '4' %}selected{% endif %}>4</option>
+                  <option value="5" {% if lot_number == '5' %}selected{% endif %}>5</option>
+                </select>
               </div>
 
               <div class="col-md-6">

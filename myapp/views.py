@@ -112,6 +112,11 @@ def booking_view(request):
             'date': request.POST.get('date', '').strip(),
             'message': request.POST.get('message', '').strip(),
         }
+        if not data['passport_number'] and not data['address']:
+            messages.error(request, 'Please fill at least one of Passport Number or Address before submitting the booking.')
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), **data})
+            response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+            return response
         if looks_like_demo_submission(data):
             messages.error(request, 'Demo or fake booking entries are blocked. Please enter your real details only.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
