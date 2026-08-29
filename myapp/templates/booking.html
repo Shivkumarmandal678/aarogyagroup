@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Book Appointment | Aarogya Group | Lahan Orientation & Medical Services{% endblock %}
+{% block title %}Book Appointment | Aarogya Group | Medical & Orientation Services in Lahan{% endblock %}
 {% block extra_head %}
-<meta name="description" content="Book an appointment with Aarogya Group for medical orientation, biometric support, training, and overseas-ready services in Lahan, Nepal.">
-<meta name="keywords" content="book appointment Aarogya Group, orientation booking Lahan, medical appointment Nepal, biometric support booking, Aarogya booking">
-<meta property="og:title" content="Book Appointment with Aarogya Group">
-<meta property="og:description" content="Book your medical or orientation appointment with Aarogya Group in Lahan, Nepal.">
+<meta name="description" content="Book your appointment with Aarogya Group for medical biometric orientation, overseas preparation support, and training services in Lahan, Nepal.">
+<meta name="keywords" content="book appointment Aarogya Group, orientation booking Lahan, medical appointment Nepal, biometric support booking, worker training appointment, Aarogya booking">
+<meta property="og:title" content="Book Appointment with Aarogya Group | Lahan, Nepal">
+<meta property="og:description" content="Reserve your medical orientation, biometric support, or overseas preparation appointment with Aarogya Group in Lahan, Nepal.">
+<meta property="og:type" content="website">
 {% endblock %}
 
 {% block content %}
@@ -80,13 +81,13 @@
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Passport Number <span class="text-danger">*</span></label>
-                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" value="{{ passport_number|default:'' }}" required>
+                <label class="form-label fw-semibold">Address <span class="text-danger">*</span></label>
+                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" value="{{ address|default:'' }}" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Address <span class="text-danger">*</span></label>
-                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" value="{{ address|default:'' }}" required>
+                <label class="form-label fw-semibold">Passport Number <span class="text-danger">*</span></label>
+                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" value="{{ passport_number|default:'' }}" required>
               </div>
 
               <div class="col-md-6">
