@@ -16,7 +16,11 @@ CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.environ.get('CSRF_TRUSTE
 
 # Fallback hosts if .env empty
 if not ALLOWED_HOSTS:
-    ALLOWED_HOSTS = ['shiv6881.pythonanywhere.com', 'aarogyagroup.com.np', 'www.aarogyagroup.com.np', 'localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['shiv6881.pythonanywhere.com', 'aarogyagroup.com.np', 'www.aarogyagroup.com.np', 'localhost', '127.0.0.1', 'testserver']
+
+# Also allow Django test client host for verification runs.
+if 'testserver' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('testserver')
 
 # Application definition
 INSTALLED_APPS = [
@@ -31,6 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -44,7 +49,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

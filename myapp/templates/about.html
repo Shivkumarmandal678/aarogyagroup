@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}About & Leadership | Aarogya Group{% endblock %}
+{% block title %}About Aarogya Group | Leadership, Purpose & Overseas Training Support{% endblock %}
+{% block extra_head %}
+<meta name="description" content="Learn about Aarogya Group, our leadership, purpose, and trusted overseas worker orientation and training support in Lahan, Nepal.">
+<meta name="keywords" content="about Aarogya Group, Aarogya Group leadership, overseas training center, medical orientation center Lahan, worker support Nepal">
+<meta property="og:title" content="About Aarogya Group | Leadership & Overseas Readiness">
+<meta property="og:description" content="Aarogya Group supports workers with clear guidance, ethical support, and practical preparation before overseas employment.">
+{% endblock %}
 
 {% block content %}
 <style>
@@ -128,22 +134,22 @@
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
                 <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 fs-6 mb-2">
-                    <i class="bi bi-building me-1"></i> About Aarogya Group
+                    <i class="bi bi-building me-1"></i> <span data-lang="en">About Aarogya Group</span><span data-lang="ne">आरोग्य समूहको बारेमा</span>
                 </span>
-                <h1 class="display-5 fw-bold text-dark mb-3">Helping workers leave prepared, informed, and confident.</h1>
-                <p class="lead text-secondary mb-4">Aarogya Orientation &amp; Training Center supports Nepali workers with medical biometric orientation, practical skills training, and transparent pre-departure guidance for overseas employment.</p>
+                <h1 class="display-5 fw-bold text-dark mb-3"><span data-lang="en">Helping workers leave prepared, informed, and confident.</span><span data-lang="ne">कामदारलाई तयार, जानकारीयुक्त र आत्मविश्वासी बनाउँदै।</span></h1>
+                <p class="lead text-secondary mb-4"><span data-lang="en">Aarogya Orientation &amp; Training Center supports Nepali workers with medical biometric orientation, practical skills training, and transparent pre-departure guidance for overseas employment.</span><span data-lang="ne">आरोग्य ओरिएन्टेशन र ट्रेनिङ सेन्टरले नेपाली कामदारलाई मेडिकल बायोमेट्रिक ओरिएन्टेशन, व्यावहारिक सीप प्रशिक्षण र विदेश रोजगारीको लागि पारदर्शी प्रस्थान-अघि मार्गदर्शन प्रदान गर्छ।</span></p>
                 <div class="d-flex flex-wrap gap-2">
                     <a class="btn btn-ag-green px-4 shadow-sm" href="{% url 'service' %}">
-                        <i class="bi bi-heart-pulse me-2"></i>Explore Services
+                        <i class="bi bi-heart-pulse me-2"></i><span data-lang="en">Explore Services</span><span data-lang="ne">सेवाहरू हेर्नुहोस्</span>
                     </a>
                     <a class="btn btn-outline-success px-4" href="#leadership-section">
-                        <i class="bi bi-people-fill me-2"></i>Meet Our Leadership
+                        <i class="bi bi-people-fill me-2"></i><span data-lang="en">Meet Our Leadership</span><span data-lang="ne">हाम्रो नेतृत्वलाई भेट्नुहोस्</span>
                     </a>
                 </div>
             </div>
             <div class="col-lg-4 text-center">
                 <i class="bi bi-shield-check display-1 text-ag-green"></i>
-                <p class="h5 mt-3 mb-0 fw-bold text-dark">Prepare with clarity. Travel with confidence.</p>
+                <p class="h5 mt-3 mb-0 fw-bold text-dark"><span data-lang="en">Prepare with clarity. Travel with confidence.</span><span data-lang="ne">स्पष्टता संग तयारी गर्नुहोस्। आत्मविश्वास संग यात्रा गर्नुहोस्।</span></p>
             </div>
         </div>
     </div>
@@ -155,15 +161,15 @@
         <div class="col-md-6">
             <div class="ag-about-panel h-100 p-4 shadow-sm">
                 <i class="bi bi-bullseye text-ag-green fs-2"></i>
-                <h3 class="h4 fw-bold mt-3 text-dark">Our Purpose</h3>
-                <p class="text-secondary mb-0">We make the medical and biometric orientation process clear and transparent, ensuring that every worker understands each critical step before embarking on their journey abroad.</p>
+                <h3 class="h4 fw-bold mt-3 text-dark"><span data-lang="en">Our Purpose</span><span data-lang="ne">हामरो उद्देश्य</span></h3>
+                <p class="text-secondary mb-0"><span data-lang="en">We make the medical and biometric orientation process clear and transparent, ensuring that every worker understands each critical step before embarking on their journey abroad.</span><span data-lang="ne">हामी MEDICAL र बायोमेट्रिक ओरिएन्टेशन प्रक्रियालाई स्पष्ट र पारदर्शी बनाउन हामीले कामदारलाई विदेश यात्राको प्रत्येक महत्वपूर्ण चरण बुझाउँछौं।</span></p>
             </div>
         </div>
         <div class="col-md-6">
             <div class="ag-about-panel h-100 p-4 shadow-sm">
                 <i class="bi bi-shield-lock text-ag-green fs-2"></i>
-                <h3 class="h4 fw-bold mt-3 text-dark">Our Support</h3>
-                <p class="text-secondary mb-0">Our expert team delivers verified guidance on medical requirements, biometric clearance, document preparation, occupational health, and destination workplace safety.</p>
+                <h3 class="h4 fw-bold mt-3 text-dark"><span data-lang="en">Our Support</span><span data-lang="ne">हामरो सहयोग</span></h3>
+                <p class="text-secondary mb-0"><span data-lang="en">Our expert team delivers verified guidance on medical requirements, biometric clearance, document preparation, occupational health, and destination workplace safety.</span><span data-lang="ne">हाम्रो विशेषज्ञ टोलीले मेडिकल आवश्यकताहरू, बायोमेट्रिक क्लियरन्स, कागजात तयारी, पेसा स्वास्थ्य, र गन्तव्य स्थानको कार्यस्थल सुरक्षा सम्बन्धी प्रमाणित मार्गदर्शन प्रदान गर्छ।</span></p>
             </div>
         </div>
     </div>

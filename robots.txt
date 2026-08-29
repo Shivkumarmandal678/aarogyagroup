@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /admin-login/
+Disallow: /admin-dashboard/
+Disallow: /staff-dashboard/
+Disallow: /doctor-dashboard/
+Disallow: /manager-dashboard/
+Disallow: /user-dashboard/
+Disallow: /dashboard/
+Disallow: /dashboard/action/
+Disallow: /dashboard/print/
+Disallow: /admin-logout/
+Disallow: /change-password/
+Disallow: /media/
+Disallow: /static/
+Allow: /
+
+Sitemap: https://aarogyagroup.com.np/sitemap.xml

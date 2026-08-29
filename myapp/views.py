@@ -12,20 +12,62 @@ from .google_sheets import (
     get_all_reports,
     post_sheet_action,
     SHEET_ID,
+    looks_like_demo_submission,
 )
+
+def render_public_page(request, template_name, context=None):
+    response = render(request, template_name, context or {})
+    response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+    response["Vary"] = "Accept-Encoding"
+    response["X-Content-Type-Options"] = "nosniff"
+    return response
+
 
 # Public Views
 def home(request):
-    return render(request, 'home.html')
+    return render_public_page(request, 'home.html')
+
+
+def sitemap_view(request):
+    base_url = request.build_absolute_uri('/').rstrip('/')
+    pages = [
+        ('', 'daily', '1.0'),
+        ('about/', 'daily', '0.9'),
+        ('service/', 'daily', '0.9'),
+        ('booking/', 'daily', '0.8'),
+    ]
+    url_items = []
+    today = date.today().isoformat()
+    for path, changefreq, priority in pages:
+        url_items.append(
+            f"""  <url>
+    <loc>{base_url}/{path}</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>{changefreq}</changefreq>
+    <priority>{priority}</priority>
+  </url>"""
+        )
+    xml = f'''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{chr(10).join(url_items)}
+</urlset>
+'''
+    response = HttpResponse(xml, content_type='application/xml')
+    response["Cache-Control"] = "public, max-age=1800, s-maxage=3600"
+    response["Vary"] = "Accept-Encoding"
+    return response
+
 
 def about(request):
-    return render(request, 'about.html')
+    return render_public_page(request, 'about.html')
+
 
 def service(request):
-    return render(request, 'services.html')
+    return render_public_page(request, 'services.html')
+
 
 def chatbot(request):
-    return render(request, 'chatbot.html')
+    return render_public_page(request, 'chatbot.html')
 
 CLASS_WEEKDAYS = {1, 3, 6}
 CLASS_CUTOFF_HOUR = 10
@@ -56,7 +98,9 @@ def booking_view(request):
         selected_date = request.POST.get('date', '').strip()
         if not is_valid_class_date(selected_date):
             messages.error(request, 'Please select the next available class date: Sunday, Tuesday, or Thursday.')
-            return render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+            response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+            return response
         data = {
             'name': request.POST.get('name', '').strip(),
             'phone': request.POST.get('phone', '').strip(),
@@ -68,12 +112,20 @@ def booking_view(request):
             'date': request.POST.get('date', '').strip(),
             'message': request.POST.get('message', '').strip(),
         }
+        if looks_like_demo_submission(data):
+            messages.error(request, 'Demo or fake booking entries are blocked. Please enter your real details only.')
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+            response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+            return response
         if save_client_booking(data):
             messages.success(request, 'धन्यवाद! तपाईँको Booking सफलतापूर्वक सुरक्षित भयो।')
         else:
             messages.info(request, 'Booking प्राप्त भयो। हामी छिट्टै सम्पर्क गर्नेछौं।')
         return redirect('booking')
-    return render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+    response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+    response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+    response["Vary"] = "Accept-Encoding"
+    return response
 
 
 # =========================================================================

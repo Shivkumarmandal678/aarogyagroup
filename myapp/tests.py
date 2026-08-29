@@ -68,6 +68,28 @@ class DashboardAccessTests(TestCase):
 		get_bookings.assert_called_once()
 
 
+class SitemapTests(TestCase):
+	def test_sitemap_lists_public_pages(self):
+		response = self.client.get('/sitemap.xml')
+		body = b''.join(response.streaming_content).decode() if hasattr(response, 'streaming_content') else response.content.decode()
+
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('/about/', body)
+		self.assertIn('/service/', body)
+		self.assertIn('/booking/', body)
+		self.assertIn('<changefreq>daily</changefreq>', body)
+		self.assertIn('<lastmod>', body)
+
+
+class PerformanceHeaderTests(TestCase):
+	def test_public_pages_send_cache_headers(self):
+		response = self.client.get('/')
+
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('Cache-Control', response.headers)
+		self.assertIn('public', response.headers['Cache-Control'])
+
+
 class BookingFormTests(TestCase):
 	def test_next_class_date_obeys_ten_am_cutoff(self):
 		before_cutoff = timezone.make_aware(datetime(2026, 9, 1, 9, 59))
@@ -102,4 +124,22 @@ class BookingFormTests(TestCase):
 		self.assertEqual(submitted['address'], 'Kathmandu')
 		self.assertEqual(submitted['lot_number'], 'LOT-7')
 		self.assertEqual(submitted['service'], 'Biometric')
+
+	@patch('myapp.views.save_client_booking')
+	def test_demo_submission_is_blocked(self, save_booking):
+		response = self.client.post('/booking/', {
+			'name': 'Demo Account',
+			'phone': '9812345678',
+			'email': 'demo@example.com',
+			'passport_number': 'P1234567',
+			'address': 'Kathmandu',
+			'lot_number': 'LOT-7',
+			'service': 'Biometric',
+			'date': next_class_date().isoformat(),
+			'message': 'This is a demo entry.',
+		})
+
+		self.assertEqual(response.status_code, 200)
+		save_booking.assert_not_called()
+		self.assertContains(response, 'Demo or fake', html=False)
 

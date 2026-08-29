@@ -7,6 +7,52 @@ from datetime import datetime
 
 WEB_APP_URL = os.environ.get('GOOGLE_WEB_APP_URL')
 SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '1iRNlkAgDdrfET5DEqKG_ZeCwQiUqmoge4emB_2cbWQg')
+DEMO_KEYWORDS = (
+    'demo', 'sample', 'fake', 'bot', 'automation', 'script',
+    'placeholder', 'lorem', 'dummy', 'trial', 'spam'
+)
+
+
+def _normalize_text(value):
+    return re.sub(r'[^a-z0-9]+', ' ', str(value or '').lower()).strip()
+
+
+def _contains_demo_keyword(value):
+    if value is None:
+        return False
+    text = _normalize_text(value)
+    if not text:
+        return False
+    tokens = set(text.split())
+    return bool(tokens & set(DEMO_KEYWORDS))
+
+
+def looks_like_demo_submission(data):
+    if not isinstance(data, dict):
+        return True
+
+    email = str(data.get('email', '') or '').strip().lower()
+    if email:
+        local_part = email.split('@', 1)[0]
+        if _contains_demo_keyword(local_part):
+            return True
+
+    message = str(data.get('message', '') or '').strip().lower()
+    if _contains_demo_keyword(message):
+        return True
+
+    name = str(data.get('name', '') or '').strip().lower()
+    if name and not email and any(keyword in name for keyword in ('demo', 'sample', 'fake', 'bot', 'spam')):
+        return True
+
+    phone = _normalize_text(data.get('phone'))
+    if phone in {'1234567890', '0000000000', '1111111111', '9999999999'}:
+        return True
+
+    if not any(str(data.get(field, '') or '').strip() for field in ('name', 'phone', 'email', 'service', 'date')):
+        return True
+
+    return False
 
 # =========================================================================
 # HELPER: GOOGLE DRIVE LINK CONVERTER
@@ -132,6 +178,16 @@ def update_admin_password_sheet(username, new_password):
 # 4. SAVE CLIENT BOOKING (POST)
 # =========================================================================
 def save_client_booking(data):
+    if not isinstance(data, dict):
+        return False
+
+    if looks_like_demo_submission(data):
+        return False
+
+    required = ['name', 'phone', 'email', 'service', 'date']
+    if any(not str(data.get(field, '')).strip() for field in required):
+        return False
+
     payload = {
         'timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
         'name': data.get('name', ''),

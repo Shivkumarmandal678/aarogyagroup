@@ -1,5 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Home | Aarogya Group{% endblock %}
+{% block title %}Aarogya Group | Medical Biometric Orientation & Training Center in Lahan{% endblock %}
+{% block extra_head %}
+<meta name="description" content="Aarogya Group in Lahan, Nepal offers medical biometric orientation, pre-departure training, worker support, and overseas readiness guidance for a safe journey abroad.">
+<meta name="keywords" content="Aarogya Group Lahan, medical biometric orientation Nepal, overseas job training Nepal, pre-departure training, worker orientation Lahan, Aarogya Group services">
+<meta property="og:title" content="Aarogya Group | Medical Biometric Orientation & Training Center in Lahan">
+<meta property="og:description" content="Medical biometric orientation and practical training for workers preparing for jobs abroad from Nepal.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Aarogya Group Home",
+  "description": "Medical biometric orientation and pre-departure training center in Lahan, Nepal.",
+  "publisher": { "@type": "Organization", "name": "Aarogya Group" },
+  "mainEntity": { "@type": "LocalBusiness", "name": "Aarogya Group" }
+}
+</script>
+{% endblock %}
 {% block content %}
 <style>
     .ag-hero { background: linear-gradient(120deg, #e9f8f2 0%, #f8fcfa 58%, #fff3df 100%); }
@@ -23,19 +39,19 @@
     <div class="container py-4">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
-                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-plus-circle me-2"></i>Aarogya Orientation &amp; Training Center</p>
-                <h1 class="display-4 fw-bold mb-4">Ready for your next journey abroad.</h1>
-                <p class="lead text-secondary mb-4">We prepare workers with clear medical biometric orientation, practical guidance, and the confidence they need before leaving Nepal for overseas employment.</p>
+                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-plus-circle me-2"></i><span data-lang="en">Aarogya Orientation &amp; Training Center</span><span data-lang="ne">आरोग्य ओरिएन्टेशन र ट्रेनिङ सेन्टर</span></p>
+                <h1 class="display-4 fw-bold mb-4"><span data-lang="en">Ready for your next journey abroad.</span><span data-lang="ne">अब तपाईँको अर्को विदेश यात्रा तयारी पूर्ण छ।</span></h1>
+                <p class="lead text-secondary mb-4"><span data-lang="en">We prepare workers with clear medical biometric orientation, practical guidance, and the confidence they need before leaving Nepal for overseas employment.</span><span data-lang="ne">हामी कामदारलाई स्पष्ट मेडिकल बायोमेट्रिक ओरिएन्टेशन, व्यावहारिक मार्गदर्शन र विदेश कामको लागि आवश्यक आत्मविश्वास प्रदान गर्छौं।</span></p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-ag-green btn-lg px-4" href="{% url 'service' %}"><i class="bi bi-arrow-right-circle me-2"></i>Explore Services</a>
-                    <a class="btn btn-outline-success btn-lg px-4" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>Call 9801196900</a>
+                    <a class="btn btn-ag-green btn-lg px-4" href="{% url 'service' %}"><i class="bi bi-arrow-right-circle me-2"></i><span data-lang="en">Explore Services</span><span data-lang="ne">सेवाहरू हेर्नुहोस्</span></a>
+                    <a class="btn btn-outline-success btn-lg px-4" href="tel:9801196900"><i class="bi bi-telephone me-2"></i><span data-lang="en">Call 9801196900</span><span data-lang="ne">9801196900 मा कल गर्नुहोस्</span></a>
                 </div>
             </div>
             <div class="col-lg-5">
                 <div class="ag-hero-panel p-4 p-lg-5 shadow-sm">
                     <i class="bi bi-person-vcard display-3 text-warning"></i>
-                    <p class="h3 mt-4 mb-3">Understand. Prepare. Go with confidence.</p>
-                    <p class="mb-0 text-white-50">Professional orientation for a safe and informed overseas journey.</p>
+                    <p class="h3 mt-4 mb-3"><span data-lang="en">Understand. Prepare. Go with confidence.</span><span data-lang="ne">बुझ्नुहोस्। तयारी गर्नुहोस्। आत्मविश्वासका साथ जानुहोस्।</span></p>
+                    <p class="mb-0 text-white-50"><span data-lang="en">Professional orientation for a safe and informed overseas journey.</span><span data-lang="ne">सुरक्षित र जानकारीपूर्ण विदेश यात्रा अधि व्यावसायिक ओरिएन्टेशन।</span></p>
                 </div>
             </div>
         </div>
@@ -45,20 +61,20 @@
     <div class="container">
         <div class="row align-items-center g-4">
             <div class="col-lg-5">
-                <p class="text-ag-green fw-semibold mb-2">A clear first step</p>
-                <h2 class="display-6 fw-bold mb-3">See what your preparation looks like.</h2>
-                <p class="text-secondary mb-0">From medical biometric guidance to practical training, our team helps you move forward with the right information.</p>
+                <p class="text-ag-green fw-semibold mb-2"><span data-lang="en">A clear first step</span><span data-lang="ne">सही पहिलो कदम</span></p>
+                <h2 class="display-6 fw-bold mb-3"><span data-lang="en">See what your preparation looks like.</span><span data-lang="ne">तपाईंको तयारी कस्तो देखिन्छ हेर्नुहोस्।</span></h2>
+                <p class="text-secondary mb-0"><span data-lang="en">From medical biometric guidance to practical training, our team helps you move forward with the right information.</span><span data-lang="ne">मेडिकल बायोमेट्रिक मार्गदर्शनदेखि व्यावहारिक प्रशिक्षणसम्म, हाम्रो टोली सही जानकारीका साथ अगाडि बढ्न सहयोग गर्छ।</span></p>
             </div>
             <div class="col-lg-7">
                 <div class="ag-visual-stage" aria-label="Aarogya orientation center highlights">
                     <div class="ag-carousel" id="agCarousel">
-                        <article class="ag-slide is-active"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85" alt="Medical professional preparing a patient"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">MEDICAL ORIENTATION</p><h3 class="h4 mb-0">Know the process before your appointment.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=85" alt="People attending an orientation session"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">ORIENTATION</p><h3 class="h4 mb-0">Understand every step before you travel.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=85" alt="Healthcare worker checking a patient's health"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">MEDICAL CHECKUP</p><h3 class="h4 mb-0">Prepare for a smooth and informed medical visit.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=85" alt="Person completing a digital identity scan"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">BIOMETRIC SUPPORT</p><h3 class="h4 mb-0">Get ready for your biometric appointment.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=85" alt="Team collaborating during practical training"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">PRACTICAL TRAINING</p><h3 class="h4 mb-0">Build confidence for work and life abroad.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85" alt="Travel documents and planning notes"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">SHRAM APPROVAL</p><h3 class="h4 mb-0">Move through your labour approval steps clearly.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85" alt="Airplane ready for an overseas journey"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">TRAVEL TICKET</p><h3 class="h4 mb-0">Leave prepared for the journey ahead.</h3></div></article>
+                        <article class="ag-slide is-active"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85" alt="Medical professional preparing a patient"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">MEDICAL ORIENTATION</span><span data-lang="ne">मेडिकल ओरिएन्टेशन</span></p><h3 class="h4 mb-0"><span data-lang="en">Know the process before your appointment.</span><span data-lang="ne">अपोइन्टमेन्ट अघि प्रक्रियालाई बुझ्नुहोस्।</span></h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=85" alt="People attending an orientation session"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">ORIENTATION</span><span data-lang="ne">ओरिएन्टेशन</span></p><h3 class="h4 mb-0"><span data-lang="en">Understand every step before you travel.</span><span data-lang="ne">यात्रा अघि प्रत्येक चरण बुझ्नुहोस्।</span></h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=85" alt="Healthcare worker checking a patient's health"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">MEDICAL CHECKUP</span><span data-lang="ne">मेडिकल चेकअप</span></p><h3 class="h4 mb-0"><span data-lang="en">Prepare for a smooth and informed medical visit.</span><span data-lang="ne">सुगम र जानकारीपूर्ण मेडिकल भ्रमणको लागि तयारी गर्नुहोस्।</span></h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=85" alt="Person completing a digital identity scan"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">BIOMETRIC SUPPORT</span><span data-lang="ne">बायोमेट्रिक सहयोग</span></p><h3 class="h4 mb-0"><span data-lang="en">Get ready for your biometric appointment.</span><span data-lang="ne">तपाईंको बायोमेट्रिक अपोइन्टमेन्टको लागि तयार हुनुहोस्।</span></h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=85" alt="Team collaborating during practical training"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">PRACTICAL TRAINING</span><span data-lang="ne">व्यावहारिक प्रशिक्षण</span></p><h3 class="h4 mb-0"><span data-lang="en">Build confidence for work and life abroad.</span><span data-lang="ne">विदेशमा काम र जीवनको लागि विश्वास तयार गर्नुहोस्।</span></h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85" alt="Travel documents and planning notes"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">SHRAM APPROVAL</span><span data-lang="ne">श्राम स्वीकृति</span></p><h3 class="h4 mb-0"><span data-lang="en">Move through your labour approval steps clearly.</span><span data-lang="ne">श्रम स्वीकृतिका चरणहरू स्पष्टता साथ पूरा गर्नुहोस्।</span></h3></div></article>
+                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85" alt="Airplane ready for an overseas journey"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1"><span data-lang="en">TRAVEL TICKET</span><span data-lang="ne">यात्रा टिकट</span></p><h3 class="h4 mb-0"><span data-lang="en">Leave prepared for the journey ahead.</span><span data-lang="ne">आगाडीको यात्राको लागि तयार भएर जाँदै हुनुहोस्।</span></h3></div></article>
                     </div>
                     <div class="ag-carousel-dots" aria-label="Carousel controls"><button class="ag-carousel-dot is-active" type="button" aria-label="Show medical orientation"></button><button class="ag-carousel-dot" type="button" aria-label="Show orientation"></button><button class="ag-carousel-dot" type="button" aria-label="Show medical checkup"></button><button class="ag-carousel-dot" type="button" aria-label="Show biometric support"></button><button class="ag-carousel-dot" type="button" aria-label="Show practical training"></button><button class="ag-carousel-dot" type="button" aria-label="Show shram approval"></button><button class="ag-carousel-dot" type="button" aria-label="Show travel ticket"></button></div>
                 </div>
@@ -69,20 +85,20 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <p class="text-ag-green fw-semibold mb-2">Our focus</p>
-            <h2 class="display-6 fw-bold">Practical preparation that matters</h2>
-            <p class="lead text-secondary">Focused support from orientation to the final steps before departure.</p>
+            <p class="text-ag-green fw-semibold mb-2"><span data-lang="en">Our focus</span><span data-lang="ne">हामरो फोकस</span></p>
+            <h2 class="display-6 fw-bold"><span data-lang="en">Practical preparation that matters</span><span data-lang="ne">महत्वपूर्ण व्यावहारिक तयारी</span></h2>
+            <p class="lead text-secondary"><span data-lang="en">Focused support from orientation to the final steps before departure.</span><span data-lang="ne">प्रस्थान अघि तयारीका अन्तिम चरणसम्म विशेष सहयोग।</span></p>
         </div>
         <div class="row g-4">
-            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-heart-pulse text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Medical Orientation</h5><p class="text-secondary mb-0">Understand medical fitness, health precautions, and the biometric process before travel.</p></div></div>
-            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-mortarboard text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Pre-departure Training</h5><p class="text-secondary mb-0">Learn the essential responsibilities, safety practices, and expectations of overseas work.</p></div></div>
-            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-passport text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Overseas Readiness</h5><p class="text-secondary mb-0">Get clear guidance on documents, cultural awareness, and the journey ahead.</p></div></div>
+            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-heart-pulse text-ag-green fs-2"></i><h5 class="fw-bold mt-3"><span data-lang="en">Medical Orientation</span><span data-lang="ne">मेडिकल ओरिएन्टेशन</span></h5><p class="text-secondary mb-0"><span data-lang="en">Understand medical fitness, health precautions, and the biometric process before travel.</span><span data-lang="ne">यात्रा अघि स्वास्थ्य फिटनेस, सावधानी र बायोमेट्रिक प्रक्रियालाई बुझ्नुहोस्।</span></p></div></div>
+            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-mortarboard text-ag-green fs-2"></i><h5 class="fw-bold mt-3"><span data-lang="en">Pre-departure Training</span><span data-lang="ne">प्रस्थान अघि प्रशिक्षण</span></h5><p class="text-secondary mb-0"><span data-lang="en">Learn the essential responsibilities, safety practices, and expectations of overseas work.</span><span data-lang="ne">विदेश कामको आवश्यक जिम्मेवारी, सुरक्षा अभ्यास र अपेक्षाहरू सिक्नुहोस्।</span></p></div></div>
+            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-passport text-ag-green fs-2"></i><h5 class="fw-bold mt-3"><span data-lang="en">Overseas Readiness</span><span data-lang="ne">विदेश तयारी</span></h5><p class="text-secondary mb-0"><span data-lang="en">Get clear guidance on documents, cultural awareness, and the journey ahead.</span><span data-lang="ne">कागजात, सांस्कृतिक जानकारी र आगामी यात्राको लागि स्पष्ट मार्गदर्शन पाउनुहोस्।</span></p></div></div>
         </div>
     </div>
 </section>
 <section class="ag-contact-band py-4">
     <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-        <div><p class="fw-bold mb-1">Ready to get oriented?</p><p class="text-secondary mb-0">Talk to Aarogya at any branch.</p></div>
+        <div><p class="fw-bold mb-1"><span data-lang="en">Ready to get oriented?</span><span data-lang="ne">ओरिएन्टेशनको लागि तयार हुनुहुन्छ?</span></p><p class="text-secondary mb-0"><span data-lang="en">Talk to Aarogya at any branch.</span><span data-lang="ne">कुनै पनि शाखामा आरोग्यसँग कुरा गर्नुहोस्।</span></p></div>
         <div class="d-flex flex-wrap gap-3"><a class="btn btn-ag-green" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a class="btn btn-outline-dark" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div>
     </div>
 </section>
