@@ -81,25 +81,17 @@
 
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Passport Number <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off">
+                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" inputmode="text" pattern="[A-Za-z0-9-]{3,20}">
               </div>
 
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Address <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address">
+                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" inputmode="text" pattern="[A-Za-z0-9 ,./#-]{3,200}">
               </div>
 
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Lot Number <span class="text-muted small">(Optional)</span></label>
-                <select name="lot_number" class="form-select">
-                  <option value="" selected>Select lot number</option>
-                  <option value="LOT-01">LOT-01</option>
-                  <option value="LOT-02">LOT-02</option>
-                  <option value="LOT-03">LOT-03</option>
-                  <option value="LOT-04">LOT-04</option>
-                  <option value="LOT-05">LOT-05</option>
-                  <option value="Not assigned">Not assigned</option>
-                </select>
+                <input type="number" name="lot_number" class="form-control" placeholder="Enter lot number" min="1" step="1">
               </div>
 
               <div class="col-md-6">
