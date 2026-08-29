@@ -78,6 +78,8 @@ class SitemapTests(TestCase):
 		self.assertIn('/about/', body)
 		self.assertIn('/service/', body)
 		self.assertIn('/booking/', body)
+		self.assertNotIn('shiv6881.pythonanywhere.com', body)
+		self.assertIn('https://aarogyagroup.com.np/', body)
 		self.assertIn('<changefreq>daily</changefreq>', body)
 		self.assertIn('<lastmod>', body)
 

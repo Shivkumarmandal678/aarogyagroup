@@ -9,6 +9,7 @@ load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+PUBLIC_SITE_URL = os.environ.get('PUBLIC_SITE_URL', 'https://aarogyagroup.com.np').rstrip('/')
 
 # Hosts & CSRF from .env
 ALLOWED_HOSTS = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]

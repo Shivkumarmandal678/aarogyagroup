@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.core.files.storage import default_storage
+from django.conf import settings
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from uuid import uuid4
@@ -32,7 +33,7 @@ def home(request):
 
 
 def sitemap_view(request):
-    base_url = request.build_absolute_uri('/').rstrip('/')
+    base_url = settings.PUBLIC_SITE_URL
     pages = [
         ('', 'daily', '1.0'),
         ('about/', 'daily', '0.9'),
