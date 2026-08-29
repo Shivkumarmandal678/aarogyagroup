@@ -136,6 +136,18 @@ class BookingFormTests(TestCase):
 		save_booking.assert_not_called()
 		self.assertContains(response, 'Please select a valid destination country', html=False)
 
+	@patch('myapp.views.save_client_booking')
+	def test_passport_copy_is_required(self, save_booking):
+		response = self.client.post('/booking/', {
+			'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
+			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+			'country': 'Qatar', 'date': next_class_date().isoformat(), 'message': 'Please confirm.',
+		})
+
+		self.assertEqual(response.status_code, 200)
+		save_booking.assert_not_called()
+		self.assertContains(response, 'Please upload a passport copy', html=False)
+
 	@patch('myapp.views.default_storage.save', return_value='passport_uploads/test.pdf')
 	@patch('myapp.views.save_client_booking', return_value=True)
 	def test_passport_copy_is_saved_and_forwarded(self, save_booking, save_file):
@@ -170,10 +182,11 @@ class BookingFormTests(TestCase):
 
 	@patch('myapp.views.save_client_booking', return_value=False)
 	def test_failed_sheet_save_still_redirects(self, save_booking):
+		passport_copy = SimpleUploadedFile('passport.pdf', b'%PDF-test', content_type='application/pdf')
 		response = self.client.post('/booking/', {
 			'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
 			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical', 'country': 'Qatar',
-			'date': next_class_date().isoformat(), 'message': 'Please confirm.',
+			'date': next_class_date().isoformat(), 'message': 'Please confirm.', 'passport_copy': passport_copy,
 		})
 
 		self.assertRedirects(response, '/booking/')
@@ -194,6 +207,7 @@ class BookingFormTests(TestCase):
 
 	@patch('myapp.views.save_client_booking', return_value=True)
 	def test_booking_submits_required_fields_and_optional_lot(self, save_booking):
+		passport_copy = SimpleUploadedFile('passport.pdf', b'%PDF-test', content_type='application/pdf')
 		response = self.client.post('/booking/', {
 			'name': 'Test Client',
 			'phone': '9812345678',
@@ -203,7 +217,7 @@ class BookingFormTests(TestCase):
 			'lot_number': '',
 			'service': 'Biometric',
 			'country': 'Malaysia',
-			'date': next_class_date().isoformat(),
+			'date': next_class_date().isoformat(), 'passport_copy': passport_copy,
 			'message': 'Please confirm.',
 		})
 
@@ -266,6 +280,7 @@ class BookingFormTests(TestCase):
 			'lot_number': '',
 			'service': 'Orientation',
 			'country': 'Oman',
+			'passport_copy': 'passport_uploads/existing.pdf',
 			'date': '2026-08-30',
 			'message': 'Please process my booking.',
 		})

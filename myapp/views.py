@@ -142,7 +142,7 @@ def booking_view(request):
         }
         required_fields = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'date', 'message']
         if any(not data.get(field, '').strip() for field in required_fields):
-            messages.error(request, 'Please fill in all required fields. Lot number is optional, but all other fields must be completed.')
+            messages.error(request, 'Please fill in all required fields. Lot number is optional; passport copy is required.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
@@ -154,6 +154,11 @@ def booking_view(request):
         if looks_like_demo_submission(data):
             messages.error(request, 'Demo or fake booking entries are blocked. Please enter your real details only.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
+            response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+            return response
+        if not request.FILES.get('passport_copy'):
+            messages.error(request, 'Please upload a passport copy. JPG, PNG or PDF files up to 5 MB are accepted.')
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
         passport_copy_path, upload_error = _save_passport_copy(request.FILES.get('passport_copy'))

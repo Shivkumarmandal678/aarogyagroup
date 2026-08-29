@@ -123,12 +123,6 @@
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="passportCopy">Passport Copy <span class="text-muted small">(Optional)</span></label>
-                <input type="file" id="passportCopy" name="passport_copy" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
-                <div class="form-text">JPG, PNG or PDF. Maximum size 5 MB.</div>
-              </div>
-
-              <div class="col-md-6">
                 <label class="form-label fw-semibold" for="lotNumber">Lot Number <span class="text-muted small">(Optional)</span></label>
                 <input type="text" id="lotNumber" name="lot_number" class="form-control" placeholder="Enter lot number if available" autocomplete="off" value="{{ lot_number|default:'' }}">
               </div>
@@ -154,6 +148,12 @@
                   {% endfor %}
                 </select>
                 <div class="form-text">Choose the country where you plan to work.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold" for="passportCopy">Passport Copy <span class="text-danger">*</span></label>
+                <input type="file" id="passportCopy" name="passport_copy" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
+                <div class="form-text">Required: JPG, PNG or PDF. Maximum size 5 MB.</div>
               </div>
 
               <div class="col-md-12">
