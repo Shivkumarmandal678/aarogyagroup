@@ -286,8 +286,8 @@ class BookingFormTests(TestCase):
 		})
 
 		payload = post_sheet_action.call_args.args[1]
-		self.assertEqual(payload['Country'], 'Oman')
-		self.assertEqual(list(payload.keys()), ['Timestamp', 'Name', 'Phone', 'Email', 'Address', 'Passport Number', 'Lot Number', 'Service', 'Country', 'Passport_Copy', 'Date', 'Message', 'Status'])
+		self.assertEqual(payload['country'], 'Oman')
+		self.assertEqual(list(payload.keys()), ['timestamp', 'name', 'phone', 'email', 'address', 'passport_number', 'lot_number', 'service', 'country', 'passport_copy', 'date', 'message', 'status'])
 
 	def test_public_pages_are_english_only(self):
 		response = self.client.get('/chatbot/')

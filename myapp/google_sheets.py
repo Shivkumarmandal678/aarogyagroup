@@ -189,18 +189,18 @@ def save_client_booking(data):
         return False
 
     payload = {
-        'Timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
-        'Name': data.get('name', ''),
-        'Phone': data.get('phone', ''),
-        'Email': data.get('email', ''),
-        'Address': data.get('address', ''),
-        'Passport Number': data.get('passport_number', ''),
-        'Lot Number': data.get('lot_number', ''),
-        'Service': data.get('service', data.get('department', '')),
-        'Country': data.get('country', ''),
-        'Passport_Copy': data.get('passport_copy', ''),
-        'Date': data.get('date', ''),
-        'Message': data.get('message', ''),
-        'Status': 'Pending'
+        'timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
+        'name': data.get('name', ''),
+        'phone': data.get('phone', ''),
+        'email': data.get('email', ''),
+        'address': data.get('address', ''),
+        'passport_number': data.get('passport_number', ''),
+        'lot_number': data.get('lot_number', ''),
+        'service': data.get('service', data.get('department', '')),
+        'country': data.get('country', ''),
+        'passport_copy': data.get('passport_copy', ''),
+        'date': data.get('date', ''),
+        'message': data.get('message', ''),
+        'status': 'Pending'
     }
     return post_sheet_action('add_booking', payload)
