@@ -161,6 +161,25 @@ class BookingFormTests(TestCase):
 		save_booking.assert_not_called()
 		self.assertContains(response, 'Please fill in all required fields', html=False)
 
+	@patch('myapp.google_sheets.post_sheet_action', return_value=True)
+	def test_booking_payload_orders_address_before_passport(self, post_sheet_action):
+		from myapp.google_sheets import save_client_booking
+
+		save_client_booking({
+			'name': 'Shiv Kumar',
+			'phone': '9824376881',
+			'email': 'shivkumarmandal678@gmail.com',
+			'passport_number': 'Bxxb',
+			'address': 'Lahan',
+			'lot_number': '',
+			'service': 'Orientation',
+			'date': '2026-08-30',
+			'message': 'Please process my booking.',
+		})
+
+		payload = post_sheet_action.call_args.args[1]
+		self.assertEqual(list(payload.keys()), ['timestamp', 'name', 'phone', 'email', 'address', 'passport_number', 'lot_number', 'service', 'date', 'message', 'status'])
+
 	def test_public_pages_are_english_only(self):
 		response = self.client.get('/chatbot/')
 		self.assertEqual(response.status_code, 200)
