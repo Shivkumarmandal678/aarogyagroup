@@ -53,8 +53,8 @@
       
       <div class="card booking-card">
         <div class="booking-header text-center">
-          <h2 class="fw-bold mb-1"><i class="bi bi-calendar-check me-2"></i>Book an Appointment</h2>
-          <p class="mb-0 text-white-50">Fill the form below to book orientation and medical services</p>
+          <h2 class="fw-bold mb-1"><i class="bi bi-calendar-check me-2"></i><span data-lang="en">Book an Appointment</span><span data-lang="ne" hidden>बुकिङ गर्नुहोस्</span></h2>
+          <p class="mb-0 text-white-50"><span data-lang="en">Fill the form below to book orientation and medical services</span><span data-lang="ne" hidden>आधारभूत फारम भर्नुहोस् र ओरिएन्टेशन तथा मेडिकल सेवा बुक गर्नुहोस्</span></p>
         </div>
 
         <div class="card-body p-4 p-md-5">
@@ -64,72 +64,62 @@
             {% csrf_token %}
 
             <div class="row g-3">
-              <!-- Full Name -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
-                <input type="text" name="name" class="form-control" placeholder="Enter Full Name" required>
+                <label class="form-label fw-semibold"><span data-lang="en">Full Name</span><span data-lang="ne" hidden>पूरा नाम</span> <span class="text-danger">*</span></label>
+                <input type="text" name="name" class="form-control" data-placeholder-en="Enter Full Name" data-placeholder-ne="पूरा नाम लेख्नुहोस्" required>
               </div>
 
-              <!-- Mobile Number -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Mobile Number <span class="text-danger">*</span></label>
-                <input type="tel" name="phone" class="form-control" placeholder="98XXXXXXXX" inputmode="tel" pattern="[0-9+ ()-]{7,20}" required>
+                <label class="form-label fw-semibold"><span data-lang="en">Mobile Number</span><span data-lang="ne" hidden>मोबाइल नम्बर</span> <span class="text-danger">*</span></label>
+                <input type="tel" name="phone" class="form-control" data-placeholder-en="98XXXXXXXX" data-placeholder-ne="९८XXXXXXXX" inputmode="tel" pattern="[0-9+ ()-]{7,20}" required>
               </div>
 
-              <!-- Email -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Email Address</label>
-                <input type="email" name="email" class="form-control" placeholder="example@gmail.com">
+                <label class="form-label fw-semibold"><span data-lang="en">Email Address</span><span data-lang="ne" hidden>इमेल ठेगाना</span></label>
+                <input type="email" name="email" class="form-control" data-placeholder-en="example@gmail.com" data-placeholder-ne="example@gmail.com">
               </div>
 
-              <!-- Passport Number -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Passport Number <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off">
+                <label class="form-label fw-semibold"><span data-lang="en">Passport Number</span><span data-lang="ne" hidden>पासपोर्ट नम्बर</span> <span class="text-muted small">(<span data-lang="en">Optional</span><span data-lang="ne" hidden>वैकल्पिक</span>)</span></label>
+                <input type="text" name="passport_number" class="form-control" data-placeholder-en="Enter passport number" data-placeholder-ne="पासपोर्ट नम्बर लेख्नुहोस्" autocomplete="off">
               </div>
 
-              <!-- Address -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Address <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address">
+                <label class="form-label fw-semibold"><span data-lang="en">Address</span><span data-lang="ne" hidden>ठेगाना</span> <span class="text-muted small">(<span data-lang="en">Optional</span><span data-lang="ne" hidden>वैकल्पिक</span>)</span></label>
+                <input type="text" name="address" class="form-control" data-placeholder-en="Enter your address" data-placeholder-ne="तपाईंको ठेगाना लेख्नुहोस्" autocomplete="street-address">
               </div>
 
-              <!-- Lot Number -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Lot Number <span class="text-muted small">(Optional)</span></label>
-                <input type="text" name="lot_number" class="form-control" placeholder="Enter lot number">
+                <label class="form-label fw-semibold"><span data-lang="en">Lot Number</span><span data-lang="ne" hidden>लट नम्बर</span> <span class="text-muted small">(<span data-lang="en">Optional</span><span data-lang="ne" hidden>वैकल्पिक</span>)</span></label>
+                <input type="text" name="lot_number" class="form-control" data-placeholder-en="Enter lot number" data-placeholder-ne="लट नम्बर लेख्नुहोस्">
               </div>
 
-              <!-- Service -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Service <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold"><span data-lang="en">Service</span><span data-lang="ne" hidden>सेवा</span> <span class="text-danger">*</span></label>
                 <select name="service" class="form-select" required>
-                  <option value="" selected disabled>Select Service</option>
-                  <option value="Medical">Medical</option>
-                  <option value="Orientation">Orientation</option>
-                  <option value="Biometric">Biometric</option>
-                  <option value="Ticket">Ticket</option>
-                  <option value="Shram">Shram</option>
+                  <option value="" selected disabled><span data-lang="en">Select Service</span><span data-lang="ne" hidden>सेवा छनौट गर्नुहोस्</span></option>
+                  <option value="Medical"><span data-lang="en">Medical</span><span data-lang="ne" hidden>मेडिकल</span></option>
+                  <option value="Orientation"><span data-lang="en">Orientation</span><span data-lang="ne" hidden>ओरिएन्टेशन</span></option>
+                  <option value="Biometric"><span data-lang="en">Biometric</span><span data-lang="ne" hidden>बायोमेट्रिक</span></option>
+                  <option value="Ticket"><span data-lang="en">Ticket</span><span data-lang="ne" hidden>टिकट</span></option>
+                  <option value="Shram"><span data-lang="en">Shram</span><span data-lang="ne" hidden>श्रम</span></option>
                 </select>
               </div>
 
-              <!-- Date -->
               <div class="col-md-12">
-                <label class="form-label fw-semibold">Preferred Date <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold"><span data-lang="en">Preferred Date</span><span data-lang="ne" hidden>रुचाइएको मिति</span> <span class="text-danger">*</span></label>
                 <input type="date" name="date" id="preferredDate" class="form-control" min="{{ next_class_date }}" value="{{ next_class_date }}" required>
-                <div class="form-text"><i class="bi bi-info-circle me-1"></i>Classes are available on Sunday, Tuesday, and Thursday. Before 10:00 AM, today's class is available; after 10:00 AM, the next class date is shown.</div>
+                <div class="form-text"><i class="bi bi-info-circle me-1"></i><span data-lang="en">Classes are available on Sunday, Tuesday, and Thursday. Before 10:00 AM, today's class is available; after 10:00 AM, the next class date is shown.</span><span data-lang="ne" hidden>कक्षाहरू आइतवार, मङ्गलवार र बिहीवार उपलब्ध छन्। १०:०० बजे अघिसम्म आजको कक्षा उपलब्ध हुन्छ; १०:०० बजेदेखि पछिको कक्षाको मिति देखाइन्छ।</span></div>
               </div>
 
-              <!-- Message -->
               <div class="col-12">
-                <label class="form-label fw-semibold">Remarks / Message</label>
-                <textarea name="message" class="form-control" rows="3" placeholder="Any specific requirements or questions..."></textarea>
+                <label class="form-label fw-semibold"><span data-lang="en">Remarks / Message</span><span data-lang="ne" hidden>टिका / सन्देश</span></label>
+                <textarea name="message" class="form-control" rows="3" data-placeholder-en="Any specific requirements or questions..." data-placeholder-ne="कुनै विशेष आवश्यकताहरू वा प्रश्नहरू..."></textarea>
               </div>
 
-              <!-- Submit -->
               <div class="col-12 mt-4">
                 <button type="submit" class="btn btn-submit w-100 fs-5">
-                  <i class="bi bi-send-fill me-2"></i> Submit Booking
+                  <i class="bi bi-send-fill me-2"></i><span data-lang="en">Submit Booking</span><span data-lang="ne" hidden>बुकिङ पेश गर्नुहोस्</span>
                 </button>
               </div>
             </div>

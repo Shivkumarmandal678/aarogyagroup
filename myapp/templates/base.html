@@ -87,12 +87,12 @@
     {% if not request.GET.embed and request.resolver_match.url_name != 'chatbot' %}
         <button class="ag-chatbot-launcher" id="chatbotLauncher" type="button" aria-controls="chatbotPanel" aria-expanded="false" title="Chat with Aarogya">
             <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
-            <span>Chat</span>
+            <span data-lang="en">Chat</span><span data-lang="ne" hidden>च्याट</span>
         </button>
         <aside class="ag-chatbot-panel" id="chatbotPanel" aria-hidden="true" aria-label="Aarogya chatbot">
-            <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i>Aarogya Assistant</strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
+            <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i><span data-lang="en">Aarogya Assistant</span><span data-lang="ne" hidden>आरोग्य सहयोगी</span></strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
             <iframe class="ag-chatbot-frame" src="{% url 'chatbot' %}?embed=1" title="Aarogya chatbot"></iframe>
-            <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}">Open full chatbot page <i class="bi bi-arrow-up-right ms-1"></i></a>
+            <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}"><span data-lang="en">Open full chatbot page</span><span data-lang="ne" hidden>पूरा च्याटबोट पेज खोल्नुहोस्</span> <i class="bi bi-arrow-up-right ms-1"></i></a>
         </aside>
 
         <style>
@@ -144,9 +144,16 @@
         (() => {
             const applyLanguage = (lang) => {
                 const effectiveLang = lang === 'ne' ? 'ne' : 'en';
+                document.documentElement.lang = effectiveLang;
                 document.body.classList.remove('lang-en', 'lang-ne');
                 document.body.classList.add(effectiveLang === 'ne' ? 'lang-ne' : 'lang-en');
                 localStorage.setItem('ag_lang', effectiveLang);
+
+                document.querySelectorAll('[data-placeholder-en][data-placeholder-ne]').forEach((element) => {
+                    const placeholder = effectiveLang === 'ne' ? element.dataset.placeholderNe : element.dataset.placeholderEn;
+                    element.setAttribute('placeholder', placeholder);
+                });
+
                 document.querySelectorAll('[data-lang-toggle]').forEach((button) => {
                     const isActive = button.dataset.langToggle === effectiveLang;
                     button.classList.toggle('active', isActive);
