@@ -149,6 +149,15 @@
                 document.body.classList.add(effectiveLang === 'ne' ? 'lang-ne' : 'lang-en');
                 localStorage.setItem('ag_lang', effectiveLang);
 
+                document.querySelectorAll('[data-lang]').forEach((element) => {
+                    const shouldShow = element.dataset.lang === effectiveLang;
+                    if (shouldShow) {
+                        element.removeAttribute('hidden');
+                    } else {
+                        element.setAttribute('hidden', 'hidden');
+                    }
+                });
+
                 document.querySelectorAll('[data-placeholder-en][data-placeholder-ne]').forEach((element) => {
                     const placeholder = effectiveLang === 'ne' ? element.dataset.placeholderNe : element.dataset.placeholderEn;
                     element.setAttribute('placeholder', placeholder);
