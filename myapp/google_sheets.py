@@ -58,7 +58,7 @@ def looks_like_demo_submission(data):
 # HELPER: GOOGLE DRIVE LINK CONVERTER
 # =========================================================================
 def format_drive_image(url):
-    """Google Drive Link लाई Direct Image URL मा बदल्ने"""
+    """Convert a Google Drive link into a direct image URL."""
     if not url:
         return 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
     url = str(url).strip()
@@ -72,8 +72,8 @@ def format_drive_image(url):
 # CORE HELPER: SHEET DATA FETCH ENGINE (APPS SCRIPT + CSV DUAL FETCH)
 # =========================================================================
 def fetch_sheet_rows(sheet_name):
-    """कुनै पनि Tab बाट सबै Rows सफासँग ल्याउने"""
-    # १. Apps Script Web App बाट
+    """Fetch all rows cleanly from any sheet tab."""
+    # 1. Apps Script Web App
     if WEB_APP_URL:
         try:
             action = {
@@ -89,7 +89,7 @@ def fetch_sheet_rows(sheet_name):
         except Exception as e:
             print(f"Apps Script Error for {sheet_name}:", e)
 
-    # २. Direct CSV Fallback (१००% ग्यारेन्टी)
+    # 2. Direct CSV fallback
     csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
     try:
         r = requests.get(csv_url, timeout=8)
@@ -111,7 +111,7 @@ def fetch_sheet_rows(sheet_name):
 # =========================================================================
 def authenticate_user(login_input, password_input):
     """
-    Username वा Email दुवैबाट र Admin वा Staff सबैलाई Login गराउने
+    Allow login by username or email for admin and staff accounts.
     """
     login_id = str(login_input).strip().lower()
     password = str(password_input).strip()
@@ -122,7 +122,7 @@ def authenticate_user(login_input, password_input):
         uemail = str(user.get('Email', '')).strip().lower()
         upass = str(user.get('Password', '')).strip()
 
-        # Username वा Email मध्ये एक मिलेमा र Password मिलेमा Login सफल
+        # Match either username or email and verify the password.
         if (login_id == uname or login_id == uemail) and (password == upass):
             user['Profile_Image'] = format_drive_image(user.get('Profile_Image'))
             return user
@@ -133,7 +133,7 @@ def authenticate_user(login_input, password_input):
 # 2. GET ALL BOOKINGS (FOR DASHBOARD)
 # =========================================================================
 def get_all_client_bookings():
-    """Booking Tab बाट सबै डाटा ल्याउने"""
+    """Fetch all booking data from the Booking sheet."""
     return fetch_sheet_rows("Booking")
 
 

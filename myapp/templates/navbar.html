@@ -147,35 +147,30 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                 
-                <!-- 1. Home -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}" title="Aarogya Group Home page">
-                        <i class="bi bi-house-door me-2" aria-hidden="true"></i><span data-lang="en">Home</span><span data-lang="ne" hidden>होम</span>
+                        <i class="bi bi-house-door me-2" aria-hidden="true"></i>Home
                     </a>
                 </li>
                 
-                <!-- 2. About (Includes Chairman & MD) -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}" title="About Aarogya Group and leadership">
-                        <i class="bi bi-building me-2" aria-hidden="true"></i><span data-lang="en">About</span><span data-lang="ne" hidden>बारेमा</span>
+                        <i class="bi bi-building me-2" aria-hidden="true"></i>About
                     </a>
                 </li>
                 
-                <!-- 3. Services -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'service' %}active{% endif %}" href="{% url 'service' %}" title="Aarogya Group services and training">
-                        <i class="bi bi-heart-pulse me-2" aria-hidden="true"></i><span data-lang="en">Services</span><span data-lang="ne" hidden>सेवाहरू</span>
+                        <i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>Services
                     </a>
                 </li>
 
-                <!-- 4. Booking -->
                 <li class="nav-item">
                     <a class="nav-link ag-nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}" href="{% url 'booking' %}" title="Book an appointment with Aarogya Group">
-                        <i class="bi bi-calendar-check me-2" aria-hidden="true"></i><span data-lang="en">Booking</span><span data-lang="ne" hidden>बुकिङ</span>
+                        <i class="bi bi-calendar-check me-2" aria-hidden="true"></i>Booking
                     </a>
                 </li>
 
-                <!-- 5. Dynamic Role Dashboard OR Portal Login -->
                 {% if request.session.admin_user %}
                 <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                     <a class="nav-link ag-nav-link text-success fw-bold dashboard-badge-btn" href="{% url 'dashboard_redirect' %}">
@@ -186,17 +181,10 @@
                 {% else %}
                 <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                     <a class="nav-link ag-nav-link btn btn-outline-success btn-nav-portal text-success" href="{% url 'admin_login' %}">
-                        <i class="bi bi-person-lock me-2"></i><span data-lang="en">Portal Login</span><span data-lang="ne" hidden>पोर्टल लगिन</span>
+                        <i class="bi bi-person-lock me-2"></i>Portal Login
                     </a>
                 </li>
                 {% endif %}
-
-                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                    <div class="btn-group lang-toggle" role="group" aria-label="Language switcher">
-                        <button type="button" class="btn btn-sm btn-outline-success active" data-lang-toggle="en" aria-pressed="true">EN</button>
-                        <button type="button" class="btn btn-sm btn-outline-success" data-lang-toggle="ne" aria-pressed="false">नेपाली</button>
-                    </div>
-                </li>
 
             </ul>
         </div>

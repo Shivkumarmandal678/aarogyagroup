@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="description" content="Aarogya Group helps Nepalese workers with medical biometric orientation, pre-departure training, and overseas readiness support in Lahan, Nepal.">
     <meta name="keywords" content="Aarogya Group, medical biometric orientation, pre-departure training, overseas job preparation, Lahan Nepal, orientation center, medical checkup, biometric support">
     <meta name="author" content="Aarogya Group">
+    <meta name="theme-color" content="#123c37">
     <meta name="geo.region" content="NP">
     <meta name="geo.placename" content="Lahan, Nepal">
     <meta property="og:type" content="website">
@@ -16,23 +18,22 @@
     <meta property="og:url" content="https://aarogyagroup.com.np/">
     <meta property="og:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85">
     <meta property="og:site_name" content="Aarogya Group">
+    <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Aarogya Group">
     <meta name="twitter:description" content="Medical biometric orientation and overseas readiness support in Lahan, Nepal.">
     <link rel="canonical" href="https://aarogyagroup.com.np/">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://images.unsplash.com">
     <title>{% block title %}Aarogya Group{% endblock %}</title>
 
     <!-- Bootstrap 5 CSS -->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" onload="this.rel='stylesheet'">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <style>
-        [data-lang="en"], [data-lang="ne"] { display: inline; }
-        body.lang-en [data-lang="ne"] { display: none; }
-        body.lang-ne [data-lang="en"] { display: none; }
-        body.lang-ne [data-lang="ne"] { display: inline; }
-        .lang-toggle .btn { min-width: 3.3rem; }
-        .lang-toggle .btn.active { background: #123c37; color: #fff; border-color: #123c37; }
+        body { color: #1f2937; }
     </style>
     
     <!-- Custom CSS -->
@@ -66,7 +67,7 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-<body class="d-flex flex-column min-vh-100 lang-en" oncontextmenu="return false;">
+<body class="d-flex flex-column min-vh-100">
 
     {% if not request.GET.embed %}
     <!-- Navbar Include -->
@@ -87,12 +88,12 @@
     {% if not request.GET.embed and request.resolver_match.url_name != 'chatbot' %}
         <button class="ag-chatbot-launcher" id="chatbotLauncher" type="button" aria-controls="chatbotPanel" aria-expanded="false" title="Chat with Aarogya">
             <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
-            <span data-lang="en">Chat</span><span data-lang="ne" hidden>च्याट</span>
+            <span>Chat</span>
         </button>
         <aside class="ag-chatbot-panel" id="chatbotPanel" aria-hidden="true" aria-label="Aarogya chatbot">
-            <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i><span data-lang="en">Aarogya Assistant</span><span data-lang="ne" hidden>आरोग्य सहयोगी</span></strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
+            <div class="ag-chatbot-panel-head"><strong><i class="bi bi-robot me-2"></i>Aarogya Assistant</strong><button class="ag-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot"><i class="bi bi-x-lg"></i></button></div>
             <iframe class="ag-chatbot-frame" src="{% url 'chatbot' %}?embed=1" title="Aarogya chatbot"></iframe>
-            <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}"><span data-lang="en">Open full chatbot page</span><span data-lang="ne" hidden>पूरा च्याटबोट पेज खोल्नुहोस्</span> <i class="bi bi-arrow-up-right ms-1"></i></a>
+            <a class="ag-chatbot-full-link" href="{% url 'chatbot' %}">Open full chatbot page <i class="bi bi-arrow-up-right ms-1"></i></a>
         </aside>
 
         <style>
@@ -120,63 +121,10 @@
     {% endif %}
 
     <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Disable Inspect Element Script -->
-    <script>
-        document.addEventListener('keydown', function (e) {
-            // F12 key disable
-            if (e.key === 'F12') {
-                e.preventDefault();
-            }
-            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C disable
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-                e.preventDefault();
-            }
-            // Ctrl+U (View Source) disable
-            if (e.ctrlKey && e.key === 'u') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script>
-        (() => {
-            const applyLanguage = (lang) => {
-                const effectiveLang = lang === 'ne' ? 'ne' : 'en';
-                document.documentElement.lang = effectiveLang;
-                document.body.classList.remove('lang-en', 'lang-ne');
-                document.body.classList.add(effectiveLang === 'ne' ? 'lang-ne' : 'lang-en');
-                localStorage.setItem('ag_lang', effectiveLang);
-
-                document.querySelectorAll('[data-lang]').forEach((element) => {
-                    const shouldShow = element.dataset.lang === effectiveLang;
-                    if (shouldShow) {
-                        element.removeAttribute('hidden');
-                    } else {
-                        element.setAttribute('hidden', 'hidden');
-                    }
-                });
-
-                document.querySelectorAll('[data-placeholder-en][data-placeholder-ne]').forEach((element) => {
-                    const placeholder = effectiveLang === 'ne' ? element.dataset.placeholderNe : element.dataset.placeholderEn;
-                    element.setAttribute('placeholder', placeholder);
-                });
-
-                document.querySelectorAll('[data-lang-toggle]').forEach((button) => {
-                    const isActive = button.dataset.langToggle === effectiveLang;
-                    button.classList.toggle('active', isActive);
-                    button.setAttribute('aria-pressed', String(isActive));
-                });
-            };
-
-            const preferred = localStorage.getItem('ag_lang') || 'en';
-            applyLanguage(preferred);
-
-            document.querySelectorAll('[data-lang-toggle]').forEach((button) => {
-                button.addEventListener('click', () => applyLanguage(button.dataset.langToggle));
-            });
-        })();
+        document.documentElement.lang = 'en';
     </script>
 
     {% block extra_js %}{% endblock %}

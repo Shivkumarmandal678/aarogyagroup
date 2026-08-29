@@ -118,9 +118,9 @@ def booking_view(request):
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
         if save_client_booking(data):
-            messages.success(request, 'धन्यवाद! तपाईँको Booking सफलतापूर्वक सुरक्षित भयो।')
+            messages.success(request, 'Thank you! Your booking was saved successfully.')
         else:
-            messages.info(request, 'Booking प्राप्त भयो। हामी छिट्टै सम्पर्क गर्नेछौं।')
+            messages.info(request, 'Booking received. Our team will contact you soon.')
         return redirect('booking')
     response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
     response["Cache-Control"] = "public, max-age=300, s-maxage=600"
@@ -133,7 +133,7 @@ def booking_view(request):
 # =========================================================================
 
 def get_role_redirect(role_name):
-    """Role अनुसार सहि Dashboard URL Path छान्ने Helper"""
+    """Return the correct dashboard route for a given role."""
     role = ''.join(char for char in str(role_name).strip().lower() if char.isalnum())
     if role in {'admin', 'administrator', 'owner', 'superadmin'}:
         return 'admin_dashboard'
@@ -205,7 +205,7 @@ def _dashboard_records(user):
 
 
 def admin_login_view(request):
-    """Google Sheet बाट सबै Role का Users Login गर्ने"""
+    """Log in users from the Google Sheet by role."""
     if request.session.get('admin_user'):
         role = request.session['admin_user'].get('role', 'User')
         return redirect(get_role_redirect(role))
@@ -226,13 +226,13 @@ def admin_login_view(request):
             messages.success(request, f"Welcome {user.get('Username')} ({role})!")
             return redirect(get_role_redirect(role))
         else:
-            messages.error(request, 'गलत Username / Email वा Password!')
+            messages.error(request, 'Invalid username or password.')
 
     return render(request, 'admin_login.html')
 
 
 def dashboard_redirect_view(request):
-    """Navbar मा Dashboard क्लिक गर्दा आफ्नै Role को Dashboard मा लैजाने"""
+    """Send the user to their correct dashboard from the navbar."""
     user = request.session.get('admin_user')
     if not user:
         return redirect('admin_login')
@@ -357,13 +357,13 @@ def admin_change_password_view(request):
         confirm_password = request.POST.get('confirm_password', '').strip()
 
         if new_password != confirm_password:
-            messages.error(request, 'नयाँ पासवर्ड मिलेन!')
+            messages.error(request, 'New passwords do not match.')
             return redirect(get_role_redirect(user.get('role')))
 
         if update_admin_password_sheet(user['username'], new_password):
-            messages.success(request, 'Google Sheet मा पासवर्ड सफलतापूर्वक परिवर्तन भयो!')
+            messages.success(request, 'Password changed successfully in Google Sheets.')
         else:
-            messages.error(request, 'पासवर्ड परिवर्तन हुन सकेन।')
+            messages.error(request, 'Password could not be changed.')
 
     return redirect(get_role_redirect(user.get('role')))
 
@@ -371,5 +371,5 @@ def admin_change_password_view(request):
 def admin_logout_view(request):
     if 'admin_user' in request.session:
         del request.session['admin_user']
-    messages.success(request, 'सफलतापूर्वक लगआउट हुनुभयो।')
+    messages.success(request, 'You have logged out successfully.')
     return redirect('admin_login')

@@ -143,3 +143,12 @@ class BookingFormTests(TestCase):
 		save_booking.assert_not_called()
 		self.assertContains(response, 'Demo or fake', html=False)
 
+	def test_public_pages_are_english_only(self):
+		response = self.client.get('/chatbot/')
+		self.assertEqual(response.status_code, 200)
+		content = response.content.decode('utf-8')
+		self.assertNotRegex(content, r'[\u0900-\u097F]')
+		self.assertNotIn('कृपया', content)
+		self.assertNotIn('तपाईं', content)
+		self.assertNotIn('सेवा', content)
+

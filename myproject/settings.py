@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp',  # तपाईंको एप फोल्डर
+    'myapp',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +64,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-# Database Setup (यसले गर्दा अघि Error आएको थियो)
+# Database setup
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -103,7 +103,7 @@ GOOGLE_SHEET_ID = os.environ.get('GOOGLE_SHEET_ID', '')
 GOOGLE_SHEET_WORKSHEET = os.environ.get('GOOGLE_SHEET_WORKSHEET', 'Client_Details')
 GOOGLE_SERVICE_ACCOUNT_JSON = os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON', '')
 
-# Email Configurations (.env बाट load हुने)
+# Email configurations
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
