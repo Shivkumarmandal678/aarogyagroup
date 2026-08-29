@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.files.storage import default_storage
 from datetime import date, datetime, timedelta
+from pathlib import Path
+from uuid import uuid4
 from django.utils import timezone
 from django.contrib import messages
 from .google_sheets import (
@@ -71,6 +74,30 @@ def chatbot(request):
 
 CLASS_WEEKDAYS = {1, 3, 6}
 CLASS_CUTOFF_HOUR = 10
+BOOKING_COUNTRIES = (
+    'United Arab Emirates (UAE)',
+    'Saudi Arabia',
+    'Qatar',
+    'Kuwait',
+    'Bahrain',
+    'Oman',
+    'Malaysia',
+)
+PASSPORT_UPLOAD_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.pdf'}
+PASSPORT_UPLOAD_CONTENT_TYPES = {'image/jpeg', 'image/png', 'application/pdf'}
+PASSPORT_UPLOAD_MAX_BYTES = 5 * 1024 * 1024
+
+
+def _save_passport_copy(uploaded_file):
+    if not uploaded_file:
+        return None, None
+    extension = Path(uploaded_file.name or '').suffix.lower()
+    if extension not in PASSPORT_UPLOAD_EXTENSIONS or uploaded_file.content_type not in PASSPORT_UPLOAD_CONTENT_TYPES:
+        return None, 'Passport copy must be a JPG, PNG, or PDF file.'
+    if uploaded_file.size > PASSPORT_UPLOAD_MAX_BYTES:
+        return None, 'Passport copy must be 5 MB or smaller.'
+    storage_path = default_storage.save(f'passport_uploads/{uuid4().hex}{extension}', uploaded_file)
+    return storage_path, None
 
 
 def next_class_date(current=None):
@@ -98,7 +125,7 @@ def booking_view(request):
         selected_date = request.POST.get('date', '').strip()
         if not is_valid_class_date(selected_date):
             messages.error(request, 'Please select the next available class date: Sunday, Tuesday, or Thursday.')
-            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
         data = {
@@ -109,26 +136,41 @@ def booking_view(request):
             'address': request.POST.get('address', '').strip(),
             'lot_number': request.POST.get('lot_number', '').strip(),
             'service': request.POST.get('service', '').strip(),
+            'country': request.POST.get('country', '').strip(),
             'date': request.POST.get('date', '').strip(),
             'message': request.POST.get('message', '').strip(),
         }
-        required_fields = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'date', 'message']
+        required_fields = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'date', 'message']
         if any(not data.get(field, '').strip() for field in required_fields):
             messages.error(request, 'Please fill in all required fields. Lot number is optional, but all other fields must be completed.')
-            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), **data})
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
+            response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+            return response
+        if data['country'] not in BOOKING_COUNTRIES:
+            messages.error(request, 'Please select a valid destination country.')
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
         if looks_like_demo_submission(data):
             messages.error(request, 'Demo or fake booking entries are blocked. Please enter your real details only.')
-            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
+        passport_copy_path, upload_error = _save_passport_copy(request.FILES.get('passport_copy'))
+        if upload_error:
+            messages.error(request, upload_error)
+            response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
+            response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+            return response
+        data['passport_copy'] = passport_copy_path or ''
         if save_client_booking(data):
             messages.success(request, 'Thank you! Your booking was saved successfully.')
         else:
+            if passport_copy_path:
+                default_storage.delete(passport_copy_path)
             messages.info(request, 'Booking received. Our team will contact you soon.')
         return redirect('booking')
-    response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat()})
+    response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
     response["Cache-Control"] = "public, max-age=300, s-maxage=600"
     response["Vary"] = "Accept-Encoding"
     return response

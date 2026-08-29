@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from django.test import TestCase
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
 from datetime import datetime
 
@@ -98,8 +99,12 @@ class BookingFormTests(TestCase):
 		self.assertTemplateUsed(response, 'booking.html')
 		for field in ('name="name"', 'name="phone"', 'name="email"', 'name="address"', 'name="passport_number"', 'name="lot_number"', 'name="service"', 'name="date"', 'name="message"'):
 			self.assertContains(response, field, html=False)
+		for destination in ('United Arab Emirates (UAE)', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman', 'Malaysia'):
+			self.assertContains(response, destination, html=False)
 		self.assertNotContains(response, 'name="timestamp"', html=False)
 		self.assertNotContains(response, 'name="status"', html=False)
+		self.assertContains(response, 'name="passport_copy"', html=False)
+		self.assertContains(response, 'enctype="multipart/form-data"', html=False)
 
 	def test_booking_page_has_cache_header(self):
 		response = self.client.get('/booking/')
@@ -111,7 +116,7 @@ class BookingFormTests(TestCase):
 		with patch('myapp.views.save_client_booking') as save_booking:
 			response = self.client.post('/booking/', {
 				'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
-				'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+				'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical', 'country': 'Qatar',
 				'date': '2099-01-01', 'message': 'Please confirm.',
 			})
 
@@ -119,11 +124,55 @@ class BookingFormTests(TestCase):
 		save_booking.assert_not_called()
 		self.assertContains(response, 'Please select the next available class date', html=False)
 
+	def test_invalid_country_does_not_save_booking(self):
+		with patch('myapp.views.save_client_booking') as save_booking:
+			response = self.client.post('/booking/', {
+				'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
+				'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+				'country': 'Unknown Country', 'date': next_class_date().isoformat(), 'message': 'Please confirm.',
+			})
+
+		self.assertEqual(response.status_code, 200)
+		save_booking.assert_not_called()
+		self.assertContains(response, 'Please select a valid destination country', html=False)
+
+	@patch('myapp.views.default_storage.save', return_value='passport_uploads/test.pdf')
+	@patch('myapp.views.save_client_booking', return_value=True)
+	def test_passport_copy_is_saved_and_forwarded(self, save_booking, save_file):
+		passport_copy = SimpleUploadedFile('passport.pdf', b'%PDF-test', content_type='application/pdf')
+		response = self.client.post('/booking/', {
+			'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
+			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+			'country': 'Malaysia', 'date': next_class_date().isoformat(), 'message': 'Please confirm.',
+			'passport_copy': passport_copy,
+		})
+
+		self.assertRedirects(response, '/booking/')
+		save_file.assert_called_once()
+		submitted = save_booking.call_args.args[0]
+		self.assertEqual(submitted['passport_copy'], 'passport_uploads/test.pdf')
+
+	@patch('myapp.views.default_storage.save')
+	@patch('myapp.views.save_client_booking')
+	def test_passport_copy_rejects_unsupported_type(self, save_booking, save_file):
+		passport_copy = SimpleUploadedFile('passport.txt', b'not a passport', content_type='text/plain')
+		response = self.client.post('/booking/', {
+			'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
+			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+			'country': 'Qatar', 'date': next_class_date().isoformat(), 'message': 'Please confirm.',
+			'passport_copy': passport_copy,
+		})
+
+		self.assertEqual(response.status_code, 200)
+		save_file.assert_not_called()
+		save_booking.assert_not_called()
+		self.assertContains(response, 'Passport copy must be a JPG, PNG, or PDF file', html=False)
+
 	@patch('myapp.views.save_client_booking', return_value=False)
 	def test_failed_sheet_save_still_redirects(self, save_booking):
 		response = self.client.post('/booking/', {
 			'name': 'Test Client', 'phone': '9812345678', 'email': 'client@example.com',
-			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical',
+			'passport_number': 'P1234567', 'address': 'Kathmandu', 'service': 'Medical', 'country': 'Qatar',
 			'date': next_class_date().isoformat(), 'message': 'Please confirm.',
 		})
 
@@ -153,6 +202,7 @@ class BookingFormTests(TestCase):
 			'address': 'Kathmandu',
 			'lot_number': '',
 			'service': 'Biometric',
+			'country': 'Malaysia',
 			'date': next_class_date().isoformat(),
 			'message': 'Please confirm.',
 		})
@@ -163,6 +213,7 @@ class BookingFormTests(TestCase):
 		self.assertEqual(submitted['address'], 'Kathmandu')
 		self.assertEqual(submitted['lot_number'], '')
 		self.assertEqual(submitted['service'], 'Biometric')
+		self.assertEqual(submitted['country'], 'Malaysia')
 
 	@patch('myapp.views.save_client_booking')
 	def test_demo_submission_is_blocked(self, save_booking):
@@ -174,6 +225,7 @@ class BookingFormTests(TestCase):
 			'address': 'Kathmandu',
 			'lot_number': 'LOT-7',
 			'service': 'Biometric',
+			'country': 'Saudi Arabia',
 			'date': next_class_date().isoformat(),
 			'message': 'This is a demo entry.',
 		})
@@ -192,6 +244,7 @@ class BookingFormTests(TestCase):
 			'address': 'Kathmandu',
 			'lot_number': '',
 			'service': 'Biometric',
+			'country': 'United Arab Emirates (UAE)',
 			'date': next_class_date().isoformat(),
 			'message': 'Please confirm.',
 		})
@@ -212,12 +265,14 @@ class BookingFormTests(TestCase):
 			'address': 'Lahan',
 			'lot_number': '',
 			'service': 'Orientation',
+			'country': 'Oman',
 			'date': '2026-08-30',
 			'message': 'Please process my booking.',
 		})
 
 		payload = post_sheet_action.call_args.args[1]
-		self.assertEqual(list(payload.keys()), ['timestamp', 'name', 'phone', 'email', 'address', 'passport_number', 'lot_number', 'service', 'date', 'message', 'status'])
+		self.assertEqual(payload['country'], 'Oman')
+		self.assertEqual(list(payload.keys()), ['timestamp', 'name', 'phone', 'email', 'address', 'passport_number', 'lot_number', 'service', 'country', 'passport_copy', 'date', 'message', 'status'])
 
 	def test_public_pages_are_english_only(self):
 		response = self.client.get('/chatbot/')

@@ -93,7 +93,7 @@
         <div class="card-body p-4 p-md-5">
           {% include 'messages.html' %}
 
-          <form method="POST" action="{% url 'booking' %}">
+          <form method="POST" action="{% url 'booking' %}" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="row g-3">
@@ -123,6 +123,12 @@
               </div>
 
               <div class="col-md-6">
+                <label class="form-label fw-semibold" for="passportCopy">Passport Copy <span class="text-muted small">(Optional)</span></label>
+                <input type="file" id="passportCopy" name="passport_copy" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
+                <div class="form-text">JPG, PNG or PDF. Maximum size 5 MB.</div>
+              </div>
+
+              <div class="col-md-6">
                 <label class="form-label fw-semibold" for="lotNumber">Lot Number <span class="text-muted small">(Optional)</span></label>
                 <input type="text" id="lotNumber" name="lot_number" class="form-control" placeholder="Enter lot number if available" autocomplete="off" value="{{ lot_number|default:'' }}">
               </div>
@@ -137,6 +143,17 @@
                   <option value="Ticket">Ticket</option>
                   <option value="Shram">Shram</option>
                 </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold" for="bookingCountry">Destination Country <span class="text-danger">*</span></label>
+                <select id="bookingCountry" name="country" class="form-select" required>
+                  <option value="" selected disabled>Select destination country</option>
+                  {% for destination in countries %}
+                    <option value="{{ destination }}"{% if country == destination %} selected{% endif %}>{{ destination }}</option>
+                  {% endfor %}
+                </select>
+                <div class="form-text">Choose the country where you plan to work.</div>
               </div>
 
               <div class="col-md-12">

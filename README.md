@@ -66,5 +66,8 @@ role-specific actions and records.
 The `Booking` tab should use this header row for the public booking form. `Timestamp` and `Status` are generated server-side and are not form fields:
 
 ```text
-Timestamp,Name,Phone,Email,Address,Passport_Number,Lot_Number,Service,Date,Message,Status
+Timestamp,Name,Phone,Email,Address,Passport_Number,Lot_Number,Service,Country,Passport_Copy,Date,Message,Status
 ```
+
+Passport copies accept JPG, PNG, or PDF files up to 5 MB. They are stored under
+the private media directory; the sheet records the internal file reference.

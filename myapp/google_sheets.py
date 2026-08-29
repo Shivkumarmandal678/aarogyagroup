@@ -184,7 +184,7 @@ def save_client_booking(data):
     if looks_like_demo_submission(data):
         return False
 
-    required = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'date', 'message']
+    required = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'date', 'message']
     if any(not str(data.get(field, '')).strip() for field in required):
         return False
 
@@ -197,6 +197,8 @@ def save_client_booking(data):
         'passport_number': data.get('passport_number', ''),
         'lot_number': data.get('lot_number', ''),
         'service': data.get('service', data.get('department', '')),
+        'country': data.get('country', ''),
+        'passport_copy': data.get('passport_copy', ''),
         'date': data.get('date', ''),
         'message': data.get('message', ''),
         'status': 'Pending'
