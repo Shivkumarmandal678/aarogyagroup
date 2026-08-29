@@ -84,6 +84,16 @@ class SitemapTests(TestCase):
 		self.assertIn('<lastmod>', body)
 
 
+class CanonicalUrlTests(TestCase):
+	def test_canonical_url_uses_public_site_url(self):
+		response = self.client.get('/', HTTP_HOST='shiv6881.pythonanywhere.com')
+
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, '<link rel="canonical" href="https://aarogyagroup.com.np/">', html=False)
+		self.assertNotContains(response, 'href="http://shiv6881.pythonanywhere.com/', html=False)
+		self.assertNotContains(response, 'href="https://shiv6881.pythonanywhere.com/', html=False)
+
+
 class PerformanceHeaderTests(TestCase):
 	def test_public_pages_send_cache_headers(self):
 		response = self.client.get('/')
