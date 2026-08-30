@@ -167,7 +167,12 @@ def booking_view(request):
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
-        data['passport_copy'] = passport_copy_path or ''
+        
+        # यहाँ पूरा Openable Clickable URL तैयार किया जा रहा है:
+        site_url = getattr(settings, 'PUBLIC_SITE_URL', 'https://aarogyagroup.com.np').rstrip('/')
+        full_file_url = f"{site_url}/media/{passport_copy_path}"
+        data['passport_copy'] = full_file_url
+
         if save_client_booking(data):
             messages.success(request, 'Thank you! Your booking was saved successfully.')
         else:
@@ -179,6 +184,7 @@ def booking_view(request):
     response["Cache-Control"] = "public, max-age=300, s-maxage=600"
     response["Vary"] = "Accept-Encoding"
     return response
+
 
 # Dashboard Helpers
 def get_role_redirect(role_name):
