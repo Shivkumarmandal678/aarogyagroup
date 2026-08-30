@@ -12,10 +12,8 @@ DEMO_KEYWORDS = (
     'placeholder', 'lorem', 'dummy', 'trial', 'spam'
 )
 
-
 def _normalize_text(value):
     return re.sub(r'[^a-z0-9]+', ' ', str(value or '').lower()).strip()
-
 
 def _contains_demo_keyword(value):
     if value is None:
@@ -25,7 +23,6 @@ def _contains_demo_keyword(value):
         return False
     tokens = set(text.split())
     return bool(tokens & set(DEMO_KEYWORDS))
-
 
 def looks_like_demo_submission(data):
     if not isinstance(data, dict):
@@ -54,11 +51,8 @@ def looks_like_demo_submission(data):
 
     return False
 
-# =========================================================================
-# HELPER: GOOGLE DRIVE LINK CONVERTER
-# =========================================================================
 def format_drive_image(url):
-    """Convert a Google Drive link into a direct image URL."""
+    """Convert Google Drive link to direct display image URL."""
     if not url:
         return 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
     url = str(url).strip()
@@ -68,18 +62,15 @@ def format_drive_image(url):
         return f"https://lh3.googleusercontent.com/d/{file_id}"
     return url
 
-# =========================================================================
-# CORE HELPER: SHEET DATA FETCH ENGINE (APPS SCRIPT + CSV DUAL FETCH)
-# =========================================================================
 def fetch_sheet_rows(sheet_name):
     """Fetch all rows cleanly from any sheet tab."""
-    # 1. Apps Script Web App
     if WEB_APP_URL:
         try:
             action = {
                 'Admin': 'get_admins',
                 'Booking': 'get_bookings',
                 'Reports': 'get_reports',
+                'Chatbot': 'get_chatbot',
             }.get(sheet_name, f'get_{sheet_name.lower()}')
             r = requests.get(f"{WEB_APP_URL}?action={action}", timeout=8, allow_redirects=True)
             if r.status_code == 200:
@@ -89,7 +80,7 @@ def fetch_sheet_rows(sheet_name):
         except Exception as e:
             print(f"Apps Script Error for {sheet_name}:", e)
 
-    # 2. Direct CSV fallback
+    # Direct CSV fallback
     csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
     try:
         r = requests.get(csv_url, timeout=8)
@@ -106,13 +97,8 @@ def fetch_sheet_rows(sheet_name):
 
     return []
 
-# =========================================================================
-# 1. UNIVERSAL AUTHENTICATION (ADMIN / STAFF / ANY USER)
-# =========================================================================
 def authenticate_user(login_input, password_input):
-    """
-    Allow login by username or email for admin and staff accounts.
-    """
+    """Allow login by username or email for admin and staff accounts."""
     login_id = str(login_input).strip().lower()
     password = str(password_input).strip()
 
@@ -122,24 +108,56 @@ def authenticate_user(login_input, password_input):
         uemail = str(user.get('Email', '')).strip().lower()
         upass = str(user.get('Password', '')).strip()
 
-        # Match either username or email and verify the password.
         if (login_id == uname or login_id == uemail) and (password == upass):
             user['Profile_Image'] = format_drive_image(user.get('Profile_Image'))
             return user
-
     return None
 
-# =========================================================================
-# 2. GET ALL BOOKINGS (FOR DASHBOARD)
-# =========================================================================
 def get_all_client_bookings():
-    """Fetch all booking data from the Booking sheet."""
     return fetch_sheet_rows("Booking")
-
 
 def get_all_reports():
     return fetch_sheet_rows("Reports")
 
+def get_chatbot_qa_list():
+    """Fetch custom Q&A messages live from the Chatbot tab of Google Sheet."""
+    if WEB_APP_URL:
+        try:
+            r = requests.get(f"{WEB_APP_URL}?action=get_chatbot", timeout=6)
+            if r.status_code == 200:
+                data = r.json()
+                if isinstance(data, list) and len(data) > 0:
+                    return data
+        except Exception as e:
+            print("Chatbot fetch error:", e)
+
+    csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Chatbot"
+    try:
+        r = requests.get(csv_url, timeout=6)
+        if r.status_code == 200:
+            reader = csv.reader(io.StringIO(r.text))
+            rows = list(reader)
+            if len(rows) > 1:
+                qa_list = []
+                for row in rows[1:]:
+                    if len(row) >= 2 and row[0].strip() and row[1].strip():
+                        qa_list.append({
+                            'keywords': row[0].strip().lower(),
+                            'answer': row[1].strip(),
+                            'button': row[2].strip() if len(row) > 2 else ''
+                        })
+                if qa_list:
+                    return qa_list
+    except Exception as e:
+        print("Chatbot CSV error:", e)
+
+    return [
+        {"keywords": "service, services, training, course", "answer": "We provide medical biometric orientation, pre-departure training, document guidance, and worker support.", "button": "Our Services"},
+        {"keywords": "branch, location, where, office", "answer": "Our branches are located in Lahan, Mirchaiya, Janakpur, and Kathmandu.", "button": "Our Branches"},
+        {"keywords": "batch, schedule, time, sunday, tuesday, thursday", "answer": "A new batch runs three days each week: Sunday, Tuesday, and Thursday from 9:00 AM to 6:00 PM.", "button": "Batch Schedule"},
+        {"keywords": "contact, phone, call, number, email", "answer": "Branch phones: Lahan 9801196900, Mirchaiya 9801596900, Janakpur 9801196900. Email: aarogyamc@gmail.com", "button": "Contact Details"},
+        {"keywords": "default", "answer": "Please ask about our services, medical orientation, training, branches, or call 9801196900.", "button": ""}
+    ]
 
 def post_sheet_action(action, data=None):
     if not WEB_APP_URL:
@@ -157,9 +175,6 @@ def post_sheet_action(action, data=None):
     except Exception:
         return False
 
-# =========================================================================
-# 3. CHANGE PASSWORD IN GOOGLE SHEET
-# =========================================================================
 def update_admin_password_sheet(username, new_password):
     if not WEB_APP_URL:
         return False
@@ -174,14 +189,8 @@ def update_admin_password_sheet(username, new_password):
     except Exception:
         return False
 
-# =========================================================================
-# 4. SAVE CLIENT BOOKING (POST)
-# =========================================================================
 def save_client_booking(data):
-    if not isinstance(data, dict):
-        return False
-
-    if looks_like_demo_submission(data):
+    if not isinstance(data, dict) or looks_like_demo_submission(data):
         return False
 
     required = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'passport_copy', 'date', 'message']

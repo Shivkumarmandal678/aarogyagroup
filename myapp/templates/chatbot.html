@@ -1,91 +1,129 @@
 {% extends "base.html" %}
 {% block title %}Aarogya Chatbot{% endblock %}
+
 {% block content %}
 <style>
     .ag-chat-page { max-width: 820px; margin: 0 auto; }
     .ag-chat-header { background: #123c37; color: #fff; border-radius: 12px 12px 0 0; }
     .ag-chat-window { min-height: 360px; max-height: 480px; overflow-y: auto; background: #f4faf7; }
-    .ag-message { max-width: 78%; padding: .75rem 1rem; border-radius: 1rem; margin-bottom: .75rem; }
-    .ag-message.bot { background: #fff; border: 1px solid #d9e9e1; border-bottom-left-radius: .25rem; }
+    .ag-message { max-width: 82%; padding: .75rem 1rem; border-radius: 1rem; margin-bottom: .75rem; font-size: 0.95rem; line-height: 1.45; }
+    .ag-message.bot { background: #fff; color: #1e293b; border: 1px solid #d9e9e1; border-bottom-left-radius: .25rem; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
     .ag-message.user { margin-left: auto; background: #18a673; color: #fff; border-bottom-right-radius: .25rem; }
-    .ag-quick-button { border: 1px solid #b9d9cb; color: #123c37; background: #fff; border-radius: 2rem; font-size: .9rem; }
-    .ag-quick-button:hover { background: #e9f8f2; }
+    .ag-quick-button { border: 1px solid #b9d9cb; color: #123c37; background: #fff; border-radius: 2rem; font-size: .85rem; font-weight: 600; transition: all 0.2s; }
+    .ag-quick-button:hover { background: #e9f8f2; border-color: #18a673; transform: translateY(-1px); }
     .ag-chat-status { font-size: .8rem; color: #b7d8cb; }
     .ag-typing { color: #5f7e72; font-style: italic; }
 </style>
-<section class="ag-chat-page py-4 py-lg-5">
-    <div class="ag-chat-header p-4">
-        <div class="d-flex align-items-center justify-content-between gap-3"><div class="d-flex align-items-center gap-3"><i class="bi bi-robot fs-1 text-warning"></i><div><p class="text-warning fw-semibold mb-1">Aarogya Assistant</p><h1 class="h3 mb-1">How can we help?</h1><p class="text-white-50 mb-0">Ask about orientation, training, branches, or contact details.</p></div></div><span class="ag-chat-status d-none d-sm-inline"><i class="bi bi-circle-fill text-success me-1"></i>Online</span></div>
-    </div>
-    <div class="ag-chat-window p-3 p-md-4" id="chatWindow" aria-live="polite">
-        <div class="ag-message bot">Welcome to Aarogya Orientation &amp; Training Center. How can we help you today?</div>
-        <div class="d-flex flex-wrap gap-2 mb-3" id="quickQuestions">
-            <button class="ag-quick-button px-3 py-2" type="button" data-question="What services do you provide?">Our services</button>
-            <button class="ag-quick-button px-3 py-2" type="button" data-question="Where are your branches?">Our branches</button>
-            <button class="ag-quick-button px-3 py-2" type="button" data-question="When does the new batch start?">Batch schedule</button>
-            <button class="ag-quick-button px-3 py-2" type="button" data-question="How can I contact you?">Contact details</button>
+
+<section class="ag-chat-page py-3 py-lg-4">
+    <div class="ag-chat-header p-3 p-md-4">
+        <div class="d-flex align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-robot fs-1 text-warning"></i>
+                <div>
+                    <p class="text-warning fw-semibold mb-0 small">Aarogya Live Assistant</p>
+                    <h1 class="h4 mb-0 text-white">How can we help you?</h1>
+                </div>
+            </div>
+            <span class="ag-chat-status"><i class="bi bi-circle-fill text-success me-1"></i>Online</span>
         </div>
     </div>
-    <form class="d-flex gap-2 p-3 bg-white border border-top-0 rounded-bottom" id="chatForm">
+
+    <div class="ag-chat-window p-3 p-md-4" id="chatWindow" aria-live="polite">
+        <div class="ag-message bot">
+            Welcome to <strong>Aarogya Orientation &amp; Training Center</strong>. How can we help you today? Please type your question or select below:
+        </div>
+
+        {% if quick_buttons %}
+        <div class="d-flex flex-wrap gap-2 mb-3" id="quickQuestions">
+            {% for btn in quick_buttons %}
+            <button class="ag-quick-button px-3 py-2" type="button" data-question="{{ btn }}">{{ btn }}</button>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <form class="d-flex gap-2 p-3 bg-white border border-top-0 rounded-bottom shadow-sm" id="chatForm">
         <label class="visually-hidden" for="chatInput">Your question</label>
-        <input class="form-control" id="chatInput" type="text" placeholder="Type your question..." autocomplete="off" required>
-        <button class="btn btn-ag-green px-3" type="submit" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
+        <input class="form-control" id="chatInput" type="text" placeholder="Ask about services, batch timings, medical, branches..." autocomplete="off" required>
+        <button class="btn btn-success px-4" type="submit" aria-label="Send message" style="background:#18a673; border:none;">
+            <i class="bi bi-send-fill"></i>
+        </button>
     </form>
-    <div class="d-flex flex-wrap gap-3 mt-4 justify-content-center"><a class="text-decoration-none text-dark" href="tel:9801196900"><i class="bi bi-telephone text-ag-green me-2"></i>9801196900</a><a class="text-decoration-none text-dark" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope text-ag-green me-2"></i>aarogyamc@gmail.com</a></div>
+
+    <div class="d-flex flex-wrap gap-3 mt-3 justify-content-center small">
+        <a class="text-decoration-none text-muted" href="tel:9801196900"><i class="bi bi-telephone text-success me-1"></i>9801196900</a>
+        <a class="text-decoration-none text-muted" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope text-success me-1"></i>aarogyamc@gmail.com</a>
+    </div>
 </section>
 {% endblock %}
+
 {% block extra_js %}
 <script>
     (() => {
+        const qaData = {{ qa_list_json|safe }};
         const form = document.getElementById('chatForm');
         const input = document.getElementById('chatInput');
         const windowElement = document.getElementById('chatWindow');
         const quickQuestions = document.getElementById('quickQuestions');
-        const answers = {
-            service: 'We provide medical biometric orientation, pre-departure training, document guidance, workplace safety education, and overseas readiness support.',
-            branch: 'Our branches are in Lahan, Mirchaiya, Janakpur, and Kathmandu. Mirchaiya hosts Birat Aarogya Medical & Orientation Centre, and Janakpur hosts Jibandeep Orientation & Medical Centre.',
-            contact: 'Branch phone numbers: Lahan 9801196900, Mirchaiya 9801596900, Janakpur 9801196900, and Kathmandu 9801196900. Shared email: aarogyamc@gmail.com.',
-            medical: 'Medical biometric orientation covers medical checkups, biometric procedures, health requirements, and the key preparation steps before travel.',
-            training: 'Pre-departure training covers workplace safety, conduct, responsibilities, and practical guidance for life and work abroad.',
-            schedule: 'A new batch runs three days each week: Sunday, Tuesday, and Thursday. Sessions are available from 9:00 AM to 6:00 PM. Saturday follows the weekday schedule.',
-            lahan: 'Lahan branch phone number: 9801196900. Email: aarogyamc@gmail.com.',
-            mirchaiya: 'Mirchaiya branch, Birat Aarogya Medical & Orientation Centre, phone number: 9801596900. Email: aarogyamc@gmail.com.',
-            janakpur: 'Janakpur branch, Jibandeep Orientation & Medical Centre, phone number: 9801196900. Email: aarogyamc@gmail.com.',
-            kathmandu: 'Kathmandu branch phone number: 9801196900. Email: aarogyamc@gmail.com.',
-            fallback: 'Please ask about our services, medical orientation, training, branches, contact details, or phone number. For assistance, call 9801196900.'
-        };
+
         const addMessage = (text, type) => {
-            const message = document.createElement('div');
-            message.className = `ag-message ${type}`;
-            message.textContent = text;
-            windowElement.appendChild(message);
+            const msg = document.createElement('div');
+            msg.className = `ag-message ${type}`;
+            msg.innerHTML = text;
+            windowElement.appendChild(msg);
             windowElement.scrollTop = windowElement.scrollHeight;
         };
-        const reply = (question) => {
-            const value = question.toLowerCase();
-            if (value.includes('mirchaiya')) return answers.mirchaiya;
-            if (value.includes('lahan')) return answers.lahan;
-            if (value.includes('janakpur')) return answers.janakpur;
-            if (value.includes('kathmandu')) return answers.kathmandu;
-            if (value.includes('batch') || value.includes('schedule') || value.includes('time') || value.includes('when') || value.includes('sunday') || value.includes('tuesday') || value.includes('thursday')) return answers.schedule;
-            if (value.includes('branch') || value.includes('location') || value.includes('where')) return answers.branch;
-            if (value.includes('contact') || value.includes('phone') || value.includes('email') || value.includes('number')) return answers.contact;
-            if (value.includes('medical') || value.includes('biometric') || value.includes('health')) return answers.medical;
-            if (value.includes('training') || value.includes('orientation') || value.includes('learn')) return answers.training;
-            if (value.includes('service')) return answers.service;
-            return answers.fallback;
+
+        const getReply = (question) => {
+            const cleanQ = question.toLowerCase().trim();
+            let defaultAnswer = "Please ask about our services, medical orientation, training, branches, or call 9801196900.";
+            
+            for (let item of qaData) {
+                if (item.keywords === 'default') {
+                    defaultAnswer = item.answer;
+                    continue;
+                }
+                const keywords = item.keywords.split(',').map(k => k.trim());
+                for (let k of keywords) {
+                    if (k && cleanQ.includes(k)) {
+                        return item.answer;
+                    }
+                }
+            }
+            return defaultAnswer;
         };
+
         const ask = (question) => {
             addMessage(question, 'user');
             const typing = document.createElement('div');
             typing.className = 'ag-message bot ag-typing';
-            typing.textContent = 'Aarogya is typing...';
+            typing.textContent = 'Aarogya Assistant is typing...';
             windowElement.appendChild(typing);
             windowElement.scrollTop = windowElement.scrollHeight;
-            window.setTimeout(() => { typing.remove(); addMessage(reply(question), 'bot'); }, 450);
+
+            setTimeout(() => {
+                typing.remove();
+                addMessage(getReply(question), 'bot');
+            }, 400);
         };
-        form.addEventListener('submit', (event) => { event.preventDefault(); const question = input.value.trim(); if (question) { ask(question); input.value = ''; input.focus(); } });
-        quickQuestions.addEventListener('click', (event) => { if (event.target.matches('[data-question]')) ask(event.target.dataset.question); });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const q = input.value.trim();
+            if (q) {
+                ask(q);
+                input.value = '';
+            }
+        });
+
+        if (quickQuestions) {
+            quickQuestions.addEventListener('click', (e) => {
+                if (e.target.matches('[data-question]')) {
+                    ask(e.target.dataset.question);
+                }
+            });
+        }
     })();
 </script>
 {% endblock %}

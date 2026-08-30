@@ -1,6 +1,8 @@
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.core.files.storage import default_storage
 from django.conf import settings
 from datetime import date, datetime, timedelta
@@ -14,6 +16,7 @@ from .google_sheets import (
     update_admin_password_sheet,
     get_all_client_bookings,
     get_all_reports,
+    get_chatbot_qa_list,
     post_sheet_action,
     SHEET_ID,
     looks_like_demo_submission,
@@ -26,11 +29,9 @@ def render_public_page(request, template_name, context=None):
     response["X-Content-Type-Options"] = "nosniff"
     return response
 
-
 # Public Views
 def home(request):
     return render_public_page(request, 'home.html')
-
 
 def sitemap_view(request):
     base_url = settings.PUBLIC_SITE_URL
@@ -61,17 +62,20 @@ def sitemap_view(request):
     response["Vary"] = "Accept-Encoding"
     return response
 
-
 def about(request):
     return render_public_page(request, 'about.html')
-
 
 def service(request):
     return render_public_page(request, 'services.html')
 
-
+@xframe_options_exempt
 def chatbot(request):
-    return render_public_page(request, 'chatbot.html')
+    qa_list = get_chatbot_qa_list()
+    quick_buttons = [item['button'] for item in qa_list if item.get('button')]
+    return render_public_page(request, 'chatbot.html', {
+        'qa_list_json': json.dumps(qa_list),
+        'quick_buttons': quick_buttons,
+    })
 
 CLASS_WEEKDAYS = {1, 3, 6}
 CLASS_CUTOFF_HOUR = 10
@@ -88,7 +92,6 @@ PASSPORT_UPLOAD_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.pdf'}
 PASSPORT_UPLOAD_CONTENT_TYPES = {'image/jpeg', 'image/png', 'application/pdf'}
 PASSPORT_UPLOAD_MAX_BYTES = 5 * 1024 * 1024
 
-
 def _save_passport_copy(uploaded_file):
     if not uploaded_file:
         return None, None
@@ -100,7 +103,6 @@ def _save_passport_copy(uploaded_file):
     storage_path = default_storage.save(f'passport_uploads/{uuid4().hex}{extension}', uploaded_file)
     return storage_path, None
 
-
 def next_class_date(current=None):
     current = current or timezone.localtime()
     class_date = current.date()
@@ -111,7 +113,6 @@ def next_class_date(current=None):
         if class_date.weekday() in CLASS_WEEKDAYS:
             return class_date
 
-
 def is_valid_class_date(value, current=None):
     try:
         selected = date.fromisoformat(str(value))
@@ -119,8 +120,6 @@ def is_valid_class_date(value, current=None):
         return False
     return selected == next_class_date(current)
 
-
-# Booking View
 def booking_view(request):
     if request.method == 'POST':
         selected_date = request.POST.get('date', '').strip()
@@ -181,13 +180,8 @@ def booking_view(request):
     response["Vary"] = "Accept-Encoding"
     return response
 
-
-# =========================================================================
-# UNIVERSAL MULTI-ROLE AUTHENTICATION & ROUTING
-# =========================================================================
-
+# Dashboard Helpers
 def get_role_redirect(role_name):
-    """Return the correct dashboard route for a given role."""
     role = ''.join(char for char in str(role_name).strip().lower() if char.isalnum())
     if role in {'admin', 'administrator', 'owner', 'superadmin'}:
         return 'admin_dashboard'
@@ -199,18 +193,14 @@ def get_role_redirect(role_name):
         return 'staff_dashboard'
     return 'user_dashboard'
 
-
 def _logged_in_user(request):
     return request.session.get('admin_user')
-
 
 def _is_admin(user):
     role = ''.join(char for char in str(user.get('role', '')).strip().lower() if char.isalnum())
     return role in {'admin', 'administrator', 'owner', 'superadmin'}
 
-
 def _require_dashboard_role(request, role):
-    """Allow admins everywhere, but keep each other role on its own portal."""
     user = _logged_in_user(request)
     if not user:
         return None, redirect('admin_login')
@@ -218,13 +208,11 @@ def _require_dashboard_role(request, role):
         return user, redirect(get_role_redirect(user.get('role')))
     return user, None
 
-
 def _dashboard_context(dashboard_user, **extra):
     return {
         'sheet_url': f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit',
         **extra,
     }
-
 
 def _row_value(row, *keys):
     for key in keys:
@@ -232,14 +220,12 @@ def _row_value(row, *keys):
             return str(row[key]).strip()
     return ''
 
-
 def _normalize_report(row):
     normalized = dict(row)
     fields = ('id', 'patient_name', 'patient_email', 'test_name', 'result', 'doctor', 'doctor_status', 'manager_status', 'staff_status', 'user_status')
     for field in fields:
         normalized[field] = _row_value(row, field, field.title().replace('_', ' '), field.title(), field.upper())
     return normalized
-
 
 def _dashboard_records(user):
     bookings = get_all_client_bookings()
@@ -257,9 +243,7 @@ def _dashboard_records(user):
         reports = [row for row in reports if _row_value(row, 'Manager_Status').lower() in {'approved', 'manager approved'}]
     return list(reversed(bookings or [])), list(reversed(reports or []))
 
-
 def admin_login_view(request):
-    """Log in users from the Google Sheet by role."""
     if request.session.get('admin_user'):
         role = request.session['admin_user'].get('role', 'User')
         return redirect(get_role_redirect(role))
@@ -284,18 +268,12 @@ def admin_login_view(request):
 
     return render(request, 'admin_login.html')
 
-
 def dashboard_redirect_view(request):
-    """Send the user to their correct dashboard from the navbar."""
     user = request.session.get('admin_user')
     if not user:
         return redirect('admin_login')
     return redirect(get_role_redirect(user.get('role', 'User')))
 
-
-# =========================================================================
-# 1. ADMIN DASHBOARD
-# =========================================================================
 def admin_dashboard_view(request):
     admin, response = _require_dashboard_role(request, 'admin_dashboard')
     if response:
@@ -303,10 +281,6 @@ def admin_dashboard_view(request):
     bookings, reports = _dashboard_records(admin)
     return render(request, 'admin_dashboard.html', _dashboard_context(admin, admin=admin, bookings=bookings, reports=reports, can_manage=True))
 
-
-# =========================================================================
-# 2. STAFF DASHBOARD
-# =========================================================================
 def staff_dashboard_view(request):
     staff, response = _require_dashboard_role(request, 'staff_dashboard')
     if response:
@@ -314,10 +288,6 @@ def staff_dashboard_view(request):
     bookings, reports = _dashboard_records(staff)
     return render(request, 'staff_dashboard.html', _dashboard_context(staff, staff=staff, bookings=bookings, reports=reports, can_approve=True))
 
-
-# =========================================================================
-# 3. DOCTOR DASHBOARD
-# =========================================================================
 def doctor_dashboard_view(request):
     doctor, response = _require_dashboard_role(request, 'doctor_dashboard')
     if response:
@@ -325,10 +295,6 @@ def doctor_dashboard_view(request):
     bookings, reports = _dashboard_records(doctor)
     return render(request, 'doctor_dashboard.html', _dashboard_context(doctor, doctor=doctor, bookings=bookings, reports=reports, can_create=True))
 
-
-# =========================================================================
-# 4. MANAGER DASHBOARD
-# =========================================================================
 def manager_dashboard_view(request):
     manager, response = _require_dashboard_role(request, 'manager_dashboard')
     if response:
@@ -336,17 +302,12 @@ def manager_dashboard_view(request):
     bookings, reports = _dashboard_records(manager)
     return render(request, 'manager_dashboard.html', _dashboard_context(manager, manager=manager, bookings=bookings, reports=reports, can_approve=True))
 
-
-# =========================================================================
-# 5. GENERAL USER DASHBOARD
-# =========================================================================
 def user_dashboard_view(request):
     user, response = _require_dashboard_role(request, 'user_dashboard')
     if response:
         return response
     bookings, reports = _dashboard_records(user)
     return render(request, 'user_dashboard.html', _dashboard_context(user, user=user, bookings=bookings, reports=reports))
-
 
 @require_POST
 def dashboard_action_view(request):
@@ -392,15 +353,12 @@ def dashboard_action_view(request):
         messages.error(request, 'Update could not be saved in Google Sheet.')
     return redirect(get_role_redirect(user.get('role')))
 
-
 def print_dashboard_view(request):
     user = _logged_in_user(request)
     if not user:
         return redirect('admin_login')
     return render(request, 'dashboard_print.html', {'user': user, 'bookings': _dashboard_records(user)[0], 'reports': _dashboard_records(user)[1]})
 
-
-# Password Change & Logout
 def admin_change_password_view(request):
     user = request.session.get('admin_user')
     if not user:
@@ -420,7 +378,6 @@ def admin_change_password_view(request):
             messages.error(request, 'Password could not be changed.')
 
     return redirect(get_role_redirect(user.get('role')))
-
 
 def admin_logout_view(request):
     if 'admin_user' in request.session:
