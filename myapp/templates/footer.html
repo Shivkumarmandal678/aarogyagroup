@@ -123,11 +123,11 @@
 <footer class="ag-footer mt-5 pt-5 pb-4" itemscope itemtype="https://schema.org/LocalBusiness">
     <div class="container">
         
-        <!-- Google Maps & Interactive Action Bar -->
+        <!-- Google Maps with Exact Coordinates (26.7139492, 86.4818376) -->
         <div class="ag-footer-map mb-5">
             <iframe 
-                src="https://www.google.com/maps?q=Aarogya%20Group%20Orientation%20and%20Training%20Center%2C%20Lahan%20Road%20No.%202%2C%20Lahan%2C%20Nepal&output=embed" 
-                title="Aarogya Group Orientation and Training Center location in Lahan, Nepal" 
+                src="https://www.google.com/maps?q=26.7139492,86.4818376&hl=en&z=17&output=embed" 
+                title="Aarogya Group Orientation and Training Center exact location in Lahan, Nepal" 
                 loading="lazy" 
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
@@ -140,13 +140,13 @@
                     <span itemprop="addressCountry">Nepal</span>
                 </div>
 
-                <!-- Location Action Buttons (Exact, Directions, Share) -->
+                <!-- Action Buttons: Exact Location & Accurate Directions -->
                 <div class="ag-loc-btn-group">
-                    <a class="ag-loc-btn ag-btn-exact" href="https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6" target="_blank" rel="noopener noreferrer" title="Open Exact Location in Google Maps">
+                    <a class="ag-loc-btn ag-btn-exact" href="https://www.google.com/maps?q=26.7139492,86.4818376" target="_blank" rel="noopener noreferrer" title="Open Exact Location in Google Maps">
                         <i class="bi bi-pin-map-fill me-1"></i> Exact Location
                     </a>
                     
-                    <a class="ag-loc-btn ag-btn-nav" href="https://www.google.com/maps/dir/?api=1&destination=26.7291,86.4837" target="_blank" rel="noopener noreferrer" title="Get Driving / Walking Directions">
+                    <a class="ag-loc-btn ag-btn-nav" href="https://www.google.com/maps/dir/?api=1&destination=26.7139492,86.4818376" target="_blank" rel="noopener noreferrer" title="Get Accurate Driving / Walking Directions">
                         <i class="bi bi-signpost-2-fill me-1"></i> Get Directions
                     </a>
 
@@ -174,7 +174,7 @@
                 </div>
             </div>
 
-            <!-- Explore Links (Included Booking) -->
+            <!-- Explore Links -->
             <div class="col-6 col-sm-4 col-lg-3">
                 <h2 class="ag-footer-heading mb-3">Explore</h2>
                 <nav class="d-flex flex-column gap-2" aria-label="Footer navigation">
@@ -187,7 +187,7 @@
                     <a class="ag-footer-link" href="{% url 'service' %}" title="Aarogya Group services">
                         <i class="bi bi-chevron-right me-1 small"></i>Services &amp; Branches
                     </a>
-                    <a class="ag-footer-link" href="{% url 'booking' %}" title="Book Orientation & Medical Appointment">
+                    <a class="ag-footer-link text-warning fw-semibold" href="{% url 'booking' %}" title="Book Orientation &amp; Medical Appointment">
                         <i class="bi bi-chevron-right me-1 small"></i>Online Booking
                     </a>
                 </nav>
@@ -217,22 +217,23 @@
     </div>
 </footer>
 
-<!-- Location Share JavaScript -->
+<!-- Accurate Location Share JavaScript -->
 <script>
     function shareAarogyaLocation() {
+        const exactLocationUrl = 'https://www.google.com/maps?q=26.7139492,86.4818376';
         const shareData = {
             title: 'Aarogya Group Orientation & Training Center',
             text: 'Visit Aarogya Group Orientation and Training Center, Lahan Road No. 2, Lahan, Nepal',
-            url: 'https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6'
+            url: exactLocationUrl
         };
 
         if (navigator.share) {
             navigator.share(shareData).catch(() => {});
         } else {
-            navigator.clipboard.writeText('https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6').then(() => {
-                alert('Location Link Copied to Clipboard!\nhttps://maps.app.goo.gl/KxKYjDUWdSjwrXCS6');
+            navigator.clipboard.writeText(exactLocationUrl).then(() => {
+                alert('Exact Location Link Copied to Clipboard!\n' + exactLocationUrl);
             }).catch(() => {
-                window.open('https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6', '_blank');
+                window.open(exactLocationUrl, '_blank');
             });
         }
     }
