@@ -123,11 +123,11 @@
 <footer class="ag-footer mt-5 pt-5 pb-4" itemscope itemtype="https://schema.org/LocalBusiness">
     <div class="container">
         
-        <!-- Google Maps Embed -->
+        <!-- Google Maps Embed with Exact Building Location (PF7J+HJH) -->
         <div class="ag-footer-map mb-5">
             <iframe 
-                src="https://www.google.com/maps?q=26.7139492,86.4818376&hl=en&z=17&output=embed" 
-                title="Aarogya Group Orientation and Training Center exact location in Lahan, Nepal" 
+                src="https://www.google.com/maps?q=PF7J%2BHJH,+Lahan+56500,+Nepal&hl=en&z=18&output=embed" 
+                title="Aarogya Group Orientation and Training Center building location in Lahan, Nepal" 
                 loading="lazy" 
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
@@ -142,17 +142,17 @@
 
                 <!-- Action Buttons -->
                 <div class="ag-loc-btn-group">
-                    <!-- EXACT LOCATION (26°42'50.2"N 86°28'54.6"E / PF7J+HJH) -->
-                    <a class="ag-loc-btn ag-btn-exact" href="https://www.google.com/maps/place/26%C2%B042'50.2%22N+86%C2%B028'54.6%22E/@26.7139444,86.4818333,18z" target="_blank" rel="noopener noreferrer" title="Open Exact Pinned Location in Google Maps">
+                    <!-- EXACT LOCATION (Opens the Exact Building PF7J+HJH) -->
+                    <a class="ag-loc-btn ag-btn-exact" href="https://www.google.com/maps/place/PF7J%2BHJH,+Lahan+56500,+Nepal" target="_blank" rel="noopener noreferrer" title="Open Exact Building Location in Google Maps">
                         <i class="bi bi-pin-map-fill me-1"></i> Exact Location
                     </a>
                     
-                    <!-- GET DIRECTIONS (Unchanged) -->
-                    <a class="ag-loc-btn ag-btn-nav" href="https://www.google.com/maps/dir/?api=1&destination=26.7139492,86.4818376" target="_blank" rel="noopener noreferrer" title="Get Accurate Driving / Walking Directions">
+                    <!-- GET DIRECTIONS (Navigates directly to PF7J+HJH building) -->
+                    <a class="ag-loc-btn ag-btn-nav" href="https://www.google.com/maps/dir/?api=1&destination=PF7J%2BHJH,+Lahan+56500,+Nepal" target="_blank" rel="noopener noreferrer" title="Get Accurate Driving / Walking Directions">
                         <i class="bi bi-signpost-2-fill me-1"></i> Get Directions
                     </a>
 
-                    <!-- SHARE LOCATION (Unchanged) -->
+                    <!-- SHARE LOCATION -->
                     <button type="button" class="ag-loc-btn ag-btn-nav" onclick="shareAarogyaLocation()" title="Share Location Link">
                         <i class="bi bi-share-fill me-1"></i> Share
                     </button>
@@ -190,7 +190,7 @@
                     <a class="ag-footer-link" href="{% url 'service' %}" title="Aarogya Group services">
                         <i class="bi bi-chevron-right me-1 small"></i>Services &amp; Branches
                     </a>
-                    <a class="ag-footer-link text-warning fw-semibold" href="{% url 'booking' %}" title="Book Orientation &amp; Medical Appointment">
+                    <a class="ag-footer-link" href="{% url 'booking' %}" title="Book Orientation &amp; Medical Appointment">
                         <i class="bi bi-chevron-right me-1 small"></i>Online Booking
                     </a>
                 </nav>
@@ -223,7 +223,7 @@
 <!-- Accurate Location Share JavaScript -->
 <script>
     function shareAarogyaLocation() {
-        const exactLocationUrl = 'https://www.google.com/maps/place/26%C2%B042\'50.2%22N+86%C2%B028\'54.6%22E/@26.7139444,86.4818333,18z';
+        const exactLocationUrl = 'https://www.google.com/maps/place/PF7J%2BHJH,+Lahan+56500,+Nepal';
         const shareData = {
             title: 'Aarogya Group Orientation & Training Center',
             text: 'Visit Aarogya Group Orientation and Training Center, Lahan Road No. 2, Lahan, Nepal',
