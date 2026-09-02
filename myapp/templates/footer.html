@@ -6,7 +6,7 @@
 
     .ag-footer-brand {
         color: #f8fafc;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         text-decoration: none;
     }
 
@@ -16,19 +16,20 @@
     .ag-footer-link { color: #a7b4aa; }
 
     .ag-footer-link {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         text-decoration: none;
         transition: color 0.2s ease, transform 0.2s ease;
     }
 
     .ag-footer-link:hover {
         color: #6ee7b7;
-        transform: translateX(2px);
+        transform: translateX(3px);
     }
 
     .ag-footer-heading {
         color: #d1fae5;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
@@ -36,56 +37,203 @@
 
     .ag-footer-divider { border-color: rgba(255, 255, 255, 0.12) !important; }
 
-    .ag-footer-map { overflow: hidden; border: 1px solid rgba(255, 255, 255, .14); border-radius: .75rem; }
+    .ag-footer-map {
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, .14);
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
     .ag-footer-map iframe { display: block; width: 100%; height: 280px; border: 0; }
-    .ag-footer-location { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem 1rem; background: #123c37; }
-    .ag-footer-location-text { color: #d1fae5; }
-    .ag-footer-location-link { white-space: nowrap; color: #123c37; background: #f4b942; }
-    .ag-footer-location-link:hover { color: #123c37; background: #ffd166; }
+    
+    /* Map Location Action Bar */
+    .ag-footer-location {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        background: #123c37;
+    }
+    .ag-footer-location-text { color: #d1fae5; font-size: 0.92rem; }
+    
+    .ag-loc-btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 
-    @media (max-width: 575.98px) {
-        .ag-footer { text-align: center; }
-        .ag-footer-links { justify-content: center; }
-        .ag-footer-location { align-items: stretch; flex-direction: column; }
+    .ag-loc-btn {
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 0.4rem 0.85rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .ag-btn-exact {
+        background: #f4b942;
+        color: #123c37;
+        border: 1px solid #f4b942;
+    }
+    .ag-btn-exact:hover {
+        background: #ffd166;
+        color: #123c37;
+        transform: translateY(-2px);
+    }
+
+    .ag-btn-nav {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .ag-btn-nav:hover {
+        background: #18a673;
+        color: #ffffff;
+        border-color: #18a673;
+        transform: translateY(-2px);
+    }
+
+    .btn-footer-book {
+        background: #18a673;
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    .btn-footer-book:hover {
+        background: #10b981;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 767.98px) {
+        .ag-footer { text-align: left; }
+        .ag-footer-location { flex-direction: column; align-items: flex-start; }
+        .ag-loc-btn-group { width: 100%; }
+        .ag-loc-btn { flex: 1; justify-content: center; text-align: center; }
     }
 </style>
 
 <footer class="ag-footer mt-5 pt-5 pb-4" itemscope itemtype="https://schema.org/LocalBusiness">
     <div class="container">
+        
+        <!-- Google Maps & Interactive Action Bar -->
         <div class="ag-footer-map mb-5">
-            <iframe src="https://www.google.com/maps?q=Aarogya%20Group%20Orientation%20and%20Training%20Center%2C%20Lahan%20Road%20No.%202%2C%20Lahan%2C%20Nepal&output=embed" title="Aarogya Group Orientation and Training Center location in Lahan, Nepal" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe 
+                src="https://www.google.com/maps?q=Aarogya%20Group%20Orientation%20and%20Training%20Center%2C%20Lahan%20Road%20No.%202%2C%20Lahan%2C%20Nepal&output=embed" 
+                title="Aarogya Group Orientation and Training Center location in Lahan, Nepal" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            
             <div class="ag-footer-location">
-                <span class="ag-footer-location-text" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress"><i class="bi bi-geo-alt-fill text-warning me-2" aria-hidden="true"></i><span itemprop="streetAddress">Lahan road no.2, Aarogya Group Orientation and Training Center</span>, <span itemprop="addressLocality">Lahan</span>, <span itemprop="addressCountry">Nepal</span></span>
-                <a class="btn ag-footer-location-link" href="https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6" target="_blank" rel="noopener noreferrer" title="Open Aarogya Group in Google Maps"><i class="bi bi-map me-2" aria-hidden="true"></i>Open Exact Location</a>
+                <div class="ag-footer-location-text" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <i class="bi bi-geo-alt-fill text-warning me-2" aria-hidden="true"></i>
+                    <span itemprop="streetAddress">Lahan road no.2, Aarogya Group Orientation and Training Center</span>, 
+                    <span itemprop="addressLocality">Lahan</span>, 
+                    <span itemprop="addressCountry">Nepal</span>
+                </div>
+
+                <!-- Location Action Buttons (Exact, Directions, Share) -->
+                <div class="ag-loc-btn-group">
+                    <a class="ag-loc-btn ag-btn-exact" href="https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6" target="_blank" rel="noopener noreferrer" title="Open Exact Location in Google Maps">
+                        <i class="bi bi-pin-map-fill me-1"></i> Exact Location
+                    </a>
+                    
+                    <a class="ag-loc-btn ag-btn-nav" href="https://www.google.com/maps/dir/?api=1&destination=26.7291,86.4837" target="_blank" rel="noopener noreferrer" title="Get Driving / Walking Directions">
+                        <i class="bi bi-signpost-2-fill me-1"></i> Get Directions
+                    </a>
+
+                    <button type="button" class="ag-loc-btn ag-btn-nav" onclick="shareAarogyaLocation()" title="Share Location Link">
+                        <i class="bi bi-share-fill me-1"></i> Share
+                    </button>
+                </div>
             </div>
         </div>
+
+        <!-- Footer Links Grid -->
         <div class="row gy-4 gx-lg-5">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-5">
                 <a class="ag-footer-brand d-inline-flex align-items-center gap-2" href="{% url 'home' %}" title="Aarogya Group home page">
                     <i class="bi bi-shield-check text-ag-green fs-4" aria-hidden="true"></i>
                     <span itemprop="name"><span class="text-ag-green">Aarogya</span> Group</span>
                 </a>
-                <p class="ag-footer-copy mt-3 mb-0" style="max-width: 28rem;">Medical biometric orientation and practical training for people preparing to work abroad.</p>
+                <p class="ag-footer-copy mt-3 mb-3" style="max-width: 28rem;">
+                    Official Medical Biometric Orientation and Pre-departure Practical Training Center for Nepalese workers preparing for overseas employment.
+                </p>
+                <div>
+                    <a href="{% url 'booking' %}" class="btn btn-footer-book btn-sm shadow-sm">
+                        <i class="bi bi-calendar-check me-1"></i> Book Appointment
+                    </a>
+                </div>
             </div>
-            <div class="col-6 col-sm-4 col-lg-2">
+
+            <!-- Explore Links (Included Booking) -->
+            <div class="col-6 col-sm-4 col-lg-3">
                 <h2 class="ag-footer-heading mb-3">Explore</h2>
                 <nav class="d-flex flex-column gap-2" aria-label="Footer navigation">
-                    <a class="ag-footer-link" href="{% url 'home' %}" title="Aarogya Group home">Home</a>
-                    <a class="ag-footer-link" href="{% url 'about' %}" title="About Aarogya Group">About</a>
-                    <a class="ag-footer-link" href="{% url 'service' %}" title="Aarogya Group services">Services</a>
+                    <a class="ag-footer-link" href="{% url 'home' %}" title="Aarogya Group home">
+                        <i class="bi bi-chevron-right me-1 small"></i>Home
+                    </a>
+                    <a class="ag-footer-link" href="{% url 'about' %}" title="About Aarogya Group">
+                        <i class="bi bi-chevron-right me-1 small"></i>About Us
+                    </a>
+                    <a class="ag-footer-link" href="{% url 'service' %}" title="Aarogya Group services">
+                        <i class="bi bi-chevron-right me-1 small"></i>Services &amp; Branches
+                    </a>
+                    <a class="ag-footer-link text-warning fw-semibold" href="{% url 'booking' %}" title="Book Orientation & Medical Appointment">
+                        <i class="bi bi-chevron-right me-1 small"></i>Online Booking
+                    </a>
                 </nav>
             </div>
-            <div class="col-12 col-sm-4 col-lg-4">
+
+            <!-- Contact Details -->
+            <div class="col-12 col-sm-6 col-lg-4">
                 <h2 class="ag-footer-heading mb-3">Contact Us</h2>
                 <div class="d-flex flex-column gap-2">
-                    <a class="ag-footer-link" href="tel:9801196900" itemprop="telephone"><i class="bi bi-telephone me-2" aria-hidden="true"></i>9801196900</a>
-                    <a class="ag-footer-link" href="mailto:aarogyamc@gmail.com" itemprop="email"><i class="bi bi-envelope me-2" aria-hidden="true"></i>aarogyamc@gmail.com</a>
-                    <a class="ag-footer-link" href="https://aarogyagroup.com.np" target="_blank" rel="noopener noreferrer"><i class="bi bi-globe2 me-2" aria-hidden="true"></i>aarogyagroup.com.np</a>
+                    <a class="ag-footer-link" href="tel:9801196900" itemprop="telephone">
+                        <i class="bi bi-telephone text-warning me-2" aria-hidden="true"></i>9801196900
+                    </a>
+                    <a class="ag-footer-link" href="mailto:aarogyamc@gmail.com" itemprop="email">
+                        <i class="bi bi-envelope text-warning me-2" aria-hidden="true"></i>aarogyamc@gmail.com
+                    </a>
+                    <a class="ag-footer-link" href="https://aarogyagroup.com.np" target="_blank" rel="noopener noreferrer">
+                        <i class="bi bi-globe2 text-warning me-2" aria-hidden="true"></i>aarogyagroup.com.np
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="ag-footer-divider border-top mt-5 pt-3">
+
+        <div class="ag-footer-divider border-top mt-5 pt-3 d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
             <p class="ag-footer-copy small mb-0">&copy; 2026 Aarogya Group. All rights reserved.</p>
+            <p class="ag-footer-copy small mb-0">Lahan Road No. 2, Siraha, Nepal</p>
         </div>
     </div>
 </footer>
+
+<!-- Location Share JavaScript -->
+<script>
+    function shareAarogyaLocation() {
+        const shareData = {
+            title: 'Aarogya Group Orientation & Training Center',
+            text: 'Visit Aarogya Group Orientation and Training Center, Lahan Road No. 2, Lahan, Nepal',
+            url: 'https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6'
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).catch(() => {});
+        } else {
+            navigator.clipboard.writeText('https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6').then(() => {
+                alert('Location Link Copied to Clipboard!\nhttps://maps.app.goo.gl/KxKYjDUWdSjwrXCS6');
+            }).catch(() => {
+                window.open('https://maps.app.goo.gl/KxKYjDUWdSjwrXCS6', '_blank');
+            });
+        }
+    }
+</script>
