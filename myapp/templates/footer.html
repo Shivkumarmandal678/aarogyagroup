@@ -123,7 +123,7 @@
 <footer class="ag-footer mt-5 pt-5 pb-4" itemscope itemtype="https://schema.org/LocalBusiness">
     <div class="container">
         
-        <!-- Google Maps with Exact Coordinates (26.7139492, 86.4818376) -->
+        <!-- Google Maps Embed -->
         <div class="ag-footer-map mb-5">
             <iframe 
                 src="https://www.google.com/maps?q=26.7139492,86.4818376&hl=en&z=17&output=embed" 
@@ -140,16 +140,19 @@
                     <span itemprop="addressCountry">Nepal</span>
                 </div>
 
-                <!-- Action Buttons: Exact Location & Accurate Directions -->
+                <!-- Action Buttons -->
                 <div class="ag-loc-btn-group">
-                    <a class="ag-loc-btn ag-btn-exact" href="https://www.google.com/maps?q=26.7139492,86.4818376" target="_blank" rel="noopener noreferrer" title="Open Exact Location in Google Maps">
+                    <!-- EXACT LOCATION (26°42'50.2"N 86°28'54.6"E / PF7J+HJH) -->
+                    <a class="ag-loc-btn ag-btn-exact" href="https://www.google.com/maps/place/26%C2%B042'50.2%22N+86%C2%B028'54.6%22E/@26.7139444,86.4818333,18z" target="_blank" rel="noopener noreferrer" title="Open Exact Pinned Location in Google Maps">
                         <i class="bi bi-pin-map-fill me-1"></i> Exact Location
                     </a>
                     
+                    <!-- GET DIRECTIONS (Unchanged) -->
                     <a class="ag-loc-btn ag-btn-nav" href="https://www.google.com/maps/dir/?api=1&destination=26.7139492,86.4818376" target="_blank" rel="noopener noreferrer" title="Get Accurate Driving / Walking Directions">
                         <i class="bi bi-signpost-2-fill me-1"></i> Get Directions
                     </a>
 
+                    <!-- SHARE LOCATION (Unchanged) -->
                     <button type="button" class="ag-loc-btn ag-btn-nav" onclick="shareAarogyaLocation()" title="Share Location Link">
                         <i class="bi bi-share-fill me-1"></i> Share
                     </button>
@@ -220,7 +223,7 @@
 <!-- Accurate Location Share JavaScript -->
 <script>
     function shareAarogyaLocation() {
-        const exactLocationUrl = 'https://www.google.com/maps?q=26.7139492,86.4818376';
+        const exactLocationUrl = 'https://www.google.com/maps/place/26%C2%B042\'50.2%22N+86%C2%B028\'54.6%22E/@26.7139444,86.4818333,18z';
         const shareData = {
             title: 'Aarogya Group Orientation & Training Center',
             text: 'Visit Aarogya Group Orientation and Training Center, Lahan Road No. 2, Lahan, Nepal',
