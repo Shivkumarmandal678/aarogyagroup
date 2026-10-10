@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', serve, {'path': 'robots.txt', 'document_root': BASE_DIR}),
     path('sitemap.xml', sitemap_view),
+    path('ads.txt', serve, {'path': 'ads.txt', 'document_root': BASE_DIR}),
     # मीडिया फाइल्स को सीधे ब्राउज़र में खोलने के लिए:
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     path('', include('myapp.urls')),
