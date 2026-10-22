@@ -1,127 +1,110 @@
 {% extends "base.html" %}
-{% block title %}Aarogya Group | Medical Biometric Orientation & Training Center in Lahan, Nepal{% endblock %}
+{% block title %}Aarogya Group | #1 Medical Biometric Orientation & Training Center in Lahan, Nepal{% endblock %}
 {% block extra_head %}
-<meta name="description" content="Aarogya Group in Lahan, Nepal provides medical biometric orientation, overseas job preparation, and pre-departure training for safe and informed foreign employment.">
-<meta name="keywords" content="Aarogya Group Lahan Nepal, medical biometric orientation Lahan, overseas job training Nepal, pre-departure training, worker orientation center, biometric support, Aarogya Group services">
-<meta property="og:title" content="Aarogya Group | Medical Biometric Orientation & Training Center in Lahan, Nepal">
-<meta property="og:description" content="Trusted medical biometric orientation and overseas preparation support for workers from Lahan, Nepal.">
-<meta property="og:type" content="website">
-<meta name="twitter:title" content="Aarogya Group | Medical Biometric Orientation & Training Center">
-<meta name="twitter:description" content="Prepare for overseas employment with trusted medical biometric orientation and training support in Lahan, Nepal.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Aarogya Group Home",
-  "description": "Aarogya Group is a medical biometric orientation and overseas preparation center in Lahan, Nepal.",
-  "publisher": { "@type": "Organization", "name": "Aarogya Group" },
-  "mainEntity": { "@type": "MedicalBusiness", "name": "Aarogya Group" }
-}
-</script>
+<meta name="description" content="Planning for Gulf or overseas employment? Get expert medical biometric orientation, pre-departure training, and fast document processing at Aarogya Group Lahan.">
+<meta name="keywords" content="Aarogya Group Lahan, medical biometric Nepal, overseas job preparation, pre departure training Lahan, booking online medical orientation">
 {% endblock %}
+
 {% block content %}
 <style>
-    .ag-hero { background: linear-gradient(120deg, #e9f8f2 0%, #f8fcfa 58%, #fff3df 100%); }
-    .ag-hero-panel { background: #123c37; color: #fff; border-radius: 1rem; }
-    .ag-feature { border-top: 3px solid #18a673; }
-    .ag-visual-stage { perspective: 1200px; min-height: 360px; position: relative; }
-    .ag-carousel { height: 360px; position: relative; transform-style: preserve-3d; }
-    .ag-slide { position: absolute; inset: 0; opacity: 0; transform: rotateY(55deg) translateZ(-180px) scale(.78); transition: transform .9s ease, opacity .9s ease; pointer-events: none; }
-    .ag-slide.is-active { opacity: 1; transform: rotateY(0) translateZ(0) scale(1); z-index: 2; pointer-events: auto; }
-    .ag-slide.is-next { opacity: .42; transform: rotateY(-35deg) translateX(34%) translateZ(-100px) scale(.82); z-index: 1; }
-    .ag-slide-image { width: 100%; height: 100%; object-fit: cover; border-radius: 1rem; box-shadow: 0 24px 55px rgba(18, 60, 55, .25); }
-    .ag-slide::after { content: ""; position: absolute; inset: 0; border-radius: 1rem; background: linear-gradient(0deg, rgba(8, 35, 32, .85), transparent 65%); }
-    .ag-slide-caption { position: absolute; right: 1.5rem; bottom: 1.25rem; left: 1.5rem; z-index: 1; color: #fff; }
-    .ag-carousel-dots { position: absolute; right: 0; bottom: -1.75rem; left: 0; z-index: 3; text-align: center; }
-    .ag-carousel-dot { width: .55rem; height: .55rem; margin: 0 .2rem; padding: 0; border: 0; border-radius: 50%; background: #a9c4b8; }
-    .ag-carousel-dot.is-active { background: #f4b942; transform: scale(1.25); }
-    .ag-contact-band { background: #fff3df; border-top: 1px solid #f4d9a1; border-bottom: 1px solid #f4d9a1; }
-    @media (max-width: 575.98px) { .ag-visual-stage, .ag-carousel { min-height: 280px; height: 280px; } .ag-slide-caption { right: 1rem; bottom: .8rem; left: 1rem; } }
+    .ag-hero { background: linear-gradient(135deg, #e9f8f2 0%, #ffffff 60%, #fff3df 100%); padding: 60px 0; }
+    .ag-hero-box { background: #123c37; color: #fff; border-radius: 1.25rem; box-shadow: 0 15px 35px rgba(18,60,55,0.2); }
+    .trust-badge-pill { background: #e0f2fe; color: #0369a1; font-weight: 600; padding: 6px 14px; border-radius: 50px; display: inline-flex; align-items: center; gap: 6px; }
+    .floating-cta-bar { background: #18a673; color: white; border-radius: 12px; padding: 20px; }
 </style>
-<section class="ag-hero py-5 py-lg-6">
-    <div class="container py-4">
+
+<section class="ag-hero">
+    <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
-                <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-plus-circle me-2"></i>Aarogya Orientation &amp; Training Center</p>
-                <h1 class="display-4 fw-bold mb-4">Ready for your next journey abroad.</h1>
-                <p class="lead text-secondary mb-4">We prepare workers with clear medical biometric orientation, practical guidance, and the confidence they need before leaving Nepal for overseas employment.</p>
-                <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-ag-green btn-lg px-4" href="{% url 'service' %}"><i class="bi bi-arrow-right-circle me-2"></i>Explore Services</a>
-                    <a class="btn btn-outline-success btn-lg px-4" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>Call 9801196900</a>
+                <div class="mb-3">
+                    <span class="trust-badge-pill"><i class="bi bi-shield-check-fill text-primary"></i> Trusted by 10,000+ Overseas Workers</span>
+                </div>
+                <h1 class="display-4 fw-bold text-dark mb-3">Your Safe &amp; Verified Gateway to Overseas Employment.</h1>
+                <p class="lead text-secondary mb-4">Aarogya Group in Lahan provides hassle-free medical biometric orientation, pre-departure training, and complete documentation guidance for UAE, Saudi Arabia, Qatar, Malaysia &amp; more.</p>
+                
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <a class="btn btn-success btn-lg px-4 fw-bold shadow-sm" href="{% url 'booking' %}" style="background:#18a673; border:none;">
+                        <i class="bi bi-calendar-check-fill me-2"></i> Book Appointment Now
+                    </a>
+                    <a class="btn btn-outline-dark btn-lg px-4 fw-semibold" href="tel:9801196900">
+                        <i class="bi bi-telephone-fill text-success me-2"></i> Call: 9801196900
+                    </a>
+                </div>
+
+                <div class="row g-3 text-secondary pt-2 border-top">
+                    <div class="col-4"><i class="bi bi-check-circle-fill text-success me-1"></i> 100% Transparent</div>
+                    <div class="col-4"><i class="bi bi-check-circle-fill text-success me-1"></i> Fast Processing</div>
+                    <div class="col-4"><i class="bi bi-check-circle-fill text-success me-1"></i> Expert Support</div>
                 </div>
             </div>
+
             <div class="col-lg-5">
-                <div class="ag-hero-panel p-4 p-lg-5 shadow-sm">
-                    <i class="bi bi-person-vcard display-3 text-warning"></i>
-                    <p class="h3 mt-4 mb-3">Understand. Prepare. Go with confidence.</p>
-                    <p class="mb-0 text-white-50">Professional orientation for a safe and informed overseas journey.</p>
+                <div class="ag-hero-box p-4 p-lg-5 text-center">
+                    <div class="display-4 text-warning mb-3"><i class="bi bi-headset"></i></div>
+                    <h3 class="fw-bold mb-2">Need Immediate Help?</h3>
+                    <p class="text-white-50 mb-4">Speak directly with our Lahan support team or visit our office for instant guidance.</p>
+                    <a href="tel:9801196900" class="btn btn-warning w-100 fw-bold py-3 rounded-pill text-dark shadow">
+                        <i class="bi bi-telephone-inbound-fill me-2"></i> Call Now: 9801196900
+                    </a>
+                    <div class="mt-3 small text-white-50">
+                        <i class="bi bi-geo-alt-fill text-warning me-1"></i> Lahan Road No. 2, Siraha, Nepal
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Why Choose Us Section for Human Engagement & SEO Keywords -->
 <section class="py-5 bg-white">
     <div class="container">
-        <div class="row align-items-center g-4">
-            <div class="col-lg-5">
-                <p class="text-ag-green fw-semibold mb-2">A clear first step</p>
-                <h2 class="display-6 fw-bold mb-3">See what your preparation looks like.</h2>
-                <p class="text-secondary mb-0">From medical biometric guidance to practical training, our team helps you move forward with the right information.</p>
+        <div class="text-center mb-5">
+            <span class="text-success fw-bold text-uppercase small tracking-wide">Why Choose Aarogya Group</span>
+            <h2 class="display-6 fw-bold text-dark">Built on Trust, Accuracy &amp; Care</h2>
+            <p class="text-muted">We ensure every applicant gets seamless processing without confusion or delays.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 p-4 rounded-4 bg-light">
+                    <div class="fs-1 text-success mb-3"><i class="bi bi-file-earmark-medical-fill"></i></div>
+                    <h4 class="fw-bold h5">Medical &amp; Biometric Guidance</h4>
+                    <p class="text-secondary small mb-0">Clear and accurate steps for medical checks and biometric data submission required by destination countries.</p>
+                </div>
             </div>
-            <div class="col-lg-7">
-                <div class="ag-visual-stage" aria-label="Aarogya orientation center highlights">
-                    <div class="ag-carousel" id="agCarousel">
-                        <article class="ag-slide is-active"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=70" alt="Medical professional preparing a patient" fetchpriority="high" decoding="async"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">MEDICAL ORIENTATION</p><h3 class="h4 mb-0">Know the process before your appointment.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=85" alt="People attending an orientation session"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">ORIENTATION</p><h3 class="h4 mb-0">Understand every step before you travel.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=85" alt="Healthcare worker checking a patient's health"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">MEDICAL CHECKUP</p><h3 class="h4 mb-0">Prepare for a smooth and informed medical visit.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=85" alt="Person completing a digital identity scan"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">BIOMETRIC SUPPORT</p><h3 class="h4 mb-0">Get ready for your biometric appointment.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=85" alt="Team collaborating during practical training"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">PRACTICAL TRAINING</p><h3 class="h4 mb-0">Build confidence for work and life abroad.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85" alt="Travel documents and planning notes"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">SHRAM APPROVAL</p><h3 class="h4 mb-0">Move through your labour approval steps clearly.</h3></div></article>
-                        <article class="ag-slide"><img class="ag-slide-image" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85" alt="Airplane ready for an overseas journey"><div class="ag-slide-caption"><p class="small text-warning fw-semibold mb-1">TRAVEL TICKET</p><h3 class="h4 mb-0">Leave prepared for the journey ahead.</h3></div></article>
-                    </div>
-                    <div class="ag-carousel-dots" aria-label="Carousel controls"><button class="ag-carousel-dot is-active" type="button" aria-label="Show medical orientation"></button><button class="ag-carousel-dot" type="button" aria-label="Show orientation"></button><button class="ag-carousel-dot" type="button" aria-label="Show medical checkup"></button><button class="ag-carousel-dot" type="button" aria-label="Show biometric support"></button><button class="ag-carousel-dot" type="button" aria-label="Show practical training"></button><button class="ag-carousel-dot" type="button" aria-label="Show shram approval"></button><button class="ag-carousel-dot" type="button" aria-label="Show travel ticket"></button></div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 p-4 rounded-4 bg-light">
+                    <div class="fs-1 text-success mb-3"><i class="bi bi-people-fill"></i></div>
+                    <h4 class="fw-bold h5">Pre-Departure Training</h4>
+                    <p class="text-secondary small mb-0">Professional orientation sessions scheduled regularly to equip workers with safety awareness and workplace knowledge.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 p-4 rounded-4 bg-light">
+                    <div class="fs-1 text-success mb-3"><i class="bi bi-whatsapp"></i></div>
+                    <h4 class="fw-bold h5">Instant Status Tracking</h4>
+                    <p class="text-secondary small mb-0">Direct coordination via phone, WhatsApp, and live digital dashboards to keep you updated at every stage.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section class="py-5">
+
+<!-- Floating Conversion Banner -->
+<section class="py-4 bg-light">
     <div class="container">
-        <div class="text-center mb-5">
-            <p class="text-ag-green fw-semibold mb-2">Our focus</p>
-            <h2 class="display-6 fw-bold">Practical preparation that matters</h2>
-            <p class="lead text-secondary">Focused support from orientation to the final steps before departure.</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-heart-pulse text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Medical Orientation</h5><p class="text-secondary mb-0">Understand medical fitness, health precautions, and the biometric process before travel.</p></div></div>
-            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-mortarboard text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Pre-departure Training</h5><p class="text-secondary mb-0">Learn the essential responsibilities, safety practices, and expectations of overseas work.</p></div></div>
-            <div class="col-md-4"><div class="ag-feature h-100 p-4"><i class="bi bi-passport text-ag-green fs-2"></i><h5 class="fw-bold mt-3">Overseas Readiness</h5><p class="text-secondary mb-0">Get clear guidance on documents, cultural awareness, and the journey ahead.</p></div></div>
+        <div class="floating-cta-bar d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 shadow">
+            <div>
+                <h3 class="h4 fw-bold mb-1 text-white"><i class="bi bi-calendar-event me-2"></i>Ready to book your orientation batch?</h3>
+                <p class="mb-0 text-white-50 small">Classes run every Sunday, Tuesday, and Thursday. Secure your spot now.</p>
+            </div>
+            <div>
+                <a href="{% url 'booking' %}" class="btn btn-warning fw-bold text-dark px-4 py-2 rounded-pill shadow-sm">
+                    Book Online Now <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
         </div>
     </div>
 </section>
-<section class="ag-contact-band py-4">
-    <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-        <div><p class="fw-bold mb-1">Ready to get oriented?</p><p class="text-secondary mb-0">Talk to Aarogya at any branch.</p></div>
-        <div class="d-flex flex-wrap gap-3"><a class="btn btn-ag-green" href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a class="btn btn-outline-dark" href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div>
-    </div>
-</section>
-{% endblock %}
-{% block extra_js %}
-<script>
-    (() => {
-        const slides = [...document.querySelectorAll('.ag-slide')];
-        const dots = [...document.querySelectorAll('.ag-carousel-dot')];
-        let current = 0;
-        const showSlide = (index) => {
-            current = index;
-            slides.forEach((slide, position) => {
-                slide.classList.toggle('is-active', position === current);
-                slide.classList.toggle('is-next', position === (current + 1) % slides.length);
-            });
-            dots.forEach((dot, position) => dot.classList.toggle('is-active', position === current));
-        };
-        dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
-        setInterval(() => showSlide((current + 1) % slides.length), 4500);
-    })();
-</script>
 {% endblock %}
