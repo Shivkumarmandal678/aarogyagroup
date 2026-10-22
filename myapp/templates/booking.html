@@ -1,93 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}Book Appointment | Aarogya Group | Medical & Orientation Services in Lahan{% endblock %}
+{% block title %}Book Overseas Services | Aarogya Group | Lahan, Nepal{% endblock %}
 {% block extra_head %}
-<meta name="description" content="Book your appointment with Aarogya Group for medical biometric orientation, overseas preparation support, and training services in Lahan, Nepal.">
-<meta name="keywords" content="book appointment Aarogya Group, orientation booking Lahan, medical appointment Nepal, biometric support booking, worker training appointment, Aarogya booking">
-<meta property="og:title" content="Book Appointment with Aarogya Group | Lahan, Nepal">
-<meta property="og:description" content="Reserve your medical orientation, biometric support, or overseas preparation appointment with Aarogya Group in Lahan, Nepal.">
-<meta property="og:type" content="website">
+<meta name="description" content="Book flight tickets, hotel, bus, medical checkup, biometric orientation, and pre-departure training with Aarogya Group in Lahan, Nepal.">
 {% endblock %}
 
 {% block content %}
-<style>
-  .booking-page { max-width: 1120px; }
-  .booking-intro { padding: 1rem 0 2rem; }
-  .booking-kicker { color: #18a673; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-  .booking-intro h1 { color: #123c37; font-weight: 800; }
-  .booking-intro-copy { max-width: 42rem; color: #64748b; }
-  .booking-benefits { display: grid; gap: .75rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
-  .booking-benefit { display: flex; gap: .75rem; align-items: flex-start; color: #334155; }
-  .booking-benefit i { color: #18a673; font-size: 1.15rem; }
-  .booking-card {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: none;
-  }
-  .booking-header {
-    background: linear-gradient(135deg, #123c37 0%, #18a673 100%);
-    color: white;
-    padding: 30px;
-    border-radius: 20px 20px 0 0;
-  }
-  .booking-header h2 { font-size: 1.35rem; }
-  .booking-section { padding-bottom: 1.25rem; border-bottom: 1px solid #e5eee9; }
-  .booking-section + .booking-section { padding-top: 1.25rem; }
-  .booking-section-title { color: #123c37; font-size: 1rem; font-weight: 800; }
-  .booking-section-title i { color: #18a673; }
-  .form-control, .form-select {
-    border-radius: 10px;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-  }
-  .form-control:focus, .form-select:focus {
-    border-color: #18a673;
-    box-shadow: 0 0 0 0.25rem rgba(24, 166, 115, 0.25);
-  }
-  .btn-submit {
-    background: #18a673;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-weight: 600;
-    transition: all 0.3s;
-  }
-  .btn-submit:hover {
-    background: #123c37;
-    color: white;
-    transform: translateY(-2px);
-  }
-  .booking-note { color: #64748b; font-size: .86rem; }
-  @media (max-width: 767.98px) {
-    .booking-page { padding-right: 1rem; padding-left: 1rem; }
-    .booking-intro { padding-top: 0; }
-    .booking-intro h1 { font-size: 2rem; }
-    .booking-card { border-radius: 14px; }
-    .booking-header { border-radius: 14px 14px 0 0; }
-  }
-</style>
-
-<div class="container booking-page py-4 py-lg-5">
-  <div class="booking-intro">
-    <p class="booking-kicker mb-2"><i class="bi bi-calendar2-check me-2"></i>Aarogya Group, Lahan</p>
-    <h1 class="display-5 mb-3">Book your orientation appointment</h1>
-    <p class="booking-intro-copy lead mb-0">Share your details and choose the service you need. Our team will review your request and contact you to confirm the next available class.</p>
-    <ul class="booking-benefits">
-      <li class="booking-benefit"><i class="bi bi-check-circle-fill"></i><span>Medical, biometric and overseas orientation support</span></li>
-      <li class="booking-benefit"><i class="bi bi-check-circle-fill"></i><span>Classes available Sunday, Tuesday and Thursday</span></li>
-      <li class="booking-benefit"><i class="bi bi-telephone-fill"></i><span>Need help? Call <a href="tel:9801196900" class="fw-semibold text-success">9801196900</a></span></li>
-    </ul>
+<div class="container booking-page py-4 py-lg-5" style="max-width: 1120px;">
+  <div class="booking-intro mb-4">
+    <p class="text-success fw-bold text-uppercase small mb-1"><i class="bi bi-calendar2-check me-2"></i>Aarogya Group, Lahan, Nepal</p>
+    <h1 class="display-5 fw-bold text-dark mb-3">Book Your Travel, Medical &amp; Training Services</h1>
+    <p class="lead text-secondary">We arrange complete overseas packages: Flight, Hotel, Bus tickets, Medical Orientation, Biometric Support, and Pre-departure Training under one roof.</p>
+    
+    <div class="row g-3 mt-3">
+      <div class="col-md-4"><div class="p-3 bg-light rounded-3 border"><i class="bi bi-airplane-fill text-success fs-4 me-2"></i><strong>Flight, Hotel &amp; Bus</strong></div></div>
+      <div class="col-md-4"><div class="p-3 bg-light rounded-3 border"><i class="bi bi-heart-pulse-fill text-success fs-4 me-2"></i><strong>Medical &amp; Orientation</strong></div></div>
+      <div class="col-md-4"><div class="p-3 bg-light rounded-3 border"><i class="bi bi-file-earmark-text-fill text-success fs-4 me-2"></i><strong>Shram &amp; Documentation</strong></div></div>
+    </div>
   </div>
+
   <div class="row justify-content-center">
     <div class="col-lg-8">
-
-
-      <div class="card booking-card">
-        <div class="booking-header text-center">
-          <h2 class="fw-bold mb-1"><i class="bi bi-calendar-check me-2"></i>Appointment details</h2>
-          <p class="mb-0 text-white-50">Fields marked with <span class="text-warning">*</span> are required.</p>
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-success text-white p-4 rounded-top-4" style="background: linear-gradient(135deg, #123c37 0%, #18a673 100%);">
+          <h3 class="fw-bold mb-1"><i class="bi bi-clipboard-check me-2"></i>Service Booking Form</h3>
+          <p class="mb-0 text-white-50">Fill out your details. Our Lahan team will contact you instantly.</p>
         </div>
 
         <div class="card-body p-4 p-md-5">
@@ -98,78 +35,83 @@
 
             <div class="row g-3">
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="bookingName">Full Name <span class="text-danger">*</span></label>
-                <input type="text" id="bookingName" name="name" class="form-control" placeholder="Enter full name" autocomplete="name" required>
+                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                <input type="text" name="name" class="form-control" placeholder="Enter full name" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="bookingPhone">Mobile Number <span class="text-danger">*</span></label>
-                <input type="tel" id="bookingPhone" name="phone" class="form-control" placeholder="98XXXXXXXX" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{7,20}" required>
+                <label class="form-label fw-semibold">Mobile Number (Phone) <span class="text-danger">*</span></label>
+                <input type="tel" name="phone" class="form-control" placeholder="98XXXXXXXX" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="bookingEmail">Email Address <span class="text-danger">*</span></label>
-                <input type="email" id="bookingEmail" name="email" class="form-control" placeholder="example@gmail.com" autocomplete="email" value="{{ email|default:'' }}" required>
+                <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="bookingAddress">Address <span class="text-danger">*</span></label>
-                <input type="text" id="bookingAddress" name="address" class="form-control" placeholder="Enter your address" autocomplete="street-address" value="{{ address|default:'' }}" required>
+                <label class="form-label fw-semibold">Address (District/City) <span class="text-danger">*</span></label>
+                <input type="text" name="address" class="form-control" placeholder="e.g. Lahan, Siraha" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="passportNumber">Passport Number <span class="text-danger">*</span></label>
-                <input type="text" id="passportNumber" name="passport_number" class="form-control" placeholder="Enter passport number" autocomplete="off" value="{{ passport_number|default:'' }}" required>
+                <label class="form-label fw-semibold">Passport Number <span class="text-danger">*</span></label>
+                <input type="text" name="passport_number" class="form-control" placeholder="Enter passport number" required>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="lotNumber">Lot Number <span class="text-muted small">(Optional)</span></label>
-                <input type="text" id="lotNumber" name="lot_number" class="form-control" placeholder="Enter lot number if available" autocomplete="off" value="{{ lot_number|default:'' }}">
+                <label class="form-label fw-semibold">Lot Number <span class="text-muted small">(Optional)</span></label>
+                <input type="text" name="lot_number" class="form-control" placeholder="Enter lot number if any">
               </div>
 
+              <!-- Updated Services List -->
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="bookingService">Service <span class="text-danger">*</span></label>
-                <select id="bookingService" name="service" class="form-select" required>
-                  <option value="" selected disabled>Select Service</option>
-                  <option value="Medical">Medical</option>
-                  <option value="Orientation">Orientation</option>
-                  <option value="Biometric">Biometric</option>
-                  <option value="Ticket">Ticket</option>
-                  <option value="Shram">Shram</option>
+                <label class="form-label fw-semibold">Select Service Required <span class="text-danger">*</span></label>
+                <select name="service" class="form-select" required>
+                  <option value="" selected disabled>Choose Service</option>
+                  <option value="Flight Booking">Flight Ticket Booking</option>
+                  <option value="Hotel Booking">Hotel Booking</option>
+                  <option value="Bus Booking">Bus Ticket Booking</option>
+                  <option value="Medical Orientation">Medical &amp; Biometric Orientation</option>
+                  <option value="Pre-Departure Training">Pre-Departure Training</option>
+                  <option value="Complete Package (Flight + Medical + Training)">Complete Package (Flight + Medical + Training)</option>
                 </select>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="bookingCountry">Destination Country <span class="text-danger">*</span></label>
-                <select id="bookingCountry" name="country" class="form-select" required>
-                  <option value="" selected disabled>Select destination country</option>
-                  {% for destination in countries %}
-                    <option value="{{ destination }}"{% if country == destination %} selected{% endif %}>{{ destination }}</option>
-                  {% endfor %}
+                <label class="form-label fw-semibold">Destination Country <span class="text-danger">*</span></label>
+                <select name="country" class="form-select" required>
+                  <option value="" selected disabled>Select destination</option>
+                  <option value="United Arab Emirates (UAE)">United Arab Emirates (UAE)</option>
+                  <option value="Saudi Arabia">Saudi Arabia</option>
+                  <option value="Qatar">Qatar</option>
+                  <option value="Kuwait">Kuwait</option>
+                  <option value="Bahrain">Bahrain</option>
+                  <option value="Oman">Oman</option>
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Other">Other Country</option>
                 </select>
-                <div class="form-text">Choose the country where you plan to work.</div>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="passportCopy">Passport Copy <span class="text-danger">*</span></label>
-                <input type="file" id="passportCopy" name="passport_copy" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
-                <div class="form-text">Required: JPG, PNG or PDF. Maximum size 5 MB.</div>
+                <label class="form-label fw-semibold">Passport Copy (Scan/Photo) <span class="text-danger">*</span></label>
+                <input type="file" name="passport_copy" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
+                <div class="form-text">JPG, PNG or PDF up to 5 MB.</div>
               </div>
 
-              <div class="col-md-12">
-                <label class="form-label fw-semibold" for="preferredDate">Preferred Date <span class="text-danger">*</span></label>
-                <input type="date" name="date" id="preferredDate" class="form-control" min="{{ next_class_date }}" value="{{ next_class_date }}" required>
-                <div class="form-text"><i class="bi bi-info-circle me-1"></i>Classes are available on Sunday, Tuesday, and Thursday. Before 10:00 AM, today’s class is available; after 10:00 AM, the next class date is shown.</div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Preferred Date <span class="text-danger">*</span></label>
+                <input type="date" name="date" id="preferredDate" class="form-control" required>
               </div>
 
               <div class="col-12">
-                <label class="form-label fw-semibold" for="bookingMessage">Remarks / Message <span class="text-danger">*</span></label>
-                <textarea id="bookingMessage" name="message" class="form-control" rows="3" placeholder="Any specific requirements or questions..." required>{{ message|default:'' }}</textarea>
+                <label class="form-label fw-semibold">Remarks / Travel Details <span class="text-danger">*</span></label>
+                <textarea name="message" class="form-control" rows="3" placeholder="Mention travel dates, flight preferences, or medical requirements..." required></textarea>
               </div>
 
               <div class="col-12 mt-4">
-                <button type="submit" class="btn btn-submit w-100 fs-5">
-                  <i class="bi bi-send-fill me-2"></i>Submit Booking
+                <button type="submit" class="btn btn-success w-100 py-3 fw-bold fs-5 shadow-sm" style="background:#18a673; border:none;">
+                  <i class="bi bi-send-fill me-2"></i> Submit Booking Request
                 </button>
               </div>
             </div>
@@ -177,46 +119,7 @@
           </form>
         </div>
       </div>
-
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-  (() => {
-    const dateInput = document.getElementById('preferredDate');
-    const allowedDays = new Set([0, 2, 4]);
-    const cutoffHour = 10;
-    const dateFromString = (value) => {
-      const [year, month, day] = value.split('-').map(Number);
-      return new Date(year, month - 1, day);
-    };
-    const formatDate = (date) => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    };
-    const nextClassDate = () => {
-      const now = new Date();
-      const candidate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      if (!(allowedDays.has(candidate.getDay()) && now.getHours() < cutoffHour)) {
-        candidate.setDate(candidate.getDate() + 1);
-        while (!allowedDays.has(candidate.getDay())) candidate.setDate(candidate.getDate() + 1);
-      }
-      return formatDate(candidate);
-    };
-    const nextDate = nextClassDate();
-    dateInput.min = nextDate;
-    dateInput.value = nextDate;
-    dateInput.addEventListener('change', () => {
-      const selected = dateFromString(dateInput.value);
-      if (!allowedDays.has(selected.getDay()) || dateInput.value < nextDate) {
-        dateInput.value = nextDate;
-      }
-    });
-  })();
-</script>
 {% endblock %}
