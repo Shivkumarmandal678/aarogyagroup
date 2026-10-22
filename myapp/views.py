@@ -97,9 +97,9 @@ def _save_passport_copy(uploaded_file):
         return None, None
     extension = Path(uploaded_file.name or '').suffix.lower()
     if extension not in PASSPORT_UPLOAD_EXTENSIONS or uploaded_file.content_type not in PASSPORT_UPLOAD_CONTENT_TYPES:
-        return None, 'Passport copy must be a JPG, PNG, or PDF file.'
+        return None, 'File must be a JPG, PNG, or PDF file.'
     if uploaded_file.size > PASSPORT_UPLOAD_MAX_BYTES:
-        return None, 'Passport copy must be 5 MB or smaller.'
+        return None, 'File must be 5 MB or smaller.'
     storage_path = default_storage.save(f'passport_uploads/{uuid4().hex}{extension}', uploaded_file)
     return storage_path, None
 
@@ -128,6 +128,7 @@ def booking_view(request):
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
+            
         data = {
             'name': request.POST.get('name', '').strip(),
             'phone': request.POST.get('phone', '').strip(),
@@ -142,49 +143,71 @@ def booking_view(request):
         }
         required_fields = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'date', 'message']
         if any(not data.get(field, '').strip() for field in required_fields):
-            messages.error(request, 'Please fill in all required fields. Lot number is optional; passport copy is required.')
+            messages.error(request, 'Please fill in all required fields.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
-        if data['country'] not in BOOKING_COUNTRIES:
+            
+        if data['country'] not in BOOKING_COUNTRIES and data['country'] != 'Other':
             messages.error(request, 'Please select a valid destination country.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
+            
         if looks_like_demo_submission(data):
             messages.error(request, 'Demo or fake booking entries are blocked. Please enter your real details only.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
-        if not request.FILES.get('passport_copy'):
-            messages.error(request, 'Please upload a passport copy. JPG, PNG or PDF files up to 5 MB are accepted.')
+
+        # Check Required Files (Passport, Citizenship Front & Back)
+        uploaded_passport = request.FILES.get('passport_copy')
+        uploaded_c_front = request.FILES.get('citizenship_front')
+        uploaded_c_back = request.FILES.get('citizenship_back')
+        uploaded_other = request.FILES.get('other_document')
+
+        if not uploaded_passport or not uploaded_c_front or not uploaded_c_back:
+            messages.error(request, 'Passport Copy, Citizenship Front, and Citizenship Back are required files.')
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
-        passport_copy_path, upload_error = _save_passport_copy(request.FILES.get('passport_copy'))
-        if upload_error:
-            messages.error(request, upload_error)
+
+        # Save files securely
+        passport_path, err1 = _save_passport_copy(uploaded_passport)
+        c_front_path, err2 = _save_passport_copy(uploaded_c_front)
+        c_back_path, err3 = _save_passport_copy(uploaded_c_back)
+        
+        other_path = ''
+        if uploaded_other:
+            other_path, err4 = _save_passport_copy(uploaded_other)
+            if err4:
+                messages.error(request, f"Other document error: {err4}")
+                response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
+                response["Cache-Control"] = "public, max-age=300, s-maxage=600"
+                return response
+
+        if err1 or err2 or err3:
+            messages.error(request, err1 or err2 or err3)
             response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
         
-        # यहाँ पूरा Openable Clickable URL तैयार किया जा रहा है:
         site_url = getattr(settings, 'PUBLIC_SITE_URL', 'https://aarogyagroup.com.np').rstrip('/')
-        full_file_url = f"{site_url}/media/{passport_copy_path}"
-        data['passport_copy'] = full_file_url
+        
+        data['passport_copy'] = f"{site_url}/media/{passport_path}"
+        data['citizenship_front'] = f"{site_url}/media/{c_front_path}"
+        data['citizenship_back'] = f"{site_url}/media/{c_back_path}"
+        data['other_document'] = f"{site_url}/media/{other_path}" if other_path else ""
 
         if save_client_booking(data):
-            messages.success(request, 'Thank you! Your booking was saved successfully.')
+            messages.success(request, 'Thank you! Your booking and documents were saved successfully.')
         else:
-            if passport_copy_path:
-                default_storage.delete(passport_copy_path)
             messages.info(request, 'Booking received. Our team will contact you soon.')
         return redirect('booking')
+        
     response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES})
     response["Cache-Control"] = "public, max-age=300, s-maxage=600"
-    response["Vary"] = "Accept-Encoding"
     return response
-
 
 # Dashboard Helpers
 def get_role_redirect(role_name):
