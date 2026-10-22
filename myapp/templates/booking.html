@@ -64,16 +64,20 @@
                 <input type="text" name="lot_number" class="form-control" placeholder="Enter lot number if any" value="{{ lot_number|default:'' }}">
               </div>
 
+              <!-- Separated Services Dropdown -->
               <div class="col-md-6">
                 <label class="form-label fw-semibold">Select Service Required <span class="text-danger">*</span></label>
                 <select name="service" class="form-select" required>
                   <option value="" selected disabled>Choose Service</option>
-                  <option value="Flight Booking"{% if service == 'Flight Booking' %} selected{% endif %}>Flight Ticket Booking</option>
+                  <option value="Medical"{% if service == 'Medical' %} selected{% endif %}>Medical Checkup</option>
+                  <option value="Orientation"{% if service == 'Orientation' %} selected{% endif %}>Orientation Class</option>
+                  <option value="Biometric"{% if service == 'Biometric' %} selected{% endif %}>Biometric Support</option>
+                  <option value="Shram Approval"{% if service == 'Shram Approval' %} selected{% endif %}>Shram Approval / Labor Permit</option>
+                  <option value="Flight Ticket Booking"{% if service == 'Flight Ticket Booking' %} selected{% endif %}>Flight Ticket Booking</option>
                   <option value="Hotel Booking"{% if service == 'Hotel Booking' %} selected{% endif %}>Hotel Booking</option>
-                  <option value="Bus Booking"{% if service == 'Bus Booking' %} selected{% endif %}>Bus Ticket Booking</option>
-                  <option value="Medical Orientation"{% if service == 'Medical Orientation' %} selected{% endif %}>Medical &amp; Biometric Orientation</option>
+                  <option value="Bus Ticket Booking"{% if service == 'Bus Ticket Booking' %} selected{% endif %}>Bus Ticket Booking</option>
                   <option value="Pre-Departure Training"{% if service == 'Pre-Departure Training' %} selected{% endif %}>Pre-Departure Training</option>
-                  <option value="Complete Package"{% if service == 'Complete Package' %} selected{% endif %}>Complete Package (Flight + Medical + Training)</option>
+                  <option value="Complete Package"{% if service == 'Complete Package' %} selected{% endif %}>Complete Package (All-in-One)</option>
                 </select>
               </div>
 
