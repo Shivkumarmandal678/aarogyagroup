@@ -92,15 +92,15 @@ PASSPORT_UPLOAD_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.pdf'}
 PASSPORT_UPLOAD_CONTENT_TYPES = {'image/jpeg', 'image/png', 'application/pdf'}
 PASSPORT_UPLOAD_MAX_BYTES = 5 * 1024 * 1024
 
-def _save_passport_copy(uploaded_file):
+def _save_document_file(uploaded_file):
     if not uploaded_file:
         return None, None
     extension = Path(uploaded_file.name or '').suffix.lower()
     if extension not in PASSPORT_UPLOAD_EXTENSIONS or uploaded_file.content_type not in PASSPORT_UPLOAD_CONTENT_TYPES:
-        return None, 'File must be a JPG, PNG, or PDF file.'
+        return None, 'Document must be a JPG, PNG, or PDF file.'
     if uploaded_file.size > PASSPORT_UPLOAD_MAX_BYTES:
-        return None, 'File must be 5 MB or smaller.'
-    storage_path = default_storage.save(f'passport_uploads/{uuid4().hex}{extension}', uploaded_file)
+        return None, 'Document must be 5 MB or smaller.'
+    storage_path = default_storage.save(f'document_uploads/{uuid4().hex}{extension}', uploaded_file)
     return storage_path, None
 
 def next_class_date(current=None):
@@ -173,13 +173,13 @@ def booking_view(request):
             return response
 
         # Save files securely
-        passport_path, err1 = _save_passport_copy(uploaded_passport)
-        c_front_path, err2 = _save_passport_copy(uploaded_c_front)
-        c_back_path, err3 = _save_passport_copy(uploaded_c_back)
+        passport_path, err1 = _save_document_file(uploaded_passport)
+        c_front_path, err2 = _save_document_file(uploaded_c_front)
+        c_back_path, err3 = _save_document_file(uploaded_c_back)
         
         other_path = ''
         if uploaded_other:
-            other_path, err4 = _save_passport_copy(uploaded_other)
+            other_path, err4 = _save_document_file(uploaded_other)
             if err4:
                 messages.error(request, f"Other document error: {err4}")
                 response = render(request, 'booking.html', {'next_class_date': next_class_date().isoformat(), 'countries': BOOKING_COUNTRIES, **data})
