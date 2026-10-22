@@ -97,9 +97,9 @@ def _save_document_file(uploaded_file):
         return None, None
     extension = Path(uploaded_file.name or '').suffix.lower()
     if extension not in PASSPORT_UPLOAD_EXTENSIONS or uploaded_file.content_type not in PASSPORT_UPLOAD_CONTENT_TYPES:
-        return None, 'Document must be a JPG, PNG, or PDF file.'
+        return None, 'File must be a JPG, PNG, or PDF file.'
     if uploaded_file.size > PASSPORT_UPLOAD_MAX_BYTES:
-        return None, 'Document must be 5 MB or smaller.'
+        return None, 'File must be 5 MB or smaller.'
     storage_path = default_storage.save(f'document_uploads/{uuid4().hex}{extension}', uploaded_file)
     return storage_path, None
 
@@ -141,6 +141,7 @@ def booking_view(request):
             'date': request.POST.get('date', '').strip(),
             'message': request.POST.get('message', '').strip(),
         }
+        
         required_fields = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'date', 'message']
         if any(not data.get(field, '').strip() for field in required_fields):
             messages.error(request, 'Please fill in all required fields.')
@@ -160,7 +161,7 @@ def booking_view(request):
             response["Cache-Control"] = "public, max-age=300, s-maxage=600"
             return response
 
-        # Check Required Files (Passport, Citizenship Front & Back)
+        # Check Required Files from request.FILES
         uploaded_passport = request.FILES.get('passport_copy')
         uploaded_c_front = request.FILES.get('citizenship_front')
         uploaded_c_back = request.FILES.get('citizenship_back')
@@ -194,9 +195,10 @@ def booking_view(request):
         
         site_url = getattr(settings, 'PUBLIC_SITE_URL', 'https://aarogyagroup.com.np').rstrip('/')
         
-        data['passport_copy'] = f"{site_url}/media/{passport_path}"
-        data['citizenship_front'] = f"{site_url}/media/{c_front_path}"
-        data['citizenship_back'] = f"{site_url}/media/{c_back_path}"
+        # Explicitly assign public links to data keys matching google_sheets.py payload
+        data['passport_copy'] = f"{site_url}/media/{passport_path}" if passport_path else ""
+        data['citizenship_front'] = f"{site_url}/media/{c_front_path}" if c_front_path else ""
+        data['citizenship_back'] = f"{site_url}/media/{c_back_path}" if c_back_path else ""
         data['other_document'] = f"{site_url}/media/{other_path}" if other_path else ""
 
         if save_client_booking(data):

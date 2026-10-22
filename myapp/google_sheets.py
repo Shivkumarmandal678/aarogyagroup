@@ -193,10 +193,12 @@ def save_client_booking(data):
     if not isinstance(data, dict) or looks_like_demo_submission(data):
         return False
 
-    required = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'passport_copy', 'date', 'message']
+    # Updated required list to include citizenship documents
+    required = ['name', 'phone', 'email', 'passport_number', 'address', 'service', 'country', 'passport_copy', 'citizenship_front', 'citizenship_back', 'date', 'message']
     if any(not str(data.get(field, '')).strip() for field in required):
         return False
 
+    # Updated payload containing citizenship links to map directly to Google Sheet columns
     payload = {
         'timestamp': datetime.now().strftime("%Y-%m-%d %I:%M %p"),
         'name': data.get('name', ''),
@@ -208,6 +210,9 @@ def save_client_booking(data):
         'service': data.get('service', data.get('department', '')),
         'country': data.get('country', ''),
         'passport_copy': data.get('passport_copy', ''),
+        'citizenship_front': data.get('citizenship_front', ''),
+        'citizenship_back': data.get('citizenship_back', ''),
+        'other_document': data.get('other_document', ''),
         'date': data.get('date', ''),
         'message': data.get('message', ''),
         'status': 'Pending'
