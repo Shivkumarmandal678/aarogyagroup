@@ -1,105 +1,102 @@
 {% extends "base.html" %}
-{% block title %}Services | Aarogya Group Medical Orientation & Pre-departure Training in Lahan{% endblock %}
+{% block title %}Services & Booking | Aarogya Group | Medical, Orientation, Shram & Ticketing in Lahan{% endblock %}
 {% block extra_head %}
-<meta name="description" content="Explore Aarogya Group services including medical biometric orientation, pre-departure training, worker support, document guidance, and overseas readiness assistance in Lahan, Nepal.">
-<meta name="keywords" content="Aarogya Group services, medical biometric orientation Lahan, pre-departure training Nepal, overseas readiness support, worker support Nepal, document guidance, biometric service, medical checkup service">
-<meta property="og:title" content="Aarogya Group Services | Medical Orientation & Pre-departure Training in Lahan, Nepal">
-<meta property="og:description" content="Medical biometric orientation and practical overseas preparation services for workers going abroad from Lahan, Nepal.">
+<meta name="description" content="Explore Aarogya Group professional services: Flight, Hotel & Bus Ticket Booking, Medical Checkup, Biometric Orientation, Shram Approval guidance, and Pre-departure Training in Lahan, Nepal.">
+<meta name="keywords" content="flight ticket booking Lahan, hotel booking Nepal, bus ticket service, medical checkup orientation, Shram approval Nepal, biometric support, Aarogya Group services">
+<meta property="og:title" content="Professional Services | Aarogya Group Lahan, Nepal">
+<meta property="og:description" content="Complete travel, medical, orientation, and documentation services for overseas workers in Lahan, Nepal.">
 <meta property="og:type" content="website">
 {% endblock %}
 
 {% block content %}
 <style>
-  /* Services Page Styling */
+  /* Professional Services Styling */
   .services-header {
-    background: #123c37;
+    background: linear-gradient(135deg, #123c37 0%, #18a673 100%);
     color: white;
-    padding: 60px 0 40px;
-    border-radius: 0;
+    padding: 70px 0 50px;
     margin-bottom: 50px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   }
 
   .service-card {
     border: none;
-    border-radius: 8px;
+    border-radius: 14px;
     background: #ffffff;
-    padding: 30px 25px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 35px 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     position: relative;
     overflow: hidden;
-  }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: #18a673;
-    transition: height 0.3s ease;
+    border-top: 4px solid #18a673;
   }
 
   .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(18, 60, 55, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(18, 60, 55, 0.12);
   }
 
-  .service-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
+  .service-icon-box {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
     background: #e9f8f2;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     color: #18a673;
     margin-bottom: 20px;
-    transition: transform 0.4s ease;
+    transition: all 0.3s ease;
   }
 
-  .service-card:hover .service-icon {
-    transform: scale(1.1) rotate(10deg);
+  .service-card:hover .service-icon-box {
     background: #18a673;
     color: #ffffff;
+    transform: scale(1.08);
   }
 
   .btn-book-service {
-    border-radius: 6px;
-    padding: 8px 20px;
+    border-radius: 8px;
+    padding: 10px 20px;
     font-weight: 600;
     background: #18a673;
     color: white;
     border: none;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
   }
 
   .btn-book-service:hover {
-    box-shadow: 0 6px 18px rgba(24, 166, 115, 0.3);
-    transform: translateY(-2px);
+    background: #123c37;
     color: white;
+    box-shadow: 0 5px 15px rgba(24, 166, 115, 0.3);
+    transform: translateY(-2px);
   }
 
   .branch-card {
     border-top: 4px solid #f4b942;
     background: #fffaf0;
-    border-radius: 8px;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
   }
-
+  .branch-card:hover {
+    transform: translateY(-5px);
+  }
   .branch-card .branch-icon { color: #18a673; font-size: 1.8rem; }
-
   .branch-contact a { color: #123c37; text-decoration: none; }
 </style>
 
 <!-- Header Section -->
 <div class="services-header text-center">
   <div class="container">
-    <p class="text-warning fw-semibold mb-2"><i class="bi bi-stars me-2"></i>Aarogya Orientation &amp; Training Center</p>
-    <h1 class="fw-bold display-5">Training for a confident overseas journey</h1>
-    <p class="lead text-light mb-0">Medical biometric orientation and practical pre-departure training for workers going abroad.</p>
+    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">
+      <i class="bi bi-stars me-1"></i> Aarogya Group Professional Services
+    </span>
+    <h1 class="fw-bold display-5 mb-3">Complete Overseas Solutions Under One Roof</h1>
+    <p class="lead text-light mb-0" style="max-width: 700px; margin: 0 auto;">From Flight &amp; Hotel Bookings to Medical Orientation and Shram Approval, we make your journey seamless and secure.</p>
   </div>
 </div>
 
@@ -107,86 +104,98 @@
 <div class="container mb-5">
   <div class="row g-4">
 
-    <!-- Service 1 -->
+    <!-- 1. Flight, Hotel & Bus Booking -->
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="bi bi-person-vcard"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Medical Biometric Orientation</h4>
-          <p class="text-muted">Step-by-step guidance about medical checks, biometric procedures, health requirements, and what to expect.</p>
+          <div class="service-icon-box"><i class="bi bi-airplane-engines-fill"></i></div>
+          <h3 class="h4 fw-bold text-dark mb-3">Travel &amp; Ticketing</h3>
+          <p class="text-secondary small mb-4">Instant arrangement for international flights, hotel reservations, and comfortable domestic bus travel tickets for your departure.</p>
         </div>
-        <div class="mt-3">
-          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
+        <div>
+          <a href="{% url 'booking' %}" class="btn-book-service w-100">
+            <i class="bi bi-calendar-check me-2"></i>Book Ticket Now
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Service 2 -->
+    <!-- 2. Medical Checkup & Biometric -->
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="bi bi-mortarboard"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Pre-departure Training</h4>
-          <p class="text-muted">Practical training on workplace conduct, personal safety, responsibilities, and adapting to life abroad.</p>
+          <div class="service-icon-box"><i class="bi bi-heart-pulse-fill"></i></div>
+          <h3 class="h4 fw-bold text-dark mb-3">Medical Checkup</h3>
+          <p class="text-secondary small mb-4">Complete guidance and coordination for certified medical examinations and health screenings required for Gulf and overseas employment.</p>
         </div>
-        <div class="mt-3">
-          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
+        <div>
+          <a href="{% url 'booking' %}" class="btn-book-service w-100">
+            <i class="bi bi-calendar-check me-2"></i>Book Medical
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Service 3 -->
+    <!-- 3. Orientation Class -->
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="bi bi-file-earmark-check"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Document Guidance</h4>
-          <p class="text-muted">Clear support to help you understand the documents and key steps needed before departure.</p>
+          <div class="service-icon-box"><i class="bi bi-mortarboard-fill"></i></div>
+          <h3 class="h4 fw-bold text-dark mb-3">Orientation Class</h3>
+          <p class="text-secondary small mb-4">Professional pre-departure orientation batches running on Sunday, Tuesday, and Thursday to prepare you for international workplaces.</p>
         </div>
-        <div class="mt-3">
-          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
+        <div>
+          <a href="{% url 'booking' %}" class="btn-book-service w-100">
+            <i class="bi bi-calendar-check me-2"></i>Join Orientation
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Service 4 -->
+    <!-- 4. Shram Approval & Documentation -->
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="bi bi-people"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Worker Support</h4>
-          <p class="text-muted">A welcoming center where workers can ask questions and prepare with accurate, practical information.</p>
+          <div class="service-icon-box"><i class="bi bi-file-earmark-check-fill"></i></div>
+          <h3 class="h4 fw-bold text-dark mb-3">Shram Approval</h3>
+          <p class="text-secondary small mb-4">Expert assistance for Department of Foreign Employment (DoFE) Shram permit documentation, insurance, and welfare linkage.</p>
         </div>
-        <div class="mt-3">
-          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
+        <div>
+          <a href="{% url 'booking' %}" class="btn-book-service w-100">
+            <i class="bi bi-calendar-check me-2"></i>Get Shram Help
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Service 5 -->
+    <!-- 5. Biometric Support -->
     <div class="col-md-6 col-lg-4">
       <div class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon"><i class="bi bi-shield-check"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Workplace Safety</h4>
-          <p class="text-muted">Build awareness of personal safety, workplace conduct, and responsibilities before starting work abroad.</p>
+          <div class="service-icon-box"><i class="bi bi-fingerprint"></i></div>
+          <h3 class="h4 fw-bold text-dark mb-3">Biometric Support</h3>
+          <p class="text-secondary small mb-4">Smooth assistance and verification for biometric registration and digital profile linkage prior to final visa processing.</p>
         </div>
-        <div class="mt-3">
-          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
+        <div>
+          <a href="{% url 'booking' %}" class="btn-book-service w-100">
+            <i class="bi bi-calendar-check me-2"></i>Book Biometric
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Service 6 -->
+    <!-- 6. Complete All-in-One Package -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between">
+      <div class="service-card h-100 d-flex flex-column justify-content-between" style="border-top-color: #f4b942;">
         <div>
-          <div class="service-icon"><i class="bi bi-globe2"></i></div>
-          <h4 class="fw-bold text-dark mb-3">Overseas Readiness</h4>
-          <p class="text-muted">Prepare for cultural awareness, travel expectations, and the practical realities of living abroad.</p>
+          <div class="service-icon-box" style="background: #fef3c7; color: #d97706;"><i class="bi bi-box-seam-fill"></i></div>
+          <h3 class="h4 fw-bold text-dark mb-3">Complete Package</h3>
+          <p class="text-secondary small mb-4">All-inclusive service bundle covering medical checks, orientation, tickets, and document clearances for absolute peace of mind.</p>
         </div>
-        <div class="mt-3">
-          <a href="tel:9801196900" class="btn btn-book-service w-100"><i class="bi bi-telephone me-2"></i>Contact Aarogya</a>
+        <div>
+          <a href="{% url 'booking' %}" class="btn btn-warning w-100 fw-bold text-dark py-2 rounded-2 shadow-sm">
+            <i class="bi bi-star-fill me-1 text-danger"></i> Book Full Package
+          </a>
         </div>
       </div>
     </div>
@@ -194,6 +203,7 @@
   </div>
 </div>
 
+<!-- Branches Section (As requested, keeping your original exact branch cards layout) -->
 <section class="container pb-5" id="branches">
   <div class="text-center mb-4">
     <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-geo-alt me-2"></i>Find Aarogya near you</p>
@@ -207,6 +217,4 @@
     <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Kathmandu Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
   </div>
 </section>
-
-
 {% endblock %}
