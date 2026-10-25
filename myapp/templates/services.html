@@ -1,11 +1,37 @@
 {% extends "base.html" %}
-{% block title %}Services & Booking | Aarogya Group | Medical, Orientation, Shram & Ticketing in Lahan{% endblock %}
+{% block title %}Overseas Services & Booking | Aarogya Group | Lahan, Nepal{% endblock %}
 {% block extra_head %}
-<meta name="description" content="Explore Aarogya Group professional services: Flight, Hotel & Bus Ticket Booking, Medical Checkup, Biometric Orientation, Shram Approval guidance, and Pre-departure Training in Lahan, Nepal.">
-<meta name="keywords" content="flight ticket booking Lahan, hotel booking Nepal, bus ticket service, medical checkup orientation, Shram approval Nepal, biometric support, Aarogya Group services">
-<meta property="og:title" content="Professional Services | Aarogya Group Lahan, Nepal">
-<meta property="og:description" content="Complete travel, medical, orientation, and documentation services for overseas workers in Lahan, Nepal.">
+<meta name="description" content="Looking for trusted overseas services in Lahan, Nepal? Aarogya Group offers expert flight, hotel & bus ticket booking, medical checkup orientation, Shram approval assistance, and pre-departure training. Call 9801196900!">
+<meta name="keywords" content="flight ticket booking Lahan, hotel booking Nepal, bus ticket service, medical checkup orientation, Shram approval guidance Nepal, pre-departure training Lahan, Aarogya Group services">
+<meta property="og:title" content="Professional Overseas Services | Aarogya Group Lahan, Nepal">
+<meta property="og:description" content="Complete travel booking, medical checkup orientation, Shram permit guidance, and pre-departure training for overseas workers in Lahan, Nepal.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="{{ PUBLIC_SITE_URL }}{{ request.path }}">
+
+<!-- Service Page Schema Markup for Google SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Overseas Employment Orientation, Medical Checkup & Travel Ticketing Services",
+  "provider": {
+    "@type": "MedicalBusiness",
+    "name": "Aarogya Group",
+    "telephone": "+977-9801196900",
+    "email": "aarogyamc@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Lahan Road No. 2",
+      "addressLocality": "Lahan",
+      "addressRegion": "Madhesh Province",
+      "postalCode": "56500",
+      "addressCountry": "NP"
+    }
+  },
+  "areaServed": ["Nepal", "Lahan", "Siraha", "Janakpur", "Mirchaiya", "Kathmandu"],
+  "description": "Complete travel bookings (Flight, Hotel, Bus), medical biometric orientation, Shram approval guidance, and pre-departure training for Nepalese workers."
+}
+</script>
 {% endblock %}
 
 {% block content %}
@@ -90,131 +116,131 @@
 </style>
 
 <!-- Header Section -->
-<div class="services-header text-center">
+<header class="services-header text-center">
   <div class="container">
     <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">
       <i class="bi bi-stars me-1"></i> Aarogya Group Professional Services
     </span>
-    <h1 class="fw-bold display-5 mb-3">Complete Overseas Solutions Under One Roof</h1>
-    <p class="lead text-light mb-0" style="max-width: 700px; margin: 0 auto;">From Flight &amp; Hotel Bookings to Medical Orientation and Shram Approval, we make your journey seamless and secure.</p>
+    <h1 class="fw-bold display-5 mb-3">Complete Overseas Solutions Under One Roof in Lahan</h1>
+    <p class="lead text-light mb-0" style="max-width: 700px; margin: 0 auto;">From Flight &amp; Hotel Bookings to Medical Orientation and Shram Approval, we make your overseas journey seamless and secure.</p>
   </div>
-</div>
+</header>
 
 <!-- Services Grid -->
-<div class="container mb-5">
+<main class="container mb-5">
   <div class="row g-4">
 
     <!-- 1. Flight, Hotel & Bus Booking -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between">
+      <article class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon-box"><i class="bi bi-airplane-engines-fill"></i></div>
-          <h3 class="h4 fw-bold text-dark mb-3">Travel &amp; Ticketing</h3>
-          <p class="text-secondary small mb-4">Instant arrangement for international flights, hotel reservations, and comfortable domestic bus travel tickets for your departure.</p>
+          <div class="service-icon-box" aria-hidden="true"><i class="bi bi-airplane-engines-fill"></i></div>
+          <h2 class="h4 fw-bold text-dark mb-3">Travel &amp; Ticketing Services</h2>
+          <p class="text-secondary small mb-4">Instant arrangement for international flight tickets, hotel reservations, and comfortable domestic bus travel tickets for your departure from Lahan, Nepal.</p>
         </div>
         <div>
           <a href="{% url 'booking' %}" class="btn-book-service w-100">
             <i class="bi bi-calendar-check me-2"></i>Book Ticket Now
           </a>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- 2. Medical Checkup & Biometric -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between">
+      <article class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon-box"><i class="bi bi-heart-pulse-fill"></i></div>
-          <h3 class="h4 fw-bold text-dark mb-3">Medical Checkup</h3>
-          <p class="text-secondary small mb-4">Complete guidance and coordination for certified medical examinations and health screenings required for Gulf and overseas employment.</p>
+          <div class="service-icon-box" aria-hidden="true"><i class="bi bi-heart-pulse-fill"></i></div>
+          <h2 class="h4 fw-bold text-dark mb-3">Medical Checkup &amp; Biometric</h2>
+          <p class="text-secondary small mb-4">Complete guidance, support, and coordination for certified medical examinations and health screenings required for Gulf and overseas employment.</p>
         </div>
         <div>
           <a href="{% url 'booking' %}" class="btn-book-service w-100">
             <i class="bi bi-calendar-check me-2"></i>Book Medical
           </a>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- 3. Orientation Class -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between">
+      <article class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon-box"><i class="bi bi-mortarboard-fill"></i></div>
-          <h3 class="h4 fw-bold text-dark mb-3">Orientation Class</h3>
-          <p class="text-secondary small mb-4">Professional pre-departure orientation batches running on Sunday, Tuesday, and Thursday to prepare you for international workplaces.</p>
+          <div class="service-icon-box" aria-hidden="true"><i class="bi bi-mortarboard-fill"></i></div>
+          <h2 class="h4 fw-bold text-dark mb-3">Pre-Departure Orientation</h2>
+          <p class="text-secondary small mb-4">Professional pre-departure orientation training batches running on Sunday, Tuesday, and Thursday to prepare you fully for international workplaces.</p>
         </div>
         <div>
           <a href="{% url 'booking' %}" class="btn-book-service w-100">
             <i class="bi bi-calendar-check me-2"></i>Join Orientation
           </a>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- 4. Shram Approval & Documentation -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between">
+      <article class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon-box"><i class="bi bi-file-earmark-check-fill"></i></div>
-          <h3 class="h4 fw-bold text-dark mb-3">Shram Approval</h3>
-          <p class="text-secondary small mb-4">Expert assistance for Department of Foreign Employment (DoFE) Shram permit documentation, insurance, and welfare linkage.</p>
+          <div class="service-icon-box" aria-hidden="true"><i class="bi bi-file-earmark-check-fill"></i></div>
+          <h2 class="h4 fw-bold text-dark mb-3">Shram Approval Assistance</h2>
+          <p class="text-secondary small mb-4">Expert documentation assistance for Department of Foreign Employment (DoFE) Shram permits, labor insurance, and official welfare linkage.</p>
         </div>
         <div>
           <a href="{% url 'booking' %}" class="btn-book-service w-100">
             <i class="bi bi-calendar-check me-2"></i>Get Shram Help
           </a>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- 5. Hotel Booking -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between">
+      <article class="service-card h-100 d-flex flex-column justify-content-between">
         <div>
-          <div class="service-icon-box"><i class="bi bi-building"></i></div>
-          <h3 class="h4 fw-bold text-dark mb-3">Hotel Booking</h3>
-          <p class="text-secondary small mb-4">Comfortable, safe, and affordable hotel accommodation arrangements near processing centers and departure points for applicants.</p>
+          <div class="service-icon-box" aria-hidden="true"><i class="bi bi-building"></i></div>
+          <h2 class="h4 fw-bold text-dark mb-3">Safe Hotel Accommodations</h2>
+          <p class="text-secondary small mb-4">Comfortable, safe, and affordable hotel reservation arrangements near processing centers and departure points for applicants visiting Lahan.</p>
         </div>
         <div>
           <a href="{% url 'booking' %}" class="btn-book-service w-100">
             <i class="bi bi-calendar-check me-2"></i>Book Hotel
           </a>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- 6. Complete All-in-One Package -->
     <div class="col-md-6 col-lg-4">
-      <div class="service-card h-100 d-flex flex-column justify-content-between" style="border-top-color: #f4b942;">
+      <article class="service-card h-100 d-flex flex-column justify-content-between" style="border-top-color: #f4b942;">
         <div>
-          <div class="service-icon-box" style="background: #fef3c7; color: #d97706;"><i class="bi bi-box-seam-fill"></i></div>
-          <h3 class="h4 fw-bold text-dark mb-3">Complete Package</h3>
-          <p class="text-secondary small mb-4">All-inclusive service bundle covering medical checks, orientation, tickets, and document clearances for absolute peace of mind.</p>
+          <div class="service-icon-box" style="background: #fef3c7; color: #d97706;" aria-hidden="true"><i class="bi bi-box-seam-fill"></i></div>
+          <h2 class="h4 fw-bold text-dark mb-3">All-Inclusive Complete Package</h2>
+          <p class="text-secondary small mb-4">A comprehensive service bundle covering medical checks, orientation, tickets, and document clearances for absolute peace of mind.</p>
         </div>
         <div>
-          <a href="{% url 'booking' %}" class="btn btn-warning w-100 fw-bold text-dark py-2 rounded-2 shadow-sm">
+          <a href="{% url 'booking' %}" class="btn btn-warning w-100 fw-bold text-dark py-2 rounded-2 shadow-sm text-decoration-none d-block text-center">
             <i class="bi bi-star-fill me-1 text-danger"></i> Book Full Package
           </a>
         </div>
-      </div>
+      </article>
     </div>
 
   </div>
-</div>
+</main>
 
-<!-- Branches Section (As requested, keeping your original exact branch cards layout) -->
+<!-- Branches Section -->
 <section class="container pb-5" id="branches">
   <div class="text-center mb-4">
-    <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-geo-alt me-2"></i>Find Aarogya near you</p>
-    <h2 class="fw-bold">Our branches</h2>
-    <p class="text-secondary mb-0">The same trusted orientation and medical support across Nepal.</p>
+    <p class="text-ag-green fw-semibold mb-2"><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>Find Aarogya near you</p>
+    <h2 class="fw-bold">Our branches across Nepal</h2>
+    <p class="text-secondary mb-0">The same trusted orientation, medical, and ticketing support nationwide.</p>
   </div>
   <div class="row g-4">
-    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Lahan Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
-    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Mirchaiya Branch</h3><p class="text-secondary">Birat Aarogya Medical &amp; Orientation Centre</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801596900"><i class="bi bi-telephone me-2"></i>9801596900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
-    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Janakpur Branch</h3><p class="text-secondary">Jibandeep Orientation &amp; Medical Centre</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
-    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon"></i><h3 class="h5 fw-bold mt-3">Kathmandu Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon" aria-hidden="true"></i><h3 class="h5 fw-bold mt-3">Lahan Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon" aria-hidden="true"></i><h3 class="h5 fw-bold mt-3">Mirchaiya Branch</h3><p class="text-secondary">Birat Aarogya Medical &amp; Orientation Centre</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801596900"><i class="bi bi-telephone me-2"></i>9801596900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon" aria-hidden="true"></i><h3 class="h5 fw-bold mt-3">Janakpur Branch</h3><p class="text-secondary">Jibandeep Orientation &amp; Medical Centre</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
+    <div class="col-md-6 col-xl-3"><article class="branch-card h-100 p-4 shadow-sm"><i class="bi bi-geo-alt branch-icon" aria-hidden="true"></i><h3 class="h5 fw-bold mt-3">Kathmandu Branch</h3><p class="text-secondary">Aarogya Orientation &amp; Medical Center</p><div class="branch-contact d-flex flex-column gap-2 small"><a href="tel:9801196900"><i class="bi bi-telephone me-2"></i>9801196900</a><a href="mailto:aarogyamc@gmail.com"><i class="bi bi-envelope me-2"></i>aarogyamc@gmail.com</a></div></article></div>
   </div>
 </section>
 {% endblock %}
