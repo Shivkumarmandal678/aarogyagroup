@@ -384,11 +384,6 @@ def dashboard_action_view(request):
         messages.error(request, 'Update could not be saved in Google Sheet.')
     return redirect(get_role_redirect(user.get('role')))
 
-def print_dashboard_view(request):
-    user = _logged_in_user(request)
-    if not user:
-        return redirect('admin_login')
-    return render(request, 'dashboard_print.html', {'user': user, 'bookings': _dashboard_records(user)[0], 'reports': _dashboard_records(user)[1]})
 
 def admin_change_password_view(request):
     user = request.session.get('admin_user')
